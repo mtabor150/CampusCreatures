@@ -25,5 +25,10 @@ public class GameActivity extends Activity {
 		Intent i = new Intent(this, TrapCreaturesActivity.class);
 		startActivity(i);
 	}
+	
+	public void goToMap(View view) {
+		Intent i = new Intent(this, MapActivity.class);
+		startActivity(i);
+	}
 
 }
