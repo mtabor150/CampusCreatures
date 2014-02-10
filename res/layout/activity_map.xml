@@ -6,16 +6,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".GameActivity" >
+    tools:context=".MapActivity" >
 
-    <Button
-        android:id="@+id/button1"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:text="Trap Creatures" 
-        android:onClick="goToTrapCreatures"/>
+        android:text="@string/hello_world" />
 
 </RelativeLayout>
