@@ -8,9 +8,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GameActivity" >
 
-    <TextView
+    <Button
+        android:id="@+id/trapCreaturesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="game..." />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp"
+        android:text="Trap Creatures" 
+        android:onClick="goToTrapCreatures"/>
+
+    <Button
+        android:id="@+id/mapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trapCreaturesButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:onClick="goToMap"
+        android:text="Map" />
 
 </RelativeLayout>

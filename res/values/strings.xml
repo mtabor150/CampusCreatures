@@ -7,5 +7,8 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_trap_creatures">TrapCreaturesActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_hello_google_maps">HelloGoogleMaps</string>
 
 </resources>
