@@ -15,7 +15,7 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp"
-        android:text="Game" 
+        android:text="Play" 
         android:onClick="goToGame"/>
 
     <Button
@@ -25,7 +25,7 @@
         android:layout_below="@+id/gameButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Settings"
+        android:text="Options"
         android:onClick="goToSettings" />
 
     <Button
@@ -35,7 +35,16 @@
         android:layout_below="@+id/settingsButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="Profile" 
+        android:text="Configure" 
         android:onClick="goToProfile"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:text="Exit" />
 
 </RelativeLayout>

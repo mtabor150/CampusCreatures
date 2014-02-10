@@ -34,6 +34,14 @@
             android:name="com.example.campuscreatures.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="com.example.campuscreatures.TrapCreaturesActivity"
+            android:label="@string/title_activity_trap_creatures" >
+        </activity>
+        <activity
+            android:name="com.example.campuscreatures.MapActivity"
+            android:label="@string/title_activity_map" >
+        </activity>
     </application>
 
 </manifest>
