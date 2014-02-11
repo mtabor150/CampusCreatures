@@ -1,4 +1,4 @@
-package creatures;
+package database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -34,8 +34,8 @@ public class InitDatabase {
 
 	public Cursor selectRecords() {
 		String[] colmns = new String[] { CREATURE_ID, CREATURE_NAME };
-		Cursor dbCursor = database.query(true, CREATURE_TABLE, colmns, null, null,
-				null, null, null, null);
+		Cursor dbCursor = database.query(true, CREATURE_TABLE, colmns, null,
+				null, null, null, null, null);
 		if (dbCursor != null) {
 			dbCursor.moveToFirst();
 
