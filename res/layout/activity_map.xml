@@ -9,30 +9,8 @@
     tools:context=".MapActivity" >
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="113dp"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:text="" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp"
-        android:text="Display GPS location"
-        android:onClick="setGPS" />
+        android:text="@string/hello_world" />
 
 </RelativeLayout>
