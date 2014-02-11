@@ -21,8 +21,8 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void goToGame(View view) {
-		Intent i = new Intent(this, GameActivity.class);
+	public void goToTrap(View view) {
+		Intent i = new Intent(this, TrapCreaturesActivity.class);
 		startActivity(i);
 	}
 	
@@ -31,8 +31,8 @@ public class MainActivity extends Activity {
 		startActivity(i);
 	}
 	
-	public void goToProfile(View view){
-		Intent i = new Intent(this, ProfileActivity.class);
+	public void goToMap(View view){
+		Intent i = new Intent(this, MapActivity.class);
 		startActivity(i);
 	}
 
