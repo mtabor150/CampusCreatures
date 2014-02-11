@@ -1,0 +1,2 @@
+INDEX VERSION 1.126+C:\Users\Phillip\workspace\CampusCreatures\.metadata\.plugins\org.eclipse.jdt.core
+1929828149.index
