@@ -5,15 +5,15 @@ Broken into sprints based on set milestone dates.  Tasks have been prioritised a
 sprint 1.
 
 
-	February 21st - Sprint 1: 29 Projected Hours
+	February 21st - Sprint 1: 29 Points
 
-1)		App Framework: 8 hours
+1)		App Framework: 8 points
 
-2)		Menu Template: 3 hours
+2)		Menu Template: 3 points
 
-3)		Menu needs working buttons/functions: 13 hours
+3)		Menu needs working buttons/functions: 13 points
 
-4)		Application needs to utilize GPS to find user location: 5 hours
+4)		Application needs to utilize GPS to find user location: 5 points
 
 		
 		
