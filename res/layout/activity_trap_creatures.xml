@@ -33,23 +33,23 @@
 
                 <LinearLayout
                     android:id="@+id/Recon"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Hunt"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Explore"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

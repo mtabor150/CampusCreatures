@@ -42,6 +42,17 @@
             android:name="com.example.campuscreatures.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
+        <activity
+            android:name="com.example.campuscreatures.CreatureStatsActivitiy"
+            android:label="@string/title_activity_creature_stats_activitiy" >
+        </activity>
+        <activity
+            android:name="com.example.campuscreatures.CreatureStatsActivity"
+            android:label="@string/title_activity_creature_stats" >
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>    
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+
 </manifest>

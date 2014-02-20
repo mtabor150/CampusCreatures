@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="73dp"
-        android:text="Trap Creatures" 
+        android:text="@string/button_trapCreatures"
         android:onClick="goToTrapCreatures"/>
 
     <Button
@@ -26,6 +26,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
         android:onClick="goToMap"
-        android:text="Map" />
+        android:text="@string/button_Map" />
 
 </RelativeLayout>
