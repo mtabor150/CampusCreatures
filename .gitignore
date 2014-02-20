@@ -1,0 +1,9 @@
+### Eclipse - .gitignore file ####
+
+.metadata
+bin/
+gen/
+
+
+##this has to work 
+
