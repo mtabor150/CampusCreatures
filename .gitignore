@@ -3,7 +3,6 @@
 .metadata
 bin/
 gen/
-
+.gradle
 
 ##this has to work 
-
