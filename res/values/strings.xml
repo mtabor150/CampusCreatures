@@ -10,5 +10,6 @@
     <string name="title_activity_trap_creatures">TrapCreaturesActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_hello_google_maps">HelloGoogleMaps</string>
+    <string name="title_activity_battle">BattleActivity</string>
 
 </resources>
