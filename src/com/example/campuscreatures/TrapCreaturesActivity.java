@@ -2,7 +2,9 @@ package com.example.campuscreatures;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TabHost;
 
 public class TrapCreaturesActivity extends Activity {
@@ -41,4 +43,8 @@ public class TrapCreaturesActivity extends Activity {
 		return true;
 	}
 
+	public void goToSampleBattle(View view) {
+		Intent newIntent = new Intent(this, BattleActivity.class);
+		startActivity(newIntent);
+	}
 }
