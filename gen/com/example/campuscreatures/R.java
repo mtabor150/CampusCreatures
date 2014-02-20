@@ -24,11 +24,18 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int Explore=0x7f080011;
         public static final int Hunt=0x7f080010;
         public static final int Recon=0x7f08000f;
         public static final int action_settings=0x7f080012;
         public static final int button1=0x7f08000e;
+=======
+        public static final int Explore=0x7f08000f;
+        public static final int Hunt=0x7f08000e;
+        public static final int Recon=0x7f08000d;
+        public static final int action_settings=0x7f080010;
+>>>>>>> 319a301127f8429427d32b3e1bb6353ce240d35f
         public static final int gameButton=0x7f080003;
         public static final int imageView1=0x7f080006;
         public static final int linearLayout1=0x7f080002;
@@ -38,7 +45,10 @@ public final class R {
         public static final int tableRow1=0x7f080007;
         public static final int tableRow2=0x7f080009;
         public static final int tableRow3=0x7f08000b;
+<<<<<<< HEAD
         public static final int textView1=0x7f08000d;
+=======
+>>>>>>> 319a301127f8429427d32b3e1bb6353ce240d35f
         public static final int textView2=0x7f080008;
         public static final int textView4=0x7f08000a;
         public static final int textView6=0x7f08000c;
