@@ -1,0 +1,7 @@
+### Eclipse - .gitignore file ####
+
+.metadata
+bin/
+gen/
+.gradle
+
