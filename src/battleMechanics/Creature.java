@@ -46,7 +46,7 @@ public class Creature {
 		return MaxHealth;
 	}
 	
-	public int getCurrerntHealth(){
+	public int getCurrentHealth(){
 		return CurrentHealth;
 	}
 	
@@ -65,7 +65,7 @@ public class Creature {
 	}
 	
 	public void adjustHealth(int val){
-		CurrentHealth += val;
+		CurrentHealth = CurrentHealth + val;
 		//make sure never to make CurrentHealth greater than max health
 		if(CurrentHealth > MaxHealth) {
 			CurrentHealth = MaxHealth;
