@@ -1,0 +1,26 @@
+Sprint 2 Backlog - April 7th
+
+198 Points:
+
+	Passive Standard Mechanics: 50 Points
+
+		- tracking GPS/zone location: 5    | Mark
+		- updating creature atlas: 20      | James/PJ
+		- passive log: 20		   | James/PJ
+		- passive option: 5		   | Mark
+		
+	Active Standard Mechanics: 50 points
+		
+		- creature trapping: 40		   | Adam
+		- currency: 5 			   | PJ
+		- bartering: 5			   | Mark
+
+	Database: 20 Points			   | PJ
+
+	Other Screens: 13 Points		   | James
+
+	Battle Mechanics: 40 Points 		   | Phil
+
+	Map Zones: 20 Points			   | Mark
+
+	Creatures Atlas: 5 Points		   | James
