@@ -17,40 +17,52 @@ sprint 1.
 
 		
 		
-	April 7th - Sprint 2: 
+	April 7th - Sprint 2: 198 Points
 
-5)		From menu, need to get to screens:
+5)		Passive Standard Mechanics: 50 Points
+
+		- tracking GPS/zone location: 5
+		- updating creature atlas: 20 
+		- passive log: 20
+		- passive option: 5
 		
-		- captured creatures
-		- map
-		- fishing
-		- settings
-		- creature index
-		- game info
+6)		Active Standard Mechanics: 50 points
+		
+		- creature trapping: 40
+		- currency: 5 
+		- bartering: 5
 
-6)		Game needs standard game mechanics (passive/active):
+7)		Database: 20 Points
 
-7)		Battle Mechanics:
+8)		Other Screens: 13 Points
 
-8)		Battle interface: 
+9)		Battle Mechanics: 40 Points 
+
+10)		Map Zones: 20 Points
+
+11)		Creatures Atlas: 5 Points
 
 
 	May 7th - Sprint 3:
 		
-9)		Application needs Settings:
+12)		Battle Interface: 40 Points
 
-10)		Game needs creature index:
+13)		Google Map Integration: 20 Points
 
-11)		Game needs manual:
+14)		Bluetooth: 40 Points
 
-12)		Game needs an Introduction:
+15)		Settings: 5 Points
+
+16)		Manual: 5 Points
+
+17)		Game Intro: 5 Points
 
 
 	??? - Mechanics deamed to be out of scope of this semester
 
-13)		Users want PvP:
+16)		Users want PvP:
 
-14)		Users want trading:
+17)		Users want trading:
 
-15)		Users want to know where other users are:
+18)		Users want to know where other users are:
 
