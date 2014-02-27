@@ -2,7 +2,9 @@ package com.example.campuscreatures;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TabHost;
 
 public class TrapCreaturesActivity extends Activity {
@@ -39,6 +41,11 @@ public class TrapCreaturesActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.trap_creatures, menu);
 		return true;
+	}
+	
+	public void goToBattle(View view) {
+		Intent i = new Intent(this, BattleActivity.class);
+		startActivity(i);
 	}
 
 }
