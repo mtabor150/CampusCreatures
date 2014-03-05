@@ -70,6 +70,10 @@ public class Creature {
 		if(CurrentHealth > MaxHealth) {
 			CurrentHealth = MaxHealth;
 		}
+		//don't allow currentHealth to ever go below 0
+		else if(CurrentHealth<0) {
+			CurrentHealth = 0;
+		}
 	}
 	
 	public void resetHealth(){
