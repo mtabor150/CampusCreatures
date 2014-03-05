@@ -17,19 +17,23 @@ import battleMechanics.Creature;
 
 public class BattleActivity extends Activity {
 	
+	//one battle, two creatures, one boolean to track the player's turn
 	private Battle currentBattle;
 	private Creature player;
 	private Creature opponent;
 	private boolean isPlayerTurn;
 	
 	//three modifiable TextViews for player and opponent
+	//those for player:
 	private TextView playerHealth;
 	private TextView playerLevel;
 	private TextView playerXP;
-	
+	//those for opponent:
 	private TextView oppHealth;
 	private TextView oppLevel;
 	private TextView oppXP;
+	
+	private TextView messageTextView;
 	
 
 	@Override
@@ -50,15 +54,15 @@ public class BattleActivity extends Activity {
 		simpleActions.add(burn);
 		simpleActions.add(push);
 		
-		//create creatures
+		//create sample creatures
 		player = new Creature("Phil",1,10,10,0,simpleActions);
 		opponent = new Creature("Mark",1,10,10,0,simpleActions);
 		
-		//create battle
+		//create the battle for this activity
 		currentBattle = new Battle(player,opponent);
 
 		
-		//create the TableRows from the layout to be referenced
+		//the following are the TableRows from the layout to be referenced
 		TableRow playerTitleTR= (TableRow) this.findViewById(R.id.playerTitle);
 		TableRow playerHealthTR = (TableRow) this.findViewById(R.id.playerHealth);
 		TableRow playerLevelTR = (TableRow) this.findViewById(R.id.playerLevel);
@@ -97,6 +101,10 @@ public class BattleActivity extends Activity {
 		oppHealthTR.addView(oppHealth);
 		oppLevelTR.addView(oppLevel);
 		oppXPTR.addView(oppXP);
+		
+		//create message TextView
+		messageTextView = (TextView) this.findViewById(R.id.battleMessage);
+		messageTextView.setText("Fight!");
 	}
 
 	@Override
@@ -106,13 +114,17 @@ public class BattleActivity extends Activity {
 		return true;
 	}
 	
-	public void battleAction(int i) {
+	//one function to implement each of the 
+	private void battleAction(int i) {
 		System.out.println("got here " + i);
 		
+		//if it is player's turn, allow the action
 		if (isPlayerTurn) {
 			isPlayerTurn = false;
 			currentBattle.playerAction(i);
 		}
+		//Otherwise, have the opponent do its action
+		//Until a simple AI is developed we will continue this implementation
 		else {
 			isPlayerTurn = true;
 			currentBattle.oppAction(i);
@@ -120,6 +132,11 @@ public class BattleActivity extends Activity {
 		System.out.println(player.getCurrentHealth());
 		playerHealth.setText("Health: " + player.getCurrentHealth());
 		oppHealth.setText("Health: " + opponent.getCurrentHealth());
+		
+		//if round == 0, battle is over, set the battle message
+		if(currentBattle.getRound() == 0) {
+			setMessage("Game Over! \nDoesn't matter who won, phil >> mark.");
+		}
 	}
 	
 	public void battleAction1(View view) {
@@ -136,6 +153,10 @@ public class BattleActivity extends Activity {
 	
 	public void battleAction4(View view) {
 		battleAction(3);
+	}
+	
+	private void setMessage(String message) {
+		messageTextView.setText(message);
 	}
 
 }
