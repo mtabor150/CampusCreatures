@@ -17,19 +17,33 @@ public class Battle {
 		isPlayerTurn = true;
 	}
 	
+	//get the round
 	public int getRound(){
 		return round;
 	}
+	
+	//return whether it is the player turn
+	public boolean isPlayerTurn() {
+		if(isPlayerTurn) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	
+	//we differentiate between player action and opponent action to seperate control between the
+	//two creatures.
 	
 	//player action
 	public void playerAction(int i) {
 		if(isPlayerTurn & round != 0) {
 			playerCreature.doBattleAction(oppCreature, i);
 			isPlayerTurn = false;
+			checkEndGame();
 		}
-		else {
-			return;
-		}
+		
 	}
 	
 	//opponent action
@@ -38,9 +52,15 @@ public class Battle {
 			oppCreature.doBattleAction(playerCreature, i);
 			isPlayerTurn = true;
 			round++;
-		}
-		else{
-			return;
+			checkEndGame();
+		}	
+	}
+	
+	
+	//check end game possibilities, if it is end of game, set round to 0
+	public void checkEndGame() {
+		if(playerCreature.getCurrentHealth() == 0 | oppCreature.getCurrentHealth() == 0) {
+			round = 0;
 		}
 	}
 	
