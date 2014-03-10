@@ -13,13 +13,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import battleMechanics.Battle;
 import battleMechanics.BattleAction;
-import battleMechanics.Creature;
+import battleMechanics.BattleCreature;
 
 public class BattleActivity extends Activity {
 	
 	private Battle currentBattle;
-	private Creature player;
-	private Creature opponent;
+	private BattleCreature player;
+	private BattleCreature opponent;
 	private boolean isPlayerTurn;
 	
 	//three modifiable TextViews for player and opponent
@@ -51,8 +51,8 @@ public class BattleActivity extends Activity {
 		simpleActions.add(push);
 		
 		//create creatures
-		player = new Creature("Phil",1,10,10,0,simpleActions);
-		opponent = new Creature("Mark",1,10,10,0,simpleActions);
+		player = new BattleCreature("Phil",1,10,10,0,simpleActions);
+		opponent = new BattleCreature("Mark",1,10,10,0,simpleActions);
 		
 		//create battle
 		currentBattle = new Battle(player,opponent);

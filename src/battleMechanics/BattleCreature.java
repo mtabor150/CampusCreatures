@@ -2,7 +2,7 @@ package battleMechanics;
 
 import java.util.ArrayList;
 
-public class Creature {
+public class BattleCreature {
 	//Creatures will have a title, level, max health, current health
 	//experience, and arrayList of attacks.
 	private String Title;
@@ -14,7 +14,7 @@ public class Creature {
 	
 	
 	//instantiate a creature with all stats
-	public Creature(String title, int level, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
+	public BattleCreature(String title, int level, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
 		Title = title;
 		Level = level;
 		MaxHealth = maxH;
@@ -85,7 +85,7 @@ public class Creature {
 	}
 	
 	//other methods
-	public void doBattleAction(Creature opp, int i) {
+	public void doBattleAction(BattleCreature opp, int i) {
 		BattleAction currentBattleAction = BattleActions.get(i);
 		//adjust creature health and opponent health. simple implementation.
 		opp.adjustHealth(-currentBattleAction.getAttackVal());
