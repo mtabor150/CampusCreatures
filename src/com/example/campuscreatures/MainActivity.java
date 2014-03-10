@@ -1,5 +1,9 @@
 package com.example.campuscreatures;
 
+import java.util.List;
+
+import database.Creatures;
+import database.DatabaseHelper;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +16,27 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		DatabaseHelper database = new DatabaseHelper(this);
+		/*
+		 * test creatures database, and tests for all functions (add, delete, getAll)
+		 */
+		
+		// ID,Name, Region, District, Type, Health, Magic, Attack, Defense, Speed, Moves Per Turn, Experience, Level
+		database.addCreature(new Creatures("001","Sabortooth Tabor", "Ritter Hall", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
+		database.addCreature(new Creatures("002","Desi Djinn ", "Simon Rec", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
+		database.addCreature(new Creatures("003","Philanderer", "Ritter Hall", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
+		database.addCreature(new Creatures("004","Adam the Intern", "Pius Library", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
+		
+		//get all Creatures
+		List<Creatures> list = database.getAllCreatures();
+		
+		//delete one creature
+		database.deleteCreature(list.get(3)); //should delete Adam the Intern
+		
+		//get all creatures
+		database.getAllCreatures();
+		
 	}
 
 	@Override
@@ -40,5 +65,7 @@ public class MainActivity extends Activity {
 		Intent i = new Intent(this, CreatureStatsActivity.class);
 		startActivity(i);
 	}
+	
+	
 
 }
