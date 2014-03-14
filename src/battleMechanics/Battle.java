@@ -3,14 +3,14 @@ package battleMechanics;
 public class Battle {
 
 	//two creatures
-	private Creature playerCreature;
-	private Creature oppCreature;
+	private BattleCreature playerCreature;
+	private BattleCreature oppCreature;
 	//round==0 will mean the battle is over
 	private int round;
 	private boolean isPlayerTurn;
 	
 	//the only unknown attributes are playerCreature and oppCreature
-	public Battle(Creature player, Creature opp) {
+	public Battle(BattleCreature player, BattleCreature opp) {
 		playerCreature = player;
 		oppCreature = opp;
 		round = 1;
