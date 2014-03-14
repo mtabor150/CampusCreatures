@@ -65,23 +65,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "experience TEXT" +
                 "level TEXT )";
                 
-//		String CREATE_CREATURE_TABLE = 
-//				"CREATE TABLE " + Table_Creatures 	
-//				+ " (" 
-//				//+ KEY_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
-//				+ KEY_ID + "INTEGER PRIMARY KEY"
-//				+ KEY_NAME + "NAME TEXT " 
-//				+ KEY_REGION + "REGION TEXT" 
-//				+ KEY_DISTRICT + "DISTRICT TEXT" 
-//				+ KEY_TYPE + "TYPE TEXT" 
-//				+ KEY_HEALTH + "HEALTH TEXT"
-//				+ KEY_MAGIC + "MAGIC TEXT" 
-//				+ KEY_ATTACK + "ATTACK TEXT"
-//				+ KEY_DEFENSE + "DEFENSE TEXT" 
-//				+ KEY_SPEED + "SPEED TEXT"
-//				+ KEY_MPT + "MOVES PER TURN TEXT" 
-//				+ KEY_EXPERIENCE + "EXPERIENCE TEXT"
-//				+ KEY_LEVEL + "LEVEL TEXT" + ")";
 		//creates database table
 		database.execSQL(CREATE_CREATURE_TABLE);
 		
