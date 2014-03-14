@@ -23,19 +23,20 @@ public class MainActivity extends Activity {
 		 */
 		
 		// ID,Name, Region, District, Type, Health, Magic, Attack, Defense, Speed, Moves Per Turn, Experience, Level
-		database.addCreature(new Creatures("001","Sabortooth Tabor", "Ritter Hall", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("002","Desi Djinn ", "Simon Rec", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("003","Philanderer", "Ritter Hall", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("004","Adam the Intern", "Pius Library", "Saint Louis University", 10, 10, 10, 10, 10, 10, 10, 10));
+		database.addCreature(new Creatures("Sabortooth Tabor", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+//		database.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "earth",  10, 10, 10, 10, 10, 10, 10, 10));
+//		database.addCreature(new Creatures("Philanderer", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+//		database.addCreature(new Creatures("Weazel Man", "Pius Library", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+//		database.addCreature(new Creatures("Adam the Intern", "Pius Library", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
 		
-		//get all Creatures
-		List<Creatures> list = database.getAllCreatures();
-		
-		//delete one creature
-		database.deleteCreature(list.get(3)); //should delete Adam the Intern
-		
-		//get all creatures
-		database.getAllCreatures();
+//		//get all Creatures
+//		List<Creatures> list = database.getAllCreatures();
+//		
+//		//delete one creature
+//		database.deleteCreature(list.get(4)); //should delete Adam the Intern
+//		
+//		//get all creatures
+//		database.getAllCreatures();
 		
 	}
 
