@@ -8,13 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 public class InitDatabase {
 
 	private DatabaseHelper dbHelper;
-
 	private SQLiteDatabase database;
 
 	public final static String CREATURE_TABLE = "Creatures"; // name of table
-
-	public final static String CREATURE_ID = "_id"; // id value for employee
-	public final static String CREATURE_NAME = "name"; // name of employee
+	public final static String CREATURE_ID = "_id"; 		// id value for creature
+	public final static String CREATURE_NAME = "name"; 		// name of creature
 
 	/**
 	 * 
