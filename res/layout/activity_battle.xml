@@ -53,6 +53,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
                 </TableRow>
+                <TableRow 
+                    android:id="@+id/playerTurn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    
+                </TableRow>
             </TableLayout>
 
             <TableLayout
@@ -83,6 +89,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
                 </TableRow>
+                <TableRow 
+                    android:id="@+id/oppTurn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    
+                </TableRow>
             </TableLayout>
 
         </LinearLayout>
@@ -110,7 +122,7 @@
                     android:onClick="battleAction1" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/attack2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal = "true"
@@ -127,7 +139,7 @@
                 android:weightSum="2" >
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/attack3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal = "true"
@@ -135,7 +147,7 @@
                     android:onClick="battleAction3" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/attack4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal = "true"
