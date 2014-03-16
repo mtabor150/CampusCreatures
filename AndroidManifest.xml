@@ -46,6 +46,10 @@
             android:name="com.example.campuscreatures.BattleActivity"
             android:label="@string/title_activity_battle" >
         </activity>
+        <activity
+            android:name="com.example.campuscreatures.DatabaseActivity"
+            android:label="@string/title_activity_database" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >

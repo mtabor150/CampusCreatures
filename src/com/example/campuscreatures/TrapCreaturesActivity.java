@@ -47,5 +47,10 @@ public class TrapCreaturesActivity extends Activity {
 		Intent i = new Intent(this, BattleActivity.class);
 		startActivity(i);
 	}
+	
+	public void goToDBTesting(View view){
+		Intent i = new Intent(this, DatabaseActivity.class);
+		startActivity(i);
+	}
 
 }
