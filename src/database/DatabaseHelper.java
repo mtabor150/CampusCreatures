@@ -23,23 +23,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "CreatureDB";
 	//Database Version number
 	private static final int DATABASE_VERSION = 1;
-	
-	
-	// Database creation sql statement used in the onCreate function (below)
-	private static final String DATABASE_CREATE_TABLE = "CREATE TABLE "
-			+ DATABASE_NAME + " (" + "CREATURE_NAME TEXT, "
-			+ "CREATURE_DESCRIPTION TEXT" + "CREATURE_HEALTH size(2,0));";
-	
+		
 	//MySQLiteHelper constuctor must call the super class constructor
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
-
-	// Method is called during creation of the database/tables
+	
+	//Creatures Table Name
+	private static final String Table_Creatures = "Creatures";
+	//Creatures Table Columns names:
+	private static final String KEY_ID = "_ID";
+	private static final String KEY_NAME = "Name";
+	private static final String KEY_REGION = "Region";
+	private static final String KEY_DISTRICT = "District";
+	private static final String KEY_TYPE = "Type";
+	private static final String KEY_HEALTH = "Health";
+	private static final String KEY_MAGIC = " Magic";
+	private static final String KEY_ATTACK = "Attack";
+	private static final String KEY_DEFENSE = "Defense";
+	private static final String KEY_SPEED = "Speed";
+	private static final String KEY_MPT = "Moves Per Turn";
+	private static final String KEY_EXPERIENCE = "Experience";
+	private static final String KEY_LEVEL = "Level";
+	
+			
+	// Method is called during creation of the tables
 	@Override
 	public void onCreate(SQLiteDatabase database) {
+		String CREATE_CREATURE_TABLE = "CREATE TABLE creatures ( " +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+                "name TEXT, "+
+                "region TEXT" +
+                "district TEXT" + 
+                "type TEXT" +
+                "health TEXT" +
+                "magic TEXT" +
+                "attack TEXT" +
+                "defense TEXT" +
+                "speed TEXT" +
+                "mpt TEXT" +
+                "experience TEXT" +
+                "level TEXT )";
+                
 		//creates database table
-		database.execSQL(DATABASE_CREATE_TABLE);
+		database.execSQL(CREATE_CREATURE_TABLE);
+		
 	}
 	
 	// Method is called during an upgrade of the database,
@@ -66,29 +94,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * 
 	 */
 	
-	//CreatureList Table Name
-	private static final String Table_Creatures = "Creatures";
-	
-	//Creatures Table Columns names:
-	private static final String KEY_ID = "ID";
-	private static final String KEY_NAME = "Name";
-	private static final String KEY_REGION = "Region";
-	private static final String KEY_DISTRICT = "District";
-	private static final String KEY_TYPE = "Type";
-	private static final String KEY_HEALTH = "Health";
-	private static final String KEY_MAGIC = " Magic";
-	private static final String KEY_ATTACK = "Attack";
-	private static final String KEY_DEFENSE = "Defense";
-	private static final String KEY_SPEED = "Speed";
-	private static final String KEY_MPT = "Moves Per Turn";
-	private static final String KEY_EXPERIENCE = "Experience";
-	private static final String KEY_LEVEL = "Level";
-	
+
 	private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_REGION, KEY_DISTRICT, KEY_TYPE,
 		KEY_HEALTH, KEY_MAGIC, KEY_ATTACK, KEY_DEFENSE, KEY_SPEED, KEY_MPT, KEY_EXPERIENCE, KEY_LEVEL
 	};
 	
-	public int addCreature(Creatures creature){
+	public void addCreature(Creatures creature){
 		//for logging
 		Log.d("addCreature", creature.toString());
 		
@@ -97,29 +108,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		//2. create ContentValues to add key "column"/value
 		ContentValues values = new ContentValues();
-		values.put(KEY_NAME, creature.getName());
-		values.put(KEY_REGION, creature.getRegion());
-		values.put(KEY_DISTRICT, creature.getDistrict());
-		values.put(KEY_TYPE, creature.getType());
-		values.put(KEY_HEALTH, creature.getHealth());
-		values.put(KEY_MAGIC, creature.getMagic());
-		values.put(KEY_ATTACK, creature.getAttack());
-		values.put(KEY_DEFENSE, creature.getDefense());
-		values.put(KEY_SPEED, creature.getSpeed());
-		values.put(KEY_MPT, creature.getMovesPerTurn());
-		values.put(KEY_EXPERIENCE, creature.getExperience());
-		values.put(KEY_LEVEL, creature.getLevel());
+		//change values.put to (String, string) for string values and
+		//values.put to (String, int)
 		
-		//3. updating row
-		int i = database.update(Table_Creatures, //table
-				values,					   	     // column/value
-				KEY_ID+" = ?",			  		 //selections 
-				new String [] {String.valueOf(creature.getId()) }); // selection
+		values.put(KEY_ID, creature.getId());   				//creature ID
+		values.put(KEY_NAME, creature.getName());				//creature name
+		values.put(KEY_REGION, creature.getRegion());			//creature region
+		values.put(KEY_DISTRICT, creature.getDistrict());		//creature district
+		values.put(KEY_TYPE, creature.getType());				//creature type
+		values.put(KEY_HEALTH, creature.getHealth());			//creature health
+		values.put(KEY_MAGIC, creature.getMagic());				//creature magic
+		values.put(KEY_ATTACK, creature.getAttack());			//creature attack
+		values.put(KEY_DEFENSE, creature.getDefense());			//creature defense
+		values.put(KEY_SPEED, creature.getSpeed());				//creature speed
+		values.put(KEY_MPT, creature.getMovesPerTurn());		//creature moves per turn
+		values.put(KEY_EXPERIENCE, creature.getExperience());	//creature experience
+		values.put(KEY_LEVEL, creature.getLevel());				//creature level
 		
-		//4. close
+//		//3. updating row
+//		int i = database.update(Table_Creatures, //table
+//				values,					   	     // column/value
+//				KEY_ID+" = ?",			  		 //selections 
+//				new String [] {String.valueOf(creature.getId()) }); // selection
+//		
+//		//4. close
+//		database.close();
+//		
+//		return i;
+		
+		//3. inserting row
+		database.insert(Table_Creatures, null, values);
+		
 		database.close();
 		
-		return i;
 	}
 	
 	public Creatures getCreature(int id){
