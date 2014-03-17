@@ -33,38 +33,65 @@
 
                 <LinearLayout
                     android:id="@+id/Recon"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
                     <Button
                         android:id="@+id/button1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Battle Sample"
-                        android:onClick="goToBattle" />
+                        android:onClick="goToBattle"
+                        android:text="Battle Sample" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" >
+
+                            <RadioButton
+                                android:id="@+id/radioSinglePlayer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="Single Player"
+                                android:onClick="radioButtonClicked" />
+
+                            <RadioButton
+                                android:id="@+id/radioTwoPlayer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Two Player"
+                                android:onClick="radioButtonClicked" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/databaseTesting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="DB Testing"
-                        android:onClick="goToDBTesting" />
-
+                        android:onClick="goToDBTesting"
+                        android:text="DB Testing" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Hunt"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Explore"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

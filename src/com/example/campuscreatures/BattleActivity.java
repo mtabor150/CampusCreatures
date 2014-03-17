@@ -20,11 +20,13 @@ import battleMechanics.BattleCreature;
 @SuppressLint("NewApi")
 public class BattleActivity extends Activity {
 
+	//private boolean isSinglePlayer;
+	
 	//one battle, two creatures, one boolean to track the player's turn
 	private Battle currentBattle;
 	private BattleCreature player;
 	private BattleCreature opponent;
-	private boolean isPlayerTurn;
+	//private boolean isPlayerTurn;
 
 	//three modifiable TextViews for player and opponent
 	//those for player:
@@ -42,7 +44,6 @@ public class BattleActivity extends Activity {
 
 	private TextView messageTextView;
 	
-	final Activity activity = this;
 
 
 	@Override
@@ -50,7 +51,7 @@ public class BattleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_battle);
 
-		isPlayerTurn = true;
+		
 		//create sample battleActions, creatures, and Battle
 		//create battleActions
 		BattleAction kick = new BattleAction("kick",1,0,10);
@@ -78,7 +79,8 @@ public class BattleActivity extends Activity {
 		opponent = new BattleCreature("Mark",1,10,10,0,simpleActions2);
 
 		//create the battle for this activity
-		currentBattle = new Battle(player,opponent);
+		boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
+		currentBattle = new Battle(player,opponent, isSinglePlayer);
 
 
 		//the following are the TableRows from the layout to be referenced
@@ -133,6 +135,17 @@ public class BattleActivity extends Activity {
 		messageTextView = (TextView) this.findViewById(R.id.battleMessage);
 		messageTextView.setText("Fight!");
 		
+		/*
+		 * print out the value that was passed through the intent
+		 */
+		
+		if (currentBattle.isSinglePlayer()) {
+			setMessage("it is a single player round");
+		}
+		else {
+			setMessage("it is a two player round");
+		}
+		
 		
 		//change names of battleAction buttons
 		adjustBattleActionButtons();
@@ -157,7 +170,7 @@ public class BattleActivity extends Activity {
 			tempCreature = opponent;
 		}
 		for (int i = 0; i< 4; i++) {
-			Button tempButton = (Button) activity.findViewById(R.id.button1);
+			Button tempButton = (Button) this.findViewById(R.id.button1);
 			
 			switch(i) {
 			case 0: tempButton = (Button) this.findViewById(R.id.attack1);
@@ -185,16 +198,20 @@ public class BattleActivity extends Activity {
 		 * otherwise, have the opponent do its action for that button.
 		 * Until a simple AI is developed we will continue this implementation
 		 */
-		if (isPlayerTurn) {
-			isPlayerTurn = false;
+		if (currentBattle.isPlayerTurn()) {
 			currentBattle.playerAction(i);
 		}
 		else {
-			isPlayerTurn = true;
-			currentBattle.oppAction(i);
+			if(currentBattle.isSinglePlayer()) {
+				return;
+			}
+			else {
+				currentBattle.oppAction(i);
+			}
 		}
-		playerHealth.setText("Health: " + player.getCurrentHealth());
-		oppHealth.setText("Health: " + opponent.getCurrentHealth());
+		setHealth();
+		updateTurnPointer();
+		
 
 		//if round == 0, battle is over, set the battle message
 		if(currentBattle.getRound() == 0) {
@@ -206,10 +223,13 @@ public class BattleActivity extends Activity {
 			}
 		}
 		else{
-			adjustBattleActionButtons();
-			updateTurnPointer();
+			if(!currentBattle.isSinglePlayer()){
+				adjustBattleActionButtons();
+			}
+			//updateTurnPointer();
 		}
 	}
+	
 
 	public void battleAction1(View view) {
 		this.battleAction(0);
@@ -242,6 +262,11 @@ public class BattleActivity extends Activity {
 			playerTurn.setText("");
 			oppTurn.setText("^");
 		}
+	}
+	
+	private void setHealth() {
+		playerHealth.setText("Health: " + player.getCurrentHealth());
+		oppHealth.setText("Health: " + opponent.getCurrentHealth());
 	}
 
 }

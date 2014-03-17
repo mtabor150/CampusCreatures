@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.RadioButton;
 
 public class TrapCreaturesActivity extends Activity {
-
+	
+	private boolean isSinglePlayer=true;//used only to TEST battle mechanics
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,12 +48,29 @@ public class TrapCreaturesActivity extends Activity {
 	
 	public void goToBattle(View view) {
 		Intent i = new Intent(this, BattleActivity.class);
+		i.putExtra("isSinglePlayer", isSinglePlayer);
 		startActivity(i);
 	}
 	
 	public void goToDBTesting(View view){
 		Intent i = new Intent(this, DatabaseActivity.class);
 		startActivity(i);
+	}
+	
+	public void radioButtonClicked(View view) {
+		boolean checked = ((RadioButton) view).isChecked();
+	    
+	    // Check which radio button was clicked
+	    switch(view.getId()) {
+	        case R.id.radioSinglePlayer:
+	           if (checked)
+	                this.isSinglePlayer = true;
+	            break;
+	        case R.id.radioTwoPlayer:
+	           if (checked)
+	                this.isSinglePlayer = false;
+	            break;
+	    }
 	}
 
 }
