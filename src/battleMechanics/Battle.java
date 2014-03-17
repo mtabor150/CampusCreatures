@@ -8,13 +8,19 @@ public class Battle {
 	//round==0 will mean the battle is over
 	private int round;
 	private boolean isPlayerTurn;
+	private boolean isSinglePlayer;
+	private BattleArtificialIntelligence battleAI;
 	
 	//the only unknown attributes are playerCreature and oppCreature
-	public Battle(BattleCreature player, BattleCreature opp) {
+	public Battle(BattleCreature player, BattleCreature opp, Boolean isSinglePlayer) {
 		playerCreature = player;
 		oppCreature = opp;
 		round = 1;
 		isPlayerTurn = true;
+		this.isSinglePlayer = isSinglePlayer;
+		if(isSinglePlayer) {
+			battleAI = new BattleArtificialIntelligence(0,this);
+		}
 	}
 	
 	//get the round
@@ -30,6 +36,11 @@ public class Battle {
 		else{
 			return false;
 		}
+	}
+	
+	//return whether it is single player or not
+	public boolean isSinglePlayer() {
+		return isSinglePlayer;
 	}
 	
 	
@@ -49,7 +60,13 @@ public class Battle {
 	//opponent action
 	public void oppAction(int i) {
 		if(!isPlayerTurn & round != 0) {
-			oppCreature.doBattleAction(playerCreature, i);
+			if(isSinglePlayer) { //if isSinglePlayer, make sure to automate a move
+				int AIMove = battleAI.calculateNextMove();
+				oppCreature.doBattleAction(playerCreature,AIMove);
+			}
+			else {
+				oppCreature.doBattleAction(playerCreature, i);
+			}
 			isPlayerTurn = true;
 			round++;
 			checkEndGame();
@@ -64,4 +81,14 @@ public class Battle {
 		}
 	}
 	
+	/*
+	 * return the player creature or opponent creature
+	 */
+	public BattleCreature getPlayerBattleCreature(){
+		return playerCreature;
+	}
+	
+	public BattleCreature getOpponentBattleCreature(){
+		return oppCreature;
+	}
 }
