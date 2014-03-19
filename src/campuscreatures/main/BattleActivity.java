@@ -6,8 +6,6 @@ import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
 
-import com.example.campuscreatures.R;
-
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;

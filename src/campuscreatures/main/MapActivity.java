@@ -1,7 +1,5 @@
 package campuscreatures.main;
 
-import com.example.campuscreatures.R;
-
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
