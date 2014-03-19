@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.campuscreatures.MainActivity"
+            android:name="campuscreatures.main.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,31 +23,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.campuscreatures.GameActivity"
+            android:name="campuscreatures.main.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity
-            android:name="com.example.campuscreatures.ProfileActivity"
+            android:name="campuscreatures.main.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
-            android:name="com.example.campuscreatures.SettingsActivity"
+            android:name="campuscreatures.main.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.example.campuscreatures.TrapCreaturesActivity"
+            android:name="campuscreatures.main.TrapCreaturesActivity"
             android:label="@string/title_activity_trap_creatures" >
         </activity>
         <activity
-            android:name="com.example.campuscreatures.MapActivity"
+            android:name="campuscreatures.main.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name="com.example.campuscreatures.BattleActivity"
+            android:name="campuscreatures.main.BattleActivity"
             android:label="@string/title_activity_battle" >
         </activity>
         <activity
-            android:name="com.example.campuscreatures.DatabaseActivity"
+            android:name="campuscreatures.main.DatabaseActivity"
             android:label="@string/title_activity_database" >
         </activity>
     </application>

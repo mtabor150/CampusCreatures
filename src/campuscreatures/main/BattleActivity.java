@@ -1,6 +1,13 @@
-package com.example.campuscreatures;
+package campuscreatures.main;
 
 import java.util.ArrayList;
+
+import campuscreatures.battleMechanics.Battle;
+import campuscreatures.battleMechanics.BattleAction;
+import campuscreatures.battleMechanics.BattleCreature;
+
+import com.example.campuscreatures.R;
+
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,9 +20,6 @@ import android.widget.RemoteViews;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import battleMechanics.Battle;
-import battleMechanics.BattleAction;
-import battleMechanics.BattleCreature;
 
 @SuppressLint("NewApi")
 public class BattleActivity extends Activity {

@@ -1,4 +1,6 @@
-package com.example.campuscreatures;
+package campuscreatures.main;
+
+import com.example.campuscreatures.R;
 
 import android.os.Bundle;
 import android.app.Activity;

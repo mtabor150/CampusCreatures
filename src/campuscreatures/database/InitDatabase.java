@@ -1,4 +1,4 @@
-package database;
+package campuscreatures.database;
 
 import android.content.ContentValues;
 import android.content.Context;

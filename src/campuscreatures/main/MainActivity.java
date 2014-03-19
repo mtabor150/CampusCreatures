@@ -1,9 +1,12 @@
-package com.example.campuscreatures;
+package campuscreatures.main;
 
 import java.util.List;
 
-import database.Creatures;
-import database.DatabaseHelper;
+import campuscreatures.database.Creatures;
+import campuscreatures.database.DatabaseHelper;
+
+import com.example.campuscreatures.R;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
