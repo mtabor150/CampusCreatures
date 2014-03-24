@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class CreatureDataBase {
+public class CreatureDatabase {
 	
 	public static final String COLUMN_ID = "id"; 				//references a row number
 	public static final String COLUMN_NAME = "creature_name";	//references creature's name according to row_id
@@ -71,11 +71,11 @@ public class CreatureDataBase {
 		}
 	}
 	
-	public CreatureDataBase(Context c){
+	public CreatureDatabase(Context c){
 		ourContext = c;
 	}
 	
-	public CreatureDataBase open(){
+	public CreatureDatabase open(){
 		ourHelper = new DbHelper(ourContext);
 		ourDatabase = ourHelper.getWritableDatabase();
 		return this;
