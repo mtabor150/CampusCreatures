@@ -1,4 +1,4 @@
-package com.example.campuscreatures;
+package campuscreatures.main;
 
 import android.location.Location;
 import android.location.LocationListener;

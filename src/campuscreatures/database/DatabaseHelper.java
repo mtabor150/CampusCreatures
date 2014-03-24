@@ -1,4 +1,4 @@
-package database;
+package campuscreatures.database;
 
 import java.util.LinkedList;
 import java.util.List;

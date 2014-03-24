@@ -1,4 +1,4 @@
-package database;
+package campuscreatures.database;
 
 public class Creatures {
 	

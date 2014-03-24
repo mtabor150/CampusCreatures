@@ -1,4 +1,4 @@
-package battleMechanics;
+package campuscreatures.battleMechanics;
 
 public class Battle {
 
