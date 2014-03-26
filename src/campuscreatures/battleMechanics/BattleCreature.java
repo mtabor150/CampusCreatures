@@ -8,16 +8,19 @@ public class BattleCreature {
 	private String Title;
 	private int Level;
 	private int MaxHealth;
+	private int speed;
 	private int CurrentHealth;
 	private int CreatureExperience;
 	private ArrayList<BattleAction> BattleActions;
+	private BattleAction currentBattleAction;
 	
 	
 	//instantiate a creature with all stats
-	public BattleCreature(String title, int level, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
+	public BattleCreature(String title, int level, int speed, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
 		Title = title;
 		Level = level;
 		MaxHealth = maxH;
+		this.speed = speed;
 		
 		//set CurrentHealth and make sure not to make it larger than MaxHealth
 		if(currentH > maxH) {
@@ -29,6 +32,7 @@ public class BattleCreature {
 		
 		CreatureExperience = xp;
 		BattleActions = actions;
+		currentBattleAction = BattleActions.get(0);
 	}
 	
 	
@@ -46,6 +50,10 @@ public class BattleCreature {
 		return MaxHealth;
 	}
 	
+	public int getSpeed() {
+		return speed;
+	}
+	
 	public int getCurrentHealth(){
 		return CurrentHealth;
 	}
@@ -58,10 +66,18 @@ public class BattleCreature {
 		return BattleActions;
 	}
 	
+	public BattleAction getCurrentBattleAction() {
+		return currentBattleAction;
+	}
+	
 	
 	//modifier methods for certain attributes
 	public void incrementLevel(){
 		Level++;
+	}
+	
+	public void setSpeed(int newSpeed) {
+		speed = newSpeed;
 	}
 	
 	public void adjustHealth(int val){
@@ -88,11 +104,7 @@ public class BattleCreature {
 		BattleActions.add(action);
 	}
 	
-	//other methods
-	public void doBattleAction(BattleCreature opp, int i) {
-		BattleAction currentBattleAction = BattleActions.get(i);
-		//adjust creature health and opponent health. simple implementation.
-		opp.adjustHealth(-currentBattleAction.getAttackVal());
-		this.adjustHealth(currentBattleAction.getRecoverVal());
+	public void chooseBattleAction(int i){
+		currentBattleAction = BattleActions.get(i);
 	}
 }
