@@ -3,64 +3,84 @@ package campuscreatures.database;
 public class Creatures {
 	
 	/*
+	 * 
 	 * Private variables:
 	 *  - 13 total attributes per creature
 	 *  - 4 string attribute values including name
-	 *  - 9 integer attribute values, including ID 
+	 *  - 9 integer attribute values, including id
 	 */
 	
-	private int id;			//primary key of the database
-	private String name;
+	int _id;			//primary key of the database
+	String _name;
 	
-	private String region;
-	private String district;
-	private String type;
+	String _region;
+	String _district;
+	String _type;
 	
-	private int health;
-	private int magic;
-	private int attack;
-	private int defense;
-	private int speed;
-	private int moves_per_turn;
-	private int experience;
-	private int level;
+	int _health;
+	int _magic;
+	int _attack;
+	int _defense;
+	int _speed;
+	int _moves_per_turn;
+	int _experience;
+	int _level;
 	
 	//Empty constructor
 	public Creatures(){}
 	
 	//constructor
+//	public Creatures(int id, String name, String region, String district, 
+//			String type, int health, int magic, int attack, int defense, 
+//			int speed, int moves_per_turn, int exp, int level) {
+//		this._id = id;
+//		this._name = name;
+//		this._region = region;
+//		this._district = district;
+//		this._type = type;
+//		this._health = health;
+//		this._magic = magic;
+//		this._attack = attack;
+//		this._defense = defense;
+//		this._speed = speed;
+//		this._moves_per_turn = moves_per_turn;
+//		this._experience = exp;
+//		this._level = level;
+//	}
+	
+	//constructor
 	public Creatures(String name, String region, String district, String type,
-			int health, int magic, int attack, int defense, int speed, int moves_per_turn, int exp, int level) {
-		this.name = name;
-		this.region = region;
-		this.district = district;
-		this.type = type;
-		this.health = health;
-		this.magic = magic;
-		this.attack = attack;
-		this.defense = defense;
-		this.speed = speed;
-		this.moves_per_turn = moves_per_turn;
-		this.experience = exp;
-		this.level = level;
+			int health, int magic, int attack, int defense, 
+			int speed, int moves_per_turn, int exp, int level) {
+		this._name = name;
+		this._region = region;
+		this._district = district;
+		this._type = type;
+		this._health = health;
+		this._magic = magic;
+		this._attack = attack;
+		this._defense = defense;
+		this._speed = speed;
+		this._moves_per_turn = moves_per_turn;
+		this._experience = exp;
+		this._level = level;
 	}
-	
-	
+		
 	public String toString() {
-		return  "This is the toString() function" + "\n" +
-				"Creature [id= " + id +
-				", name = " + name +
-				", region = " + region +
-				", district = " + district +
-				", type = " + type +
-				", health = " + health +
-				", magic = " + magic +
-				", attack = " + attack +
-				", defense = " + defense +
-				", speed = " + speed +
-				", moves per turn = " + moves_per_turn +
-				", experience = " + experience +
-				", level = " + level;	
+		return  "This is the toString() function: ..... " +
+				" Creature [id= " + _id +
+				", name = " + _name +
+				", region = " + _region +
+				", district = " + _district +
+				", type = " + _type +
+				", health = " + _health +
+				", magic = " + _magic +
+				", attack = " + _attack +
+				", defense = " + _defense +
+				", speed = " + _speed +
+				", moves per turn = " + _moves_per_turn +
+				", experience = " + _experience +
+				", level = " + _level;	
 	}
 	
 	/**
@@ -71,106 +91,106 @@ public class Creatures {
 	
 	//ID attribute
 	public int getId() {
-		return this.id;
+		return this._id;
 	}
 	public void setId(int id){
-		this.id = id;
+		this._id = id;
 	}
 
 	//name attribute
 	public String getName() {
-		return this.name;
+		return this._name;
 	}
 	public void setName(String name){
-		this.name = name;
+		this._name = name;
 	}
 	
 	//region attribute
 	public String getRegion(){
-		return this.region;
+		return this._region;
 	}
 	public void setRegion(String region) {
-		this.region = region;
+		this._region = region;
 	}
 	
 	//district attribute
 	public String getDistrict(){
-		return this.district;
+		return this._district;
 	}
 	public void setDistrict(String district) {
-		this.district = district;
+		this._district = district;
 	}
 	
 	//type attribute
 	public String getType(){
-		return this.type;
+		return this._type;
 	}
 	public void setType(String type) {
-		this.type = type;
+		this._type = type;
 	}
 	
 	//health attribute
 	public int getHealth(){
-		return this.health;
+		return this._health;
 	}
 	public void setHealth(int health) {
-		this.health = health;
+		this._health = health;
 	}
 	
 	//magic attribute
 	public int getMagic(){
-		return this.magic;
+		return this._magic;
 	}
 	public void setMagic(int magic) {
-		this.magic = magic;
+		this._magic = magic;
 	}
 	
 	//attack attribute
 	public int getAttack(){
-		return this.attack;
+		return this._attack;
 	}
 	public void setAttack(int attack) {
-		this.attack = attack;
+		this._attack = attack;
 	}
 	
 	//defense attribute
 	public int getDefense(){
-		return this.defense;
+		return this._defense;
 	}
 	public void setDefense(int defense){
-		this.defense = defense;
+		this._defense = defense;
 	}
 	
 	// speed attribute
 	public int getSpeed(){
-		return this.speed;
+		return this._speed;
 	}
 	public void setSpeed(int speed){
-		this.speed = speed;
+		this._speed = speed;
 	}
 	
 	//moves per turn attribute
 	public int getMovesPerTurn(){
-		return this.moves_per_turn;
+		return this._moves_per_turn;
 	}
 	public void setMovesPerTurn(int moves_per_turn){
-		this.moves_per_turn = moves_per_turn;
+		this._moves_per_turn = moves_per_turn;
 	}
 	
 	//experience attribute
 	public int getExperience(){
-		return this.experience;
+		return this._experience;
 	}
-	public void setExperience(int exp){
-		this.experience = exp;
+	public void setExperience(int experience){
+		this._experience = experience;
 	}
 	
 	//level attribute
 	public int getLevel(){
-		return this.level;
+		return this._level;
 	}
 	public void setLevel(int level){
-		this.level = level;
+		this._level = level;
 	}
 	
 	/*
