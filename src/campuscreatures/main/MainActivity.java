@@ -10,13 +10,64 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+	
+	
+	private ViewPager viewPager;
+    private MainPagerAdapter mAdapter;
+    private ActionBar actionBar;
+    // Tab titles
+    private String[] tabs = { "Home", "Map", "Creature Atlas" };
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//actionbar setup
+		viewPager = (ViewPager)findViewById(R.id.pager);
+		mAdapter = new MainPagerAdapter(getSupportFragmentManager());
+		
+		viewPager.setAdapter(mAdapter);
+		actionBar.setHomeButtonEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		
+		//add tabs
+		for (String tab_name : tabs){
+			actionBar.addTab(actionBar.newTab().setText(tab_name).setTabListener(this));
+		}
+		
+		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				actionBar.setSelectedNavigationItem(postion);
+				
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
+		
+		
 		
 		DatabaseHelper database = new DatabaseHelper(this);
 		/*
@@ -69,6 +120,24 @@ public class MainActivity extends Activity {
 	public void goToCreatureStats(View view){
 		Intent i = new Intent(this, CreatureStatsActivity.class);
 		startActivity(i);
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
