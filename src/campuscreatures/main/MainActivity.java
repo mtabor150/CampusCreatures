@@ -4,10 +4,10 @@ import java.util.List;
 
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.app.ActionBar;
@@ -28,7 +28,7 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		//setup
 		mAdapter = new MainPagerAdapter(getSupportFragmentManager());
 		
@@ -56,33 +56,6 @@ public class MainActivity extends FragmentActivity {
 			}
 		});
 		
-		
-		
-		
-		
-		DatabaseHelper database = new DatabaseHelper(this);
-		/*
-		 * test creatures database, and tests for all functions (add, delete, getAll)
-		 */
-		
-		// ID,Name, Region, District, Type, Health, Magic, Attack, Defense, Speed, Moves Per Turn, Experience, Level
-
-		database.addCreature(new Creatures("Sabortooth Tabor", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "earth",  10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("Philanderer", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("Weazel Man", "Pius Library", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("Adam the Intern", "Pius Library", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
-		
-		//get all Creatures
-		//List<Creatures> list = database.getAllCreatures();
-		
-		//delete one creature
-		//cause a crash, NEED TO FIX INSERT (creature) METHOD
-		//database.deleteCreature(list.get(4)); //should delete Adam the Intern
-		
-		//get all creatures
-		//database.getAllCreatures();
-
 
 	}
 
