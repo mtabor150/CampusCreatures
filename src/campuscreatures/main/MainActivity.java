@@ -10,13 +10,53 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends FragmentActivity {
+	
+	
+	private ViewPager viewPager;
+    private MainPagerAdapter mAdapter;
+   
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		//setup
+		mAdapter = new MainPagerAdapter(getSupportFragmentManager());
+		
+		viewPager = (ViewPager)findViewById(R.id.pager);
+		viewPager.setAdapter(mAdapter);
+		viewPager.setCurrentItem(1);
+		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				
+				
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+
 	}
 
 	@Override
@@ -47,3 +87,4 @@ public class MainActivity extends Activity {
 	}
 
 }
+

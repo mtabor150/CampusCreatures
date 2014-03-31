@@ -22,14 +22,14 @@ public class BattleArtificialIntelligence {
 	/*
 	 * For now, calculateNextMove() will just randomly choose a move from the arrayList of moves
 	 */
-	public int calculateNextMove() {
+	public void calculateNextMove() {
 		int numMoves = AICreature.getBattleActions().size();
 		if(numMoves == 0) {
-			return -1; //each creature should have at least one move;
+			return; //each creature should have at least one move;
 		}
 		Random random = new Random();
 		int randomNumber = random.nextInt(numMoves-1);
-		return randomNumber;
+		AICreature.chooseBattleAction(randomNumber);
 	}
 	
 }
