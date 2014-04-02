@@ -30,23 +30,23 @@ public class Creatures {
 	public Creatures(){}
 	
 	//constructor
-//	public Creatures(int id, String name, String region, String district, 
-//			String type, int health, int magic, int attack, int defense, 
-//			int speed, int moves_per_turn, int exp, int level) {
-//		this._id = id;
-//		this._name = name;
-//		this._region = region;
-//		this._district = district;
-//		this._type = type;
-//		this._health = health;
-//		this._magic = magic;
-//		this._attack = attack;
-//		this._defense = defense;
-//		this._speed = speed;
-//		this._moves_per_turn = moves_per_turn;
-//		this._experience = exp;
-//		this._level = level;
-//	}
+	public Creatures(int id, String name, String region, String district, 
+			String type, int health, int magic, int attack, int defense, 
+			int speed, int moves_per_turn, int exp, int level) {
+		this._id = id;
+		this._name = name;
+		this._region = region;
+		this._district = district;
+		this._type = type;
+		this._health = health;
+		this._magic = magic;
+		this._attack = attack;
+		this._defense = defense;
+		this._speed = speed;
+		this._moves_per_turn = moves_per_turn;
+		this._experience = exp;
+		this._level = level;
+	}
 	
 	//constructor
 	public Creatures(String name, String region, String district, String type,
