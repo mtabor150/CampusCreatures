@@ -15,13 +15,13 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
  
         switch (index) {
         case 0:
-            // Top Rated fragment activity
+            // map fragment activity
             return new MapFragment();
         case 1:
-            // Games fragment activity
+            // home fragment activity
             return new HomeFragment();
         case 2:
-            // Movies fragment activity
+            // creature atlas fragment activity
             return new CreatureAtlasFragment();
         }
  
