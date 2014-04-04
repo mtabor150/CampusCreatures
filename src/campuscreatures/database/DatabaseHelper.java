@@ -1,7 +1,9 @@
 package campuscreatures.database;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,22 +14,32 @@ import android.util.Log;
 /**
  * 
  * Class DatabaseHelper extends SQLiteOpenHelper
- * Creates a Database "CreatureDB" with one table "Creatures"
+ * Creates a Database "CreatureDB" with two tables: Creatures and PlayerDB
  * 
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-	//Database Version number
+	//Database Name and Version number 
 	private static final int DATABASE_VERSION = 1;
-		
-	//Database name
 	private static final String DATABASE_NAME = "CreatureDB";
 	
-	//Creatures Table Name
+	//Creatures Table Names
 	private static final String TABLE_CREATURES = "Creatures";
+	private static final String TABLE_PLAYER = "PlayerDB";
 	
-	//Creatures Table Columns names:
+	
+	/* 
+	 * Creatures Table and PlayerDB table use the same column names.
+	 * But the ID for a creature would be different: 
+	 * 	- In PlayerDB it would be dynamic.
+	 *  - In Creatures it would be static.
+	 * 
+	 */
+	
+	//PlayerDB 
+	
+	//Creatures Table - column names
 	public static final String KEY_ID = "_id";
 	private static final String COLUMN_NAME = "name";
 	private static final String COLUMN_REGION = "region";
@@ -42,10 +54,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String COLUMN_EXPERIENCE = "experience";
 	private static final String COLUMN_LEVEL = "level";
 	
-	//testing integer
-	private int numIDs = 0;
 	
-	//MySQLiteHelper constuctor must call the super class constructor
+	// MySQLiteHelper constuctor must call the super class constructor
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -127,18 +137,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_EXPERIENCE, creature.getExperience());	//creature experience
 		values.put(COLUMN_LEVEL, creature.getLevel());				//creature level
 		
-		Log.d("About to insert the entire row for:", creature.getName());
 		//3. insert rows
+		Log.d("About to insert the entire row for:", creature.getName());
 		database.insert("Creatures", null, values);
 		Log.d("Inserted the row for: ", creature.getName());
-		//Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
+		Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
 		
-		//Creatures creatureToPrintOut = this.getCreature(numIDs);
-		numIDs ++;
-		//Log.d("KEY ID for: ", creatureToPrintOut.getName() + " is " + creatureToPrintOut.getId());
 		//Close database connection
 		database.close();
 		
+		Log.d("getCreature Function", getCreature(0).toString());
 	}
 	
 	/*
@@ -168,9 +176,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		//3. if we got results get the first one
 		if (cursor != null)
 			cursor.moveToFirst();
-		for(int i = 0; i<id & !cursor.isAfterLast(); i++) {
-			cursor.moveToNext();
-		}
+//		for(int i = 0; i<id & !cursor.isAfterLast(); i++) {
+//			cursor.moveToNext();
+//		}
 		
 		//4. build creatures object
 		Creatures creature = new Creatures();
@@ -198,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	//getting all creatures
 	public List<Creatures> getAllCreatures(){
-		List<Creatures> creaturesList = new LinkedList<Creatures>();
+		List<Creatures> creaturesList = new ArrayList<Creatures>();
 		
 		//1. build the query
 		String selectQuery = " SELECT * FROM " + TABLE_CREATURES;
