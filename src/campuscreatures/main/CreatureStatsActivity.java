@@ -2,7 +2,9 @@ package campuscreatures.main;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class CreatureStatsActivity extends Activity {
 
@@ -18,5 +20,4 @@ public class CreatureStatsActivity extends Activity {
 		getMenuInflater().inflate(R.menu.creature_stats, menu);
 		return true;
 	}
-
 }
