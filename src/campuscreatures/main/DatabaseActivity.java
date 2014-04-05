@@ -53,24 +53,6 @@ public class DatabaseActivity extends Activity {
 		return true;
 	}
 	
-	public void goToTrap(View view) {
-		Intent i = new Intent(this, TrapCreaturesActivity.class);
-		startActivity(i);
-	}
 	
-	public void goToSettings(View view) {
-		Intent i = new Intent(this, SettingsActivity.class);
-		startActivity(i);
-	}
-	
-	public void goToMap(View view){
-		Intent i = new Intent(this, MapActivity.class);
-		startActivity(i);
-	}
-	
-	public void goToCreatureStats(View view){
-		Intent i = new Intent(this, CreatureStatsActivity.class);
-		startActivity(i);
-	}
 
 }
