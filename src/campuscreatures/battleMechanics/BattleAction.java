@@ -12,7 +12,12 @@ public class BattleAction {
 	public BattleAction(String title, int attack, int recover, int effect) {
 		Title = title;
 		AttackVal = attack;
-		RecoverVal = recover;
+		if(attack == 0) {  //we won't allow both attack and recover in same action
+			RecoverVal = recover;
+		}
+		else {
+			RecoverVal = 0; //so if both parameters aren't zero, we default to accept the attack value
+		}
 		Effectiveness = effect;
 	}
 	

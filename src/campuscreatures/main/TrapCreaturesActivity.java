@@ -48,29 +48,13 @@ public class TrapCreaturesActivity extends Activity {
 	
 	public void goToBattle(View view) {
 		Intent i = new Intent(this, BattleActivity.class);
-		i.putExtra("isSinglePlayer", isSinglePlayer);
+		//i.putExtra("isSinglePlayer", isSinglePlayer);
 		startActivity(i);
 	}
 	
 	public void goToDBTesting(View view){
 		Intent i = new Intent(this, DatabaseActivity.class);
 		startActivity(i);
-	}
-	
-	public void radioButtonClicked(View view) {
-		boolean checked = ((RadioButton) view).isChecked();
-	    
-	    // Check which radio button was clicked
-	    switch(view.getId()) {
-	        case R.id.radioSinglePlayer:
-	           if (checked)
-	                this.isSinglePlayer = true;
-	            break;
-	        case R.id.radioTwoPlayer:
-	           if (checked)
-	                this.isSinglePlayer = false;
-	            break;
-	    }
 	}
 
 }

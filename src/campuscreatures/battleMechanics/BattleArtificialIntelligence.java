@@ -20,16 +20,39 @@ public class BattleArtificialIntelligence {
 	}
 	
 	/*
-	 * For now, calculateNextMove() will just randomly choose a move from the arrayList of moves
+	 * choose strongest attack until Health is under 3 points
 	 */
 	public void calculateNextMove() {
-		int numMoves = AICreature.getBattleActions().size();
-		if(numMoves == 0) {
-			return; //each creature should have at least one move;
+		int chooseIndex;
+		if(AICreature.getCurrentHealth() < 3) {
+			chooseIndex = findBestHeal();
 		}
-		Random random = new Random();
-		int randomNumber = random.nextInt(numMoves-1);
-		AICreature.chooseBattleAction(randomNumber);
+		else {
+			chooseIndex = findStrongestMove();
+		}
+		AICreature.chooseBattleAction(chooseIndex);
+	}
+	
+	private int findStrongestMove() {
+		int sizeOfBattleActions = AICreature.getBattleActions().size();
+		int strongestIndex = 0;
+		for(int i=1; i<sizeOfBattleActions; i++) {
+			if(AICreature.getBattleActions().get(i).getAttackVal() > AICreature.getBattleActions().get(strongestIndex).getAttackVal()) {
+				strongestIndex = i;
+			}
+		}
+		return strongestIndex;
+	}
+	
+	private int findBestHeal() {
+		int sizeOfBattleActions = AICreature.getBattleActions().size();
+		int bestIndex = 0;
+		for(int i=1; i<sizeOfBattleActions; i++) {
+			if(AICreature.getBattleActions().get(i).getRecoverVal() > AICreature.getBattleActions().get(bestIndex).getRecoverVal()) {
+				bestIndex = i;
+			}
+		}
+		return bestIndex;
 	}
 	
 }
