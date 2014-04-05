@@ -61,6 +61,7 @@
             android:name="campuscreatures.main.CreaturesStatsActivity"
             android:label="@string/title_activity_creatures_stats" >
         </activity>
+        <service android:enabled="true" android:name="campuscreatures.location.LocationService" />
     </application>
 
 </manifest>
