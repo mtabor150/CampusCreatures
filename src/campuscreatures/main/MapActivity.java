@@ -1,50 +1,47 @@
 package campuscreatures.main;
 
-import campuscreatures.location.*;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /*
- * MapActivity class: finds a user's location using latitude and longitude points. 
- * 
- * 
+ * MapActivity class: for testing display user's location using latitude and longitude 
  */
 
 public class MapActivity extends Activity {
 	
-	Intent locationIntent = null;
-	LocationService location = null;
+	ListView locationList;
+	ArrayAdapter<String> locationArray; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-		locationIntent = new Intent(this, LocationService.class);
-		startService(locationIntent);
-		location = new LocationService(this);
+		
+		locationList = (ListView) findViewById(R.id.locationList);
+		locationArray = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, 0);
+		locationList.setAdapter(locationArray);
+
 	}
 	
 	@Override
 	public void onStart(){
 		super.onStart();
-		startService(locationIntent);
 	}
 	
 	@Override
 	public void onPause(){
 		super.onPause();
-		stopService(locationIntent);
 	}
 	
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		stopService(locationIntent);
 	}
 	
 	@Override
@@ -55,12 +52,9 @@ public class MapActivity extends Activity {
 	}
 	
 	public void displayGPS(View view){
-		//mlocListener.getLocation();
-		
-		TextView textView1 = (TextView) findViewById(R.id.textView1);
-	    textView1.setText("latitude " + location.getLatitude());
-	    
-	    TextView textView2 = (TextView) findViewById(R.id.textView2);
-	    textView2.setText("longitude " + location.getLongitude());
+		locationArray.clear();
+		locationArray.add("latitude " + MainActivity.location.getLatitude());
+		locationArray.add("longitude " + MainActivity.location.getLongitude());
+	
 	}
 } 
