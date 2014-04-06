@@ -14,5 +14,6 @@
     <string name="title_activity_database">DatabaseActivity</string>
     <string name="title_activity_creature_stats">CreatureStatsActivity</string>
     <string name="title_activity_creatures_stats">CreaturesStatsActivity</string>
+    <string name="title_activity_creature_entry">CreatureEntryActivity</string>
 
 </resources>
