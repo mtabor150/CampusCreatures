@@ -229,7 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return creature;
 	}
 		
-	//getting all creatures
+	//getting all creatures and all their attribute values
 	public List<Creatures> getAllCreatures(){
 		List<Creatures> creaturesList = new LinkedList<Creatures>();
 		//List<Creatures> creaturesList = new ArrayList<Creatures>();
@@ -250,7 +250,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				//Creatures creature = new Creatures();
 				creature = new Creatures();
 				creature.setId(cursor.getInt(0));
+				Log.d(COLUMN_ID, String.valueOf(creature.getId()));
 				creature.setName(cursor.getString(1));
+				Log.d(COLUMN_NAME, creature.getName());
 				creature.setRegion(cursor.getString(2));
 				creature.setDistrict(cursor.getString(3));
 				creature.setType(cursor.getString(4));
@@ -268,7 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			} while (cursor.moveToNext());
 		}
 		
-		Log.d("getAllCreatures()", creaturesList.toString());
+		//Log.d("Logging getAllCreatures()", creaturesList.toString());
 		
 		//return creatures list
 		return creaturesList;	
@@ -280,8 +282,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		List<Creatures> regionCreatures = new ArrayList<Creatures>();
 		String selectQuery = "SELECT * FROM " + TABLE_CREATURES + " WHERE "
 		            + COLUMN_REGION + " = " + region;
-		Log.e(LOG, selectQuery);
-		
 		SQLiteDatabase database = this.getReadableDatabase();
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		
@@ -306,6 +306,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				regionCreatures.add(creature);
 			} while (cursor.moveToNext());
 		}
+		Log.d("Logging getAllCreaturesByRegion()", regionCreatures.toString());
 		return regionCreatures;
 	}
 	
