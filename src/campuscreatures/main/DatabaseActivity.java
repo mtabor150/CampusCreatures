@@ -43,6 +43,7 @@ public class DatabaseActivity extends Activity {
 		//get all Creatures
 		database.getAllCreatures();
 		database.getCreaturesCount();
+		//database.getAllCreaturesByRegion("Ritter Hall");
 		database.close();
 		
 	}

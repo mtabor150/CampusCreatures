@@ -250,9 +250,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				//Creatures creature = new Creatures();
 				creature = new Creatures();
 				creature.setId(cursor.getInt(0));
-				Log.d(COLUMN_ID, String.valueOf(creature.getId()));
 				creature.setName(cursor.getString(1));
-				Log.d(COLUMN_NAME, creature.getName());
 				creature.setRegion(cursor.getString(2));
 				creature.setDistrict(cursor.getString(3));
 				creature.setType(cursor.getString(4));
@@ -264,13 +262,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				creature.setMovesPerTurn(cursor.getInt(10));
 				creature.setExperience(cursor.getInt(11));
 				creature.setLevel(cursor.getInt(12));
-
 				//Add creature to creatures
 				creaturesList.add(creature);
+				Log.d("ID and NAME", String.valueOf(creature.getId()) + " " + creature.getName());
 			} while (cursor.moveToNext());
 		}
 		
-		//Log.d("Logging getAllCreatures()", creaturesList.toString());
+		//Log.d("getAllCreatures()", creaturesList.toString());
 		
 		//return creatures list
 		return creaturesList;	
