@@ -80,7 +80,8 @@ public class BattleCreature {
 		speed = newSpeed;
 	}
 	
-	public void adjustHealth(int val){
+	public int adjustHealth(int val){
+		int oldHealth = CurrentHealth;
 		CurrentHealth = CurrentHealth + val;
 		//make sure never to make CurrentHealth greater than max health
 		if(CurrentHealth > MaxHealth) {
@@ -90,6 +91,7 @@ public class BattleCreature {
 		else if(CurrentHealth<0) {
 			CurrentHealth = 0;
 		}
+		return CurrentHealth-oldHealth;
 	}
 	
 	public void resetHealth(){

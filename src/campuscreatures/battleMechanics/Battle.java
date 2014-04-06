@@ -1,14 +1,20 @@
 package campuscreatures.battleMechanics;
 
-public class Battle {
+import java.io.Serializable;
+import java.util.Random;
+
+public class Battle implements Serializable {
 
 	//two creatures
-	private BattleCreature playerCreature;
-	private BattleCreature oppCreature;
+	private transient BattleCreature playerCreature;
+	private transient BattleCreature oppCreature;
 	//round==0 will mean the battle is over
 	private int round;
 	private boolean isSinglePlayer;
-	private BattleArtificialIntelligence battleAI;
+	private transient BattleArtificialIntelligence battleAI;
+	private transient BattlePrompt battlePrompt;
+	private boolean playerChoseActionForRound;
+	private boolean opponentChoseActionForRound;
 	
 	//the only unknown attributes are playerCreature and oppCreature
 	public Battle(BattleCreature player, BattleCreature opp, Boolean isSinglePlayer) {
@@ -19,6 +25,9 @@ public class Battle {
 		if(isSinglePlayer) {
 			battleAI = new BattleArtificialIntelligence(0,this);
 		}
+		battlePrompt = new BattlePrompt(10);
+		playerChoseActionForRound = false;
+		opponentChoseActionForRound = false;
 	}
 	
 	//get the round
@@ -31,16 +40,33 @@ public class Battle {
 		return isSinglePlayer;
 	}
 	
-	//other methods
-	public void doBattleAction(BattleCreature creature, BattleAction battleAction) {
+	//doBattleAction should implement chance of hitting other creature as well
+	public void doBattleAction(BattleCreature thisCreature, BattleAction battleAction) {
 		//adjust creature health and opponent health. simple implementation.
-		if(creature == playerCreature) {
-			oppCreature.adjustHealth(-battleAction.getAttackVal());
-			playerCreature.adjustHealth(battleAction.getRecoverVal());
+		BattleCreature otherCreature; //other Creature is used to understand who the other creature is
+		if(thisCreature == playerCreature) {
+			otherCreature = oppCreature;
+			
 		}
 		else {
-			playerCreature.adjustHealth(-battleAction.getAttackVal());
-			oppCreature.adjustHealth(battleAction.getRecoverVal());
+			otherCreature = playerCreature;
+		}
+		
+		int damage = handleBattleAction(battleAction, true);
+		int regeneration = handleBattleAction(battleAction, false);
+		
+		damage = otherCreature.adjustHealth(damage);
+		regeneration = thisCreature.adjustHealth(regeneration);
+		
+		
+		if (damage != 0) {
+			battlePrompt.addIndexedMessage(thisCreature.getTitle() + " was able to inflict " + damage + " damage on " + otherCreature.getTitle());
+		}
+		else if (regeneration != 0) {
+			battlePrompt.addIndexedMessage(thisCreature.getTitle() + " was able to regenerate " + regeneration + " healthpoints");
+		}
+		else {
+			battlePrompt.addIndexedMessage(thisCreature.getTitle() + " was not able to effectively do anything");
 		}
 	}
 	
@@ -59,11 +85,9 @@ public class Battle {
 		if(round != 0) {
 			if(isSinglePlayer) { //if isSinglePlayer, make sure to automate a move
 				battleAI.calculateNextMove();
-				doBattleAction(oppCreature,oppCreature.getCurrentBattleAction());
+				battlePrompt.addIndexedMessage(oppCreature.getTitle() + " chose " + oppCreature.getCurrentBattleAction().getTitle());
 			}
-			else {
-				doBattleAction(oppCreature, oppCreature.getCurrentBattleAction());
-			}
+			doBattleAction(oppCreature, oppCreature.getCurrentBattleAction());
 			checkEndGame();
 		}	
 	}
@@ -76,22 +100,55 @@ public class Battle {
 	 * ****In the end, might need to add an element of randomization.
 	 */
 	public void implementRound() {
+		if (round == 0) { //end of game, so no more rounds to implement
+			return;
+		}
 		round++;
+		
+		/*
+		 * player opponent must choose a new action for each round
+		 */
+		if (playerChoseActionForRound == false) {
+			battlePrompt.addIndexedMessage(playerCreature.getTitle() + " must choose an action for this round");
+			return;
+		}
+		else if (opponentChoseActionForRound == false & !isSinglePlayer()) {
+			battlePrompt.addIndexedMessage(oppCreature.getTitle() + " must choose an action for this round");
+			return;
+		}
+		
+		
 		if(playerCreature.getSpeed() >= oppCreature.getSpeed()) {
+			battlePrompt.addIndexedMessage(playerCreature.getTitle() + " moved faster and acted first!");
 			playerAction();
+			if(round == 0) return; //end of battle
+			battlePrompt.addIndexedMessage(oppCreature.getTitle() + " moved second...");
 			oppAction();
+			
 		}
 		else {
+			battlePrompt.addIndexedMessage(oppCreature.getTitle() + " moved faster and acted first");
 			oppAction();
+			if(round == 0) return; //end of battle
+			battlePrompt.addIndexedMessage(playerCreature.getTitle() + " moved second...");
 			playerAction();
+			
 		}
+		playerChoseActionForRound = false;
+		opponentChoseActionForRound = false;
+		battlePrompt.addRoundHeader(round);
 	}
 	
 	
 	//check end game possibilities, if it is end of game, set round to 0
 	public void checkEndGame() {
-		if(playerCreature.getCurrentHealth() == 0 | oppCreature.getCurrentHealth() == 0) {
+		if(playerCreature.getCurrentHealth() == 0) {
 			round = 0;
+			battlePrompt.creatureWon(oppCreature);
+		}
+		else if(oppCreature.getCurrentHealth() == 0) {
+			round = 0;
+			battlePrompt.creatureWon(playerCreature);
 		}
 	}
 	
@@ -104,5 +161,48 @@ public class Battle {
 	
 	public BattleCreature getOpponentBattleCreature(){
 		return oppCreature;
+	}
+	
+
+	public String battlePromptAsString() {
+		return battlePrompt.battlePromptAsString();
+	}
+	
+	public void choosePlayerBattleAction(int i) {
+		if(round ==0) {
+			return;
+		}
+		playerChoseActionForRound = true;
+		playerCreature.chooseBattleAction(i);
+		battlePrompt.addIndexedMessage(playerCreature.getTitle() + " chose " + playerCreature.getCurrentBattleAction().getTitle());
+	}
+	
+	public void chooseOppBattleAction(int i) {
+		if(round ==0) {
+			return;
+		}
+		opponentChoseActionForRound = true;
+		oppCreature.chooseBattleAction(i);
+	}
+	
+	
+	/*
+	 * handleBattleAction will interpret how the value of a battleAction will affect the creatures
+	 * in the battle based on creature stats, types, and other considerations
+	 * For now, we are just going to return a [0,2] random modification range
+	 */
+	private int handleBattleAction(BattleAction battleAction, boolean isAttack){
+		int MinVal;
+		int MaxVal;
+		if(isAttack) {
+			MinVal = -2*battleAction.getAttackVal();
+			MaxVal = 0;
+		}
+		else {
+			MinVal = 0;
+			MaxVal = 2*battleAction.getRecoverVal();
+		}
+		
+		return MinVal + (int)(Math.random() * ((MaxVal - MinVal) + 1));
 	}
 }

@@ -25,12 +25,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
-/*
- * Note for major editing:
- * For restructuring the user interface:
- * *Add a timer or a button to implement the round after actions have been chosen.
- * *change the "messageTextView" at the bottom to aggregate messages.
- */
 @SuppressLint("NewApi")
 public class BattleActivity extends Activity {
 
@@ -38,8 +32,8 @@ public class BattleActivity extends Activity {
 	
 	//one battle, two creatures, one boolean to track the player's turn
 	private Battle currentBattle;
-	private BattleCreature player;
-	private BattleCreature opponent;
+	//private BattleCreature player;
+	//private BattleCreature opponent;
 
 	//three modifiable TextViews for player and opponent
 	//those for player:
@@ -67,22 +61,20 @@ public class BattleActivity extends Activity {
 		setContentView(R.layout.activity_battle);
 
 		/*
-		 * set up sample battle and set up the battle stats
+		 * set up sample battle if 
 		 */
-		setupSampleBattle();
+		currentBattle = (Battle) getIntent().getSerializableExtra("Battle");
+
+		if(currentBattle==null) {
+			setupSampleBattle();
+		}
+		
 		setupBattleStats();
 		
 		/*
 		 * set up scrollViews
 		 */
 		addBattleActionScrollViews();
-		
-		if (currentBattle.isSinglePlayer()) {
-			setMessage("it is a single player round");
-		}
-		else {
-			setMessage("it is a two player round");
-		}	
 	}
 
 	@Override
@@ -95,17 +87,123 @@ public class BattleActivity extends Activity {
 	//The only button should now be connected to this function
 	public void implementRound(View view) {
 		currentBattle.implementRound();
-		setHealth();
+		refreshStats();
+		refreshMessage();
 	}
 
 	//for the message textView at the bottom of the page, this function sets the value
-	private void setMessage(String message) {
-		messageTextView.setText(message);
+	private void refreshMessage() {
+		messageTextView.setText(currentBattle.battlePromptAsString());
 	}
 	
-	private void setHealth() {
+	//refreshes stats
+	private void refreshStats() {
+		BattleCreature player = currentBattle.getPlayerBattleCreature();
+		BattleCreature opponent = currentBattle.getOpponentBattleCreature();
 		playerHealth.setText("Health: " + player.getCurrentHealth());
+		playerLevel.setText("Level: " + player.getLevel());
+		playerXP.setText("Experience: " + player.getCreatureExperience());
+		
 		oppHealth.setText("Health: " + opponent.getCurrentHealth());
+		oppLevel.setText("Level: " + opponent.getLevel());
+		oppXP.setText("Experience: " + opponent.getCreatureExperience());		
+	}
+	
+	/*
+	 * This sets up the forms and their stats properly for the battle sample
+	 */
+	private void setupBattleStats() {
+		if(currentBattle == null) { //otherwise this function will crash
+			return;
+		}
+		
+		//create TableRows and set them equal to those in the activity_battle.xml file
+		TableRow playerTitleTR= (TableRow) this.findViewById(R.id.playerTitle);
+		TableRow playerHealthTR = (TableRow) this.findViewById(R.id.playerHealth);
+		TableRow playerLevelTR = (TableRow) this.findViewById(R.id.playerLevel);
+		TableRow playerXPTR = (TableRow) this.findViewById(R.id.playerExperience);
+		TableRow playerTurnTR = (TableRow) this.findViewById(R.id.playerTurn);
+
+		TableRow oppTitleTR = (TableRow) this.findViewById(R.id.oppTitle);
+		TableRow oppHealthTR = (TableRow) this.findViewById(R.id.oppHealth);
+		TableRow oppLevelTR = (TableRow) this.findViewById(R.id.oppLevel);
+		TableRow oppXPTR = (TableRow) this.findViewById(R.id.oppExperience);
+		TableRow oppTurnTR = (TableRow) this.findViewById(R.id.oppTurn);
+
+
+		//create player textViews to be added to tableRows
+		BattleCreature player = currentBattle.getPlayerBattleCreature();
+		playerTitle = new TextView(this);
+		playerHealth = new TextView(this);
+		playerLevel = new TextView(this);
+		playerXP = new TextView(this);
+		playerTitle.setText(player.getTitle());
+		playerHealth.setText("Health: " + player.getCurrentHealth());
+		playerLevel.setText("Level: " + player.getLevel());
+		playerXP.setText("Experience: " + player.getCreatureExperience());
+		playerTitleTR.addView(playerTitle);
+		playerHealthTR.addView(playerHealth);
+		playerLevelTR.addView(playerLevel);
+		playerXPTR.addView(playerXP);
+
+		//create opponent TextViews to be added to TableRows
+		BattleCreature opponent = currentBattle.getOpponentBattleCreature();
+		oppTitle = new TextView(this);
+		oppHealth = new TextView(this);
+		oppLevel = new TextView(this);
+		oppXP = new TextView(this);
+		oppTitle.setText(opponent.getTitle());
+		oppHealth.setText("Health: " + opponent.getCurrentHealth());
+		oppLevel.setText("Level: " + opponent.getLevel());
+		oppXP.setText("Experience: " + opponent.getCreatureExperience());
+		oppTitleTR.addView(oppTitle);
+		oppHealthTR.addView(oppHealth);
+		oppLevelTR.addView(oppLevel);
+		oppXPTR.addView(oppXP);
+
+		//create message TextView
+		messageTextView = (TextView) this.findViewById(R.id.battleMessage);
+		messageTextView.setText("Fight!");
+	}
+	
+	private void addBattleActionScrollViews() {
+		//instantiate battle action scrollviews
+		final BattleCreature player = currentBattle.getPlayerBattleCreature();
+		playerBattleActionsListView = (ListView) this.findViewById(R.id.listview1);
+		String[] playerBattleActions = new String[player.getBattleActions().size()];
+		for(int i=0; i<player.getBattleActions().size(); i++) {
+			playerBattleActions[i] = player.getBattleActions().get(i).getTitle();
+		}
+		//new ArrayAdapter<String>();
+		playerBattleActionsListView.setAdapter(new ArrayAdapter<String>( this, R.layout.battle_actions_list , playerBattleActions));
+		playerBattleActionsListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				currentBattle.choosePlayerBattleAction((int)id);
+			    //player.chooseBattleAction((int)id);
+			    //currentBattle.addBattlePromptMessage("player chose " + player.getCurrentBattleAction().getTitle());
+			    refreshMessage();
+			}
+		});
+		
+		if(!currentBattle.isSinglePlayer()){
+			final BattleCreature opponent = currentBattle.getOpponentBattleCreature();
+			opponentBattleActionsListView = (ListView) this.findViewById(R.id.listview2);
+			String[] oppBattleActions = new String[opponent.getBattleActions().size()];
+			for(int i=0; i<player.getBattleActions().size(); i++) {
+				oppBattleActions[i] = opponent.getBattleActions().get(i).getTitle();
+			}
+			opponentBattleActionsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.battle_actions_list, oppBattleActions));
+			opponentBattleActionsListView.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					currentBattle.chooseOppBattleAction((int)id);
+					//opponent.chooseBattleAction((int)id);
+					//currentBattle.addBattlePromptMessage("opponent chose " + opponent.getCurrentBattleAction().getTitle());
+					refreshMessage();
+				}
+			});
+		}
 	}
 	
 	/*
@@ -132,106 +230,12 @@ public class BattleActivity extends Activity {
 		simpleActions2.add(intimidate);
 		
 		//create sample creatures
-		player = new BattleCreature("Phil",1,4,10,10,0,simpleActions1);
-		opponent = new BattleCreature("Mark",1,3,10,10,0,simpleActions2);
+		BattleCreature player = new BattleCreature("Phil",1,4,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature("Mark",1,3,10,10,0,simpleActions2);
 		
 		//create the battle for this activity
-		boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
-		currentBattle = new Battle(player,opponent, isSinglePlayer);
-	}
-	
-	
-	/*
-	 * This sets up the forms and their stats properly for the battle sample
-	 */
-	private void setupBattleStats() {
-		if(opponent == null | player == null) { //otherwise this function will crash
-			return;
-		}
-		
-		//create TableRows and set them equal to those in the activity_battle.xml file
-		TableRow playerTitleTR= (TableRow) this.findViewById(R.id.playerTitle);
-		TableRow playerHealthTR = (TableRow) this.findViewById(R.id.playerHealth);
-		TableRow playerLevelTR = (TableRow) this.findViewById(R.id.playerLevel);
-		TableRow playerXPTR = (TableRow) this.findViewById(R.id.playerExperience);
-		TableRow playerTurnTR = (TableRow) this.findViewById(R.id.playerTurn);
-
-		TableRow oppTitleTR = (TableRow) this.findViewById(R.id.oppTitle);
-		TableRow oppHealthTR = (TableRow) this.findViewById(R.id.oppHealth);
-		TableRow oppLevelTR = (TableRow) this.findViewById(R.id.oppLevel);
-		TableRow oppXPTR = (TableRow) this.findViewById(R.id.oppExperience);
-		TableRow oppTurnTR = (TableRow) this.findViewById(R.id.oppTurn);
-
-
-		//create player textViews to be added to tableRows
-		playerTitle = new TextView(this);
-		playerHealth = new TextView(this);
-		playerLevel = new TextView(this);
-		playerXP = new TextView(this);
-		playerTitle.setText(player.getTitle());
-		playerHealth.setText("Health: " + player.getCurrentHealth());
-		playerLevel.setText("Level: " + player.getLevel());
-		playerXP.setText("Experience: " + player.getCreatureExperience());
-		playerTitleTR.addView(playerTitle);
-		playerHealthTR.addView(playerHealth);
-		playerLevelTR.addView(playerLevel);
-		playerXPTR.addView(playerXP);
-
-		//create opponent TextViews to be added to TableRows
-		oppTitle = new TextView(this);
-		oppHealth = new TextView(this);
-		oppLevel = new TextView(this);
-		oppXP = new TextView(this);
-		oppTitle.setText(opponent.getTitle());
-		oppHealth.setText("Health: " + opponent.getCurrentHealth());
-		oppLevel.setText("Level: " + opponent.getLevel());
-		oppXP.setText("Experience: " + opponent.getCreatureExperience());
-		oppTitleTR.addView(oppTitle);
-		oppHealthTR.addView(oppHealth);
-		oppLevelTR.addView(oppLevel);
-		oppXPTR.addView(oppXP);
-
-		//create message TextView
-		messageTextView = (TextView) this.findViewById(R.id.battleMessage);
-		messageTextView.setText("Fight!");
-	}
-	
-	private void addBattleActionScrollViews() {
-		//instantiate battle action scrollviews
-		playerBattleActionsListView = (ListView) this.findViewById(R.id.listview1);
-		opponentBattleActionsListView = (ListView) this.findViewById(R.id.listview2);
-		
-		//make a scroll view example...
-		String[] playerBattleActions = new String[player.getBattleActions().size()];
-		for(int i=0; i<player.getBattleActions().size(); i++) {
-			playerBattleActions[i] = player.getBattleActions().get(i).getTitle();
-		}
-		String[] oppBattleActions = new String[opponent.getBattleActions().size()];
-		for(int i=0; i<player.getBattleActions().size(); i++) {
-			oppBattleActions[i] = opponent.getBattleActions().get(i).getTitle();
-		}
-		
-		//new ArrayAdapter<String>();
-		playerBattleActionsListView.setAdapter(new ArrayAdapter<String>( this, R.layout.battle_actions_list , playerBattleActions));
-		opponentBattleActionsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.battle_actions_list, oppBattleActions));
-		//ListView listView = getListView();
-		//playerBattleActionsListView.setTextFilterEnabled(true);
-		
-		playerBattleActionsListView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-			    player.chooseBattleAction((int)id);
-			    setMessage("player chose " + player.getCurrentBattleAction().getTitle());
-			}
-		});
-		
-		opponentBattleActionsListView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				opponent.chooseBattleAction((int)id);
-				setMessage("opponent chose " + opponent.getCurrentBattleAction().getTitle());
-			}
-		});
+		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
+		currentBattle = new Battle(player,opponent, true);
 	}
 
 }
