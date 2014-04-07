@@ -6,23 +6,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MapActivity" >
+    tools:context="campuscreatures.main.CreatureEntryActivity$PlaceholderFragment" >
 
-    <ListView
-        android:id="@+id/locationList"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:text="" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="displayGPS"
-        android:text="Display GPS location" />
+        android:text="@string/hello_world" />
 
 </RelativeLayout>

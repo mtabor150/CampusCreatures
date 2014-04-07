@@ -145,12 +145,21 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/battleMessage"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="TextView" />
+       <ScrollView
+           android:id="@+id/scrollView1"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1" >
+
+                <TextView
+		            android:id="@+id/battleMessage"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            
+		            android:text="TextView" />
+       </ScrollView>
+
+        
 
     </LinearLayout>
 

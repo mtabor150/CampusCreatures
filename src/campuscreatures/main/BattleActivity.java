@@ -6,6 +6,7 @@ import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
 import android.os.Bundle;
+import android.os.Handler;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.Menu;
@@ -63,18 +64,22 @@ public class BattleActivity extends Activity {
 		/*
 		 * set up sample battle if 
 		 */
+		System.out.println("...onCreate: A");
 		currentBattle = (Battle) getIntent().getSerializableExtra("Battle");
-
+		System.out.println("got here A");
 		if(currentBattle==null) {
+			System.out.println("got here C");
 			setupSampleBattle();
 		}
-		
+		System.out.println("...onCreate: B");
+		System.out.println(currentBattle);
 		setupBattleStats();
-		
+		System.out.println("determination");
 		/*
 		 * set up scrollViews
 		 */
 		addBattleActionScrollViews();
+		System.out.println("got here z");
 	}
 
 	@Override
@@ -86,14 +91,39 @@ public class BattleActivity extends Activity {
 	
 	//The only button should now be connected to this function
 	public void implementRound(View view) {
+		System.out.println("Got here AA");
 		currentBattle.implementRound();
+		System.out.println("Got here AB");
 		refreshStats();
+		System.out.println("Got ehre AC");
 		refreshMessage();
+		System.out.println("Got here ZZ");
+		ScrollView scroll = (ScrollView) findViewById(R.id.scrollView1);
+		//scroll.scrollTo(0, messageTextView.getHeight()+20);
 	}
 
 	//for the message textView at the bottom of the page, this function sets the value
 	private void refreshMessage() {
 		messageTextView.setText(currentBattle.battlePromptAsString());
+		
+		/*
+		 * the following code is used to allow the UIthread to finish, and thus
+		 * update messageTextView to the proper size before implementing the Handler, h.
+		 * If this is not done, the ScrollView scroll will scroll will scroll down to the bottom
+		 * of the last version of messageTextView. This is because the UIThread has not
+		 * updated the views until the activity thread finishes. This handler fixes the problem.
+		 */
+		 Handler h = new Handler();
+
+		 h.postDelayed(new Runnable() {
+
+		     @Override
+		     public void run() {
+		         ScrollView scroll = (ScrollView) findViewById(R.id.scrollView1);
+		         scroll.fullScroll(View.FOCUS_DOWN);
+		     }
+		 }, 10);
+		
 	}
 	
 	//refreshes stats
@@ -106,7 +136,7 @@ public class BattleActivity extends Activity {
 		
 		oppHealth.setText("Health: " + opponent.getCurrentHealth());
 		oppLevel.setText("Level: " + opponent.getLevel());
-		oppXP.setText("Experience: " + opponent.getCreatureExperience());		
+		oppXP.setText("Experience: " + opponent.getCreatureExperience());	
 	}
 	
 	/*
@@ -116,28 +146,33 @@ public class BattleActivity extends Activity {
 		if(currentBattle == null) { //otherwise this function will crash
 			return;
 		}
-		
+		System.out.println("Setup A");
 		//create TableRows and set them equal to those in the activity_battle.xml file
 		TableRow playerTitleTR= (TableRow) this.findViewById(R.id.playerTitle);
 		TableRow playerHealthTR = (TableRow) this.findViewById(R.id.playerHealth);
 		TableRow playerLevelTR = (TableRow) this.findViewById(R.id.playerLevel);
 		TableRow playerXPTR = (TableRow) this.findViewById(R.id.playerExperience);
 		TableRow playerTurnTR = (TableRow) this.findViewById(R.id.playerTurn);
-
+		
+		System.out.println("Setup B");
 		TableRow oppTitleTR = (TableRow) this.findViewById(R.id.oppTitle);
 		TableRow oppHealthTR = (TableRow) this.findViewById(R.id.oppHealth);
 		TableRow oppLevelTR = (TableRow) this.findViewById(R.id.oppLevel);
 		TableRow oppXPTR = (TableRow) this.findViewById(R.id.oppExperience);
 		TableRow oppTurnTR = (TableRow) this.findViewById(R.id.oppTurn);
 
-
+		System.out.println("Setup C");
 		//create player textViews to be added to tableRows
 		BattleCreature player = currentBattle.getPlayerBattleCreature();
+		System.out.println(player);
+		System.out.println("Setup C.1");
 		playerTitle = new TextView(this);
 		playerHealth = new TextView(this);
+		System.out.println("Setup C.1.2");
 		playerLevel = new TextView(this);
 		playerXP = new TextView(this);
 		playerTitle.setText(player.getTitle());
+		System.out.println("Setup C.2");
 		playerHealth.setText("Health: " + player.getCurrentHealth());
 		playerLevel.setText("Level: " + player.getLevel());
 		playerXP.setText("Experience: " + player.getCreatureExperience());
@@ -146,6 +181,7 @@ public class BattleActivity extends Activity {
 		playerLevelTR.addView(playerLevel);
 		playerXPTR.addView(playerXP);
 
+		System.out.println("Setup D");
 		//create opponent TextViews to be added to TableRows
 		BattleCreature opponent = currentBattle.getOpponentBattleCreature();
 		oppTitle = new TextView(this);
@@ -161,9 +197,16 @@ public class BattleActivity extends Activity {
 		oppLevelTR.addView(oppLevel);
 		oppXPTR.addView(oppXP);
 
+		System.out.println("Setup E");
 		//create message TextView
 		messageTextView = (TextView) this.findViewById(R.id.battleMessage);
-		messageTextView.setText("Fight!");
+		if(!currentBattle.isStarted()) {
+			messageTextView.setText("Fight!");
+		}
+		else {
+			refreshMessage();
+		}
+		System.out.println("Setup F");
 	}
 	
 	private void addBattleActionScrollViews() {
@@ -217,6 +260,7 @@ public class BattleActivity extends Activity {
 		BattleAction push = new BattleAction("push",2,0,5);
 		BattleAction intimidate = new BattleAction("intimidate",1,0,10);
 		
+		System.out.println("got here D");
 		ArrayList<BattleAction> simpleActions1 = new ArrayList();
 		simpleActions1.add(kick);
 		simpleActions1.add(heal);
@@ -229,13 +273,15 @@ public class BattleActivity extends Activity {
 		simpleActions2.add(burn);
 		simpleActions2.add(intimidate);
 		
+		System.out.println("got here E");
 		//create sample creatures
 		BattleCreature player = new BattleCreature("Phil",1,4,10,10,0,simpleActions1);
 		BattleCreature opponent = new BattleCreature("Mark",1,3,10,10,0,simpleActions2);
-		
+		System.out.println("got here F");
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);
+		System.out.println("got here G");
 	}
 
 }

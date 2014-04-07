@@ -64,13 +64,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
+                    
+                    <TextView android:id="@+id/huntText"
+              			android:layout_width="wrap_content"
+              			android:layout_height="wrap_content"
+             			android:text="Time to Hunt" />
+                    
+                    <Button android:id="@+id/huntButton"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:onClick="goToBattle"
+           	 			android:text="D-D-D-D-Duel!" />
+                    
                 </LinearLayout>
+                
+
 
                 <LinearLayout
                     android:id="@+id/Explore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
+                    
+                    <TextView android:id="@+id/exploreText"
+              			android:layout_width="wrap_content"
+              			android:layout_height="wrap_content"
+             			android:text="Lets Explore!" />
+                    
+                    <Button android:id="@+id/exploreButton"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:onClick="goToBattle"
+           	 			android:text="Explore the Area." />
+                    
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
