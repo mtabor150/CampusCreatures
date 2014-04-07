@@ -12,7 +12,7 @@ public class MainActivity extends FragmentActivity {
 
 	private ViewPager viewPager;
 	private MainPagerAdapter mAdapter;
-	
+
 	private Intent locationIntent = null;
 	public static LocationService location = null;
 
@@ -43,13 +43,13 @@ public class MainActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 			}
 		});
-		
+
 		//initialize location service
 		locationIntent = new Intent(this, LocationService.class);
 		startService(locationIntent);
 		location = new LocationService(this);
 	}
-	
+
 	protected void onDestroy(){
 		stopService(locationIntent);
 		super.onDestroy();

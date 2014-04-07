@@ -308,6 +308,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return regionCreatures;
 	}
 	
+	//UPDATE WITH NEW TABLE CRITERIA
+	//Used by Recon to find list of creatures in area
+	public List<Creatures> getLocalCreatures(String region, String district){
+		List<Creatures> creaturesList = new LinkedList<Creatures>();
+		
+		//1. build the query
+		String selectQuery = " SELECT * FROM " + TABLE_CREATURES + " WHERE " + COLUMN_REGION + " = " + region + " AND " + COLUMN_DISTRICT + " = " + district;
+		
+		//2. get reference to writeable Database
+		SQLiteDatabase database = this.getWritableDatabase();
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		
+		//3. go over each row, build creature and add it to the list
+		Creatures creature = null;
+		if (cursor.moveToFirst()) {
+			do {
+				creature = new Creatures();
+				creature.setId(cursor.getInt(0));
+				creature.setName(cursor.getString(1));
+				creature.setRegion(cursor.getString(2));
+				creature.setDistrict(cursor.getString(3));
+				creature.setType(cursor.getString(4));
+				creature.setHealth(cursor.getInt(5));
+				creature.setMagic(cursor.getInt(6));
+				creature.setAttack(cursor.getInt(7));
+				creature.setDefense(cursor.getInt(8));
+				creature.setSpeed(cursor.getInt(9));
+				creature.setMovesPerTurn(cursor.getInt(10));
+				creature.setExperience(cursor.getInt(11));
+				creature.setLevel(cursor.getInt(12));
+
+				//Add creature to creatures
+				creaturesList.add(creature);
+			} while (cursor.moveToNext());
+		}
+		
+		Log.d("getAllCreatures()", creaturesList.toString());
+		
+		//return creatures list
+		return creaturesList;	
+	}
+	
 	//get creatures count
 	public int getCreaturesCount(){
 		String countQuery = " SELECT * FROM " + TABLE_CREATURES;
