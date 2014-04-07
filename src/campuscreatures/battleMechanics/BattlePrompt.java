@@ -1,8 +1,9 @@
 package campuscreatures.battleMechanics;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BattlePrompt {
+public class BattlePrompt implements Serializable {
 	
 	private ArrayList<String> messages;
 	private int maxSize;

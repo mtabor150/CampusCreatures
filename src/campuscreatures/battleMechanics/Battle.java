@@ -3,16 +3,20 @@ package campuscreatures.battleMechanics;
 import java.io.Serializable;
 import java.util.Random;
 
+import campuscreatures.main.BattleActivity;
+import android.content.Intent;
+import android.view.View;
+
 public class Battle implements Serializable {
 
 	//two creatures
-	private transient BattleCreature playerCreature;
-	private transient BattleCreature oppCreature;
+	private BattleCreature playerCreature;
+	private BattleCreature oppCreature;
 	//round==0 will mean the battle is over
 	private int round;
 	private boolean isSinglePlayer;
-	private transient BattleArtificialIntelligence battleAI;
-	private transient BattlePrompt battlePrompt;
+	private BattleArtificialIntelligence battleAI;
+	private BattlePrompt battlePrompt;
 	private boolean playerChoseActionForRound;
 	private boolean opponentChoseActionForRound;
 	
@@ -52,8 +56,8 @@ public class Battle implements Serializable {
 			otherCreature = playerCreature;
 		}
 		
-		int damage = handleBattleAction(battleAction, true);
-		int regeneration = handleBattleAction(battleAction, false);
+		int damage = handleBattleAction(thisCreature, battleAction, true);
+		int regeneration = handleBattleAction(thisCreature, battleAction, false);
 		
 		damage = otherCreature.adjustHealth(damage);
 		regeneration = thisCreature.adjustHealth(regeneration);
@@ -75,21 +79,27 @@ public class Battle implements Serializable {
 	 */
 	public void playerAction() {
 		if(round != 0) {
+			System.out.println("Got to playerAction()");
 			doBattleAction(playerCreature, playerCreature.getCurrentBattleAction());
 			checkEndGame();
+			System.out.println("Got out of playerAction()");
 		}
 		
 	}
 	
 	public void oppAction() {
+		System.out.println("Got to oppAction()");
 		if(round != 0) {
 			if(isSinglePlayer) { //if isSinglePlayer, make sure to automate a move
+				System.out.println("Got to calculateNextMove()");
 				battleAI.calculateNextMove();
+				System.out.println("Got out of calculateNextMove()");
 				battlePrompt.addIndexedMessage(oppCreature.getTitle() + " chose " + oppCreature.getCurrentBattleAction().getTitle());
 			}
 			doBattleAction(oppCreature, oppCreature.getCurrentBattleAction());
 			checkEndGame();
-		}	
+		}
+		System.out.println("Got out of oppAction()");
 	}
 	
 	/*
@@ -142,13 +152,22 @@ public class Battle implements Serializable {
 	
 	//check end game possibilities, if it is end of game, set round to 0
 	public void checkEndGame() {
+		BattleCreature winningCreature = null;
+		BattleCreature losingCreature = null;
 		if(playerCreature.getCurrentHealth() == 0) {
 			round = 0;
 			battlePrompt.creatureWon(oppCreature);
+			winningCreature = oppCreature;
+			losingCreature = playerCreature;
 		}
 		else if(oppCreature.getCurrentHealth() == 0) {
 			round = 0;
 			battlePrompt.creatureWon(playerCreature);
+			winningCreature = playerCreature;
+			losingCreature = oppCreature;
+		}
+		if(round == 0) {
+			modifyExperienceAndLevel(winningCreature, losingCreature);
 		}
 	}
 	
@@ -169,7 +188,7 @@ public class Battle implements Serializable {
 	}
 	
 	public void choosePlayerBattleAction(int i) {
-		if(round ==0) {
+		if(round ==0 | (playerChoseActionForRound & (playerCreature.getCurrentBattleAction() == playerCreature.getBattleActions().get(i)))) {
 			return;
 		}
 		playerChoseActionForRound = true;
@@ -191,18 +210,41 @@ public class Battle implements Serializable {
 	 * in the battle based on creature stats, types, and other considerations
 	 * For now, we are just going to return a [0,2] random modification range
 	 */
-	private int handleBattleAction(BattleAction battleAction, boolean isAttack){
+	private int handleBattleAction(BattleCreature thisCreature, BattleAction battleAction, boolean isAttack){
 		int MinVal;
 		int MaxVal;
+		int actionUseCount = thisCreature.getCurrentBattleActionUseCount();
 		if(isAttack) {
-			MinVal = -2*battleAction.getAttackVal();
+			MinVal = (-2)*battleAction.getModifiedAttackValue(thisCreature.getCurrentBattleActionUseCount());
 			MaxVal = 0;
 		}
 		else {
 			MinVal = 0;
-			MaxVal = 2*battleAction.getRecoverVal();
+			MaxVal = 2*battleAction.getModifiedRecoverValue(thisCreature.getCurrentBattleActionUseCount())/actionUseCount;
 		}
+		System.out.println("MinVal = " + MinVal);
+		System.out.println("MaxVal = " + MaxVal);
 		
 		return MinVal + (int)(Math.random() * ((MaxVal - MinVal) + 1));
+	}
+	
+	/*
+	 * inccreases creature experience and level accordingly
+	 */
+	private void modifyExperienceAndLevel(BattleCreature winner, BattleCreature loser) {
+		int winExpIncrease = loser.getLevel()*10;
+		winner.increaseCreatureExperience(winExpIncrease);
+		battlePrompt.addMessage(winner.getTitle() + "'s experience increased by " + winExpIncrease);
+		int loseExpIncrease = winner.getLevel()*3;
+		loser.increaseCreatureExperience(winner.getLevel()*3);
+		battlePrompt.addMessage(loser.getTitle() + "'s experience increased by " + loseExpIncrease);
+		while(winner.getCreatureExperience() > winner.getLevel()*100) {
+			winner.incrementLevel();
+			battlePrompt.addMessage(winner.getTitle() + " increased to level " + winner.getLevel());
+		}
+		while(loser.getCreatureExperience() > winner.getLevel()*100) {
+			loser.incrementLevel();
+			battlePrompt.addMessage(loser.getTitle() + " increased to level " + loser.getLevel());
+		}
 	}
 }
