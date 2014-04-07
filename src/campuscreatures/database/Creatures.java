@@ -3,14 +3,13 @@ package campuscreatures.database;
 public class Creatures {
 	
 	/*
-	 * 
 	 * Private variables:
 	 *  - 13 total attributes per creature
 	 *  - 4 string attribute values including name
 	 *  - 9 integer attribute values, including id
 	 */
 	
-	int _id;			//primary key of the database
+	int _id;		//primary key of the database
 	String _name;
 	
 	String _region;
@@ -30,10 +29,9 @@ public class Creatures {
 	public Creatures(){}
 	
 	//constructor
-	public Creatures(int id, String name, String region, String district, 
-			String type, int health, int magic, int attack, int defense, 
+	public Creatures(String name, String region, String district, String type,
+			int health, int magic, int attack, int defense, 
 			int speed, int moves_per_turn, int exp, int level) {
-		this._id = id;
 		this._name = name;
 		this._region = region;
 		this._district = district;
@@ -49,9 +47,10 @@ public class Creatures {
 	}
 	
 	//constructor
-	public Creatures(String name, String region, String district, String type,
-			int health, int magic, int attack, int defense, 
+	public Creatures(int id, String name, String region, String district, 
+			String type, int health, int magic, int attack, int defense, 
 			int speed, int moves_per_turn, int exp, int level) {
+		this._id = id;
 		this._name = name;
 		this._region = region;
 		this._district = district;
@@ -83,11 +82,7 @@ public class Creatures {
 				", level = " + _level;	
 	}
 	
-	/**
-	 * 
-	 * All the attribute functions: set and get values
-	 * 
-	 */
+	/*  All the attribute functions: set and get values */
 	
 	//ID attribute
 	public int getId() {
@@ -193,8 +188,4 @@ public class Creatures {
 		this._level = level;
 	}
 	
-	/*
-	 * ++++++++++++++++++++++++++++++++++++++++ Done
-	 */
-
 }
