@@ -6,6 +6,7 @@ import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
 import android.os.Bundle;
+import android.os.Handler;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.Menu;
@@ -97,11 +98,32 @@ public class BattleActivity extends Activity {
 		System.out.println("Got ehre AC");
 		refreshMessage();
 		System.out.println("Got here ZZ");
+		ScrollView scroll = (ScrollView) findViewById(R.id.scrollView1);
+		//scroll.scrollTo(0, messageTextView.getHeight()+20);
 	}
 
 	//for the message textView at the bottom of the page, this function sets the value
 	private void refreshMessage() {
 		messageTextView.setText(currentBattle.battlePromptAsString());
+		
+		/*
+		 * the following code is used to allow the UIthread to finish, and thus
+		 * update messageTextView to the proper size before implementing the Handler, h.
+		 * If this is not done, the ScrollView scroll will scroll will scroll down to the bottom
+		 * of the last version of messageTextView. This is because the UIThread has not
+		 * updated the views until the activity thread finishes. This handler fixes the problem.
+		 */
+		 Handler h = new Handler();
+
+		 h.postDelayed(new Runnable() {
+
+		     @Override
+		     public void run() {
+		         ScrollView scroll = (ScrollView) findViewById(R.id.scrollView1);
+		         scroll.fullScroll(View.FOCUS_DOWN);
+		     }
+		 }, 10);
+		
 	}
 	
 	//refreshes stats
@@ -114,7 +136,7 @@ public class BattleActivity extends Activity {
 		
 		oppHealth.setText("Health: " + opponent.getCurrentHealth());
 		oppLevel.setText("Level: " + opponent.getLevel());
-		oppXP.setText("Experience: " + opponent.getCreatureExperience());		
+		oppXP.setText("Experience: " + opponent.getCreatureExperience());	
 	}
 	
 	/*
@@ -178,7 +200,12 @@ public class BattleActivity extends Activity {
 		System.out.println("Setup E");
 		//create message TextView
 		messageTextView = (TextView) this.findViewById(R.id.battleMessage);
-		messageTextView.setText("Fight!");
+		if(!currentBattle.isStarted()) {
+			messageTextView.setText("Fight!");
+		}
+		else {
+			refreshMessage();
+		}
 		System.out.println("Setup F");
 	}
 	

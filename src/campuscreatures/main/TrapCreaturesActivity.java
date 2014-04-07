@@ -23,7 +23,7 @@ public class TrapCreaturesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trap_creatures);
 		
-		currentBattle = null;
+		currentBattle = null; //this is used to pass an Intent to a BattleActivity
 		
 		TabHost tabs = (TabHost)findViewById(android.R.id.tabhost);
 	    tabs.setup();
@@ -54,8 +54,14 @@ public class TrapCreaturesActivity extends Activity {
 		return true;
 	}
 	
+	
+	/*
+	 * The below function shows how to pass a Battle object to a BattleActivity.
+	 * As far as I can tell, this function must be placed in every activity which
+	 * might want to start a battle.
+	 */
 	public void goToBattle(View view) {
-		setupSampleBattle2();
+		setupSampleBattle(); //only used to setup currentBattle but any battle can be used.
 		Intent i = new Intent(this, BattleActivity.class);
 		i.putExtra("Battle", currentBattle);
 		System.out.println("goToBattle...");
@@ -67,7 +73,12 @@ public class TrapCreaturesActivity extends Activity {
 		startActivity(i);
 	}
 	
-	private void setupSampleBattle2() {
+	
+	/*
+	 * this is only used to show that we can pass a Battle object from this activity to another
+	 * activity.
+	 */
+	private void setupSampleBattle() {
 		System.out.println("setupSampelActivity...");
 		BattleAction kick = new BattleAction("kick",1,0,10);
 		BattleAction heal = new BattleAction("heal",0,2,10);

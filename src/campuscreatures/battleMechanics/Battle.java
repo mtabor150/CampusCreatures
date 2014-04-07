@@ -12,6 +12,7 @@ public class Battle implements Serializable {
 	//two creatures
 	private BattleCreature playerCreature;
 	private BattleCreature oppCreature;
+	private boolean isStarted;
 	//round==0 will mean the battle is over
 	private int round;
 	private boolean isSinglePlayer;
@@ -24,6 +25,7 @@ public class Battle implements Serializable {
 	public Battle(BattleCreature player, BattleCreature opp, Boolean isSinglePlayer) {
 		playerCreature = player;
 		oppCreature = opp;
+		isStarted = false;
 		round = 1;
 		this.isSinglePlayer = isSinglePlayer;
 		if(isSinglePlayer) {
@@ -32,6 +34,10 @@ public class Battle implements Serializable {
 		battlePrompt = new BattlePrompt(10);
 		playerChoseActionForRound = false;
 		opponentChoseActionForRound = false;
+	}
+	
+	public boolean isStarted() {
+		return isStarted;
 	}
 	
 	//get the round
@@ -188,6 +194,7 @@ public class Battle implements Serializable {
 	}
 	
 	public void choosePlayerBattleAction(int i) {
+		isStarted = true;
 		if(round ==0 | (playerChoseActionForRound & (playerCreature.getCurrentBattleAction() == playerCreature.getBattleActions().get(i)))) {
 			return;
 		}

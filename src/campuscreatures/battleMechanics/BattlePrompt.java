@@ -32,7 +32,7 @@ public class BattlePrompt implements Serializable {
 	public void addMessage(String newMessage) {
 		messages.add(newMessage);
 		if(messages.size() > maxSize) {
-			messages.remove(0);
+			//messages.remove(0);
 		}
 		roundHeaderAddedLast = false;
 	}
@@ -40,7 +40,7 @@ public class BattlePrompt implements Serializable {
 	public String battlePromptAsString() {
 		String totalBattleMessage = new String();
 		int numMessages = messages.size();
-		for(int i = 0; i<maxSize & i<numMessages; i++) {
+		for(int i = 0; i<numMessages; i++) {
 			if(i == numMessages-1 & roundHeaderAddedLast) {
 				return totalBattleMessage; //don't want to include the round header if it is last
 			}
@@ -57,6 +57,7 @@ public class BattlePrompt implements Serializable {
 	}
 	
 	public void creatureWon(BattleCreature creature) {
+		addMessage("");
 		addMessage(creature.getTitle() + " WON!");
 	}
 	
