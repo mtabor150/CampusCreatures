@@ -5,8 +5,11 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COURSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -58,9 +61,14 @@
             android:name="campuscreatures.main.CreaturesStatsActivity"
             android:label="@string/title_activity_creatures_stats" >
         </activity>
-    </application>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
-    </uses-permission>
+        <activity
+            android:name="campuscreatures.main.CreatureEntryActivity"
+            android:label="@string/title_activity_creature_entry" >
+        </activity>
+        
+        <service android:enabled="true" android:name="campuscreatures.location.LocationService" />
+
+    </application>
 
 </manifest>

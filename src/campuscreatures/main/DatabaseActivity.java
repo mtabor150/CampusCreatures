@@ -41,7 +41,9 @@ public class DatabaseActivity extends Activity {
 		database.addCreature(new Creatures(11, "Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
 		
 		//get all Creatures
-		List<Creatures> list = database.getAllCreatures();
+		database.getAllCreatures();
+		database.getCreaturesCount();
+		//database.getAllCreaturesByRegion("Ritter Hall");
 		database.close();
 		
 	}
