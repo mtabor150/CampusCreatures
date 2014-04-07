@@ -1,6 +1,8 @@
 package campuscreatures.battleMechanics;
 
-public class BattleAction {
+import java.io.Serializable;
+
+public class BattleAction implements Serializable {
 	
 	//a BattleAction will either attack the other creature
 	//or recover the creature calling the action
@@ -27,11 +29,11 @@ public class BattleAction {
 		return Title;
 	}
 	
-	public int getAttackVal(){
+	private int getAttackVal(){
 		return AttackVal;
 	}
 	
-	public int getRecoverVal(){
+	private int getRecoverVal(){
 		return RecoverVal;
 	}
 	
@@ -52,4 +54,20 @@ public class BattleAction {
 	public void setEffectiveness(int effect){
 		Effectiveness = effect;
 	}
+	
+	public int getModifiedAttackValue(int mod) {
+		if(mod == 0) {
+			return AttackVal;
+		}
+		System.out.println("mod = " + mod);
+		return AttackVal/(mod);
+	}
+	
+	public int getModifiedRecoverValue(int mod) {
+		if(mod == 0) {
+			return RecoverVal;
+		}
+		return RecoverVal/mod;
+	}
+	
 }

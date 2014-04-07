@@ -1,8 +1,9 @@
 package campuscreatures.battleMechanics;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BattleCreature {
+public class BattleCreature implements Serializable {
 	//Creatures will have a title, level, max health, current health
 	//experience, and arrayList of attacks.
 	private String Title;
@@ -13,6 +14,8 @@ public class BattleCreature {
 	private int CreatureExperience;
 	private ArrayList<BattleAction> BattleActions;
 	private BattleAction currentBattleAction;
+	private ArrayList<Integer> BattleActionsUseCount;
+	private int CurrentBattleActionUseCount;
 	
 	
 	//instantiate a creature with all stats
@@ -21,7 +24,7 @@ public class BattleCreature {
 		Level = level;
 		MaxHealth = maxH;
 		this.speed = speed;
-		
+		System.out.println("Got here H");
 		//set CurrentHealth and make sure not to make it larger than MaxHealth
 		if(currentH > maxH) {
 			CurrentHealth = maxH;
@@ -33,6 +36,15 @@ public class BattleCreature {
 		CreatureExperience = xp;
 		BattleActions = actions;
 		currentBattleAction = BattleActions.get(0);
+		System.out.println("Got here I");
+		BattleActionsUseCount = new ArrayList();
+		for(int i=0; i<BattleActions.size();i++) {
+			BattleActionsUseCount.add(0);
+		}
+		System.out.println("Got here K");
+		resetBattleActionsCount(-1); //set all counts to 0;
+		System.out.println("Got here J");
+		
 	}
 	
 	
@@ -108,5 +120,28 @@ public class BattleCreature {
 	
 	public void chooseBattleAction(int i){
 		currentBattleAction = BattleActions.get(i);
+		BattleActionsUseCount.set(i, BattleActionsUseCount.get(i) +1);
+		CurrentBattleActionUseCount = BattleActionsUseCount.get(i);
+		resetBattleActionsCount(i);
+	}
+	
+	private void resetBattleActionsCount(int i) {//reset all battle actions count except for the one with index i
+		System.out.println("Got here L");
+		for(int j = 0; j< BattleActions.size(); j++) {
+			System.out.println("Got here M: " + j);
+			if (i!=j) {
+				System.out.println("Got here N: " + j);
+				BattleActionsUseCount.set(j,0);
+				System.out.println("Got here O");
+			}
+		}
+	}
+	
+	public ArrayList<Integer> getBattleActionsUseCount() {
+		return BattleActionsUseCount;
+	}
+	
+	public int getCurrentBattleActionUseCount() {
+		return CurrentBattleActionUseCount;
 	}
 }
