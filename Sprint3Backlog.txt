@@ -1,0 +1,29 @@
+Sprint 3 - May 7th: 123 Points
+
+
+Profile: 13 Points - Phil
+
+Creature Atlas: 5 Points - James/PJ
+
+Database: 13 Points - PJ
+
+Creature Trapping: 40 Points - Adam
+
+Screen UI: 13 Points - James
+
+Map: 8 points - Mark
+
+Zones: 8 Points - Mark
+
+Creatures: 13 Points - James/PJ
+
+Battle UI: 13 Points - Phil
+
+Tracking GPS/Zone location: 5 Points - Mark
+
+
+Stretch Goals
+
+Bluetooth: 40 Points 
+
+Google Map Integration: 20 Points
