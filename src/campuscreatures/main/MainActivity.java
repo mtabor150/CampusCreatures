@@ -1,5 +1,6 @@
 package campuscreatures.main;
 
+import campuscreatures.database.DatabaseHelper;
 import campuscreatures.location.LocationService;
 import android.os.Bundle;
 import android.content.Intent;

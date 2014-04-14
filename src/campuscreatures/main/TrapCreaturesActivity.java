@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
+import campuscreatures.database.DatabaseService;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -69,7 +70,7 @@ public class TrapCreaturesActivity extends Activity {
 	}
 
 	public void goToDBTesting(View view){
-		Intent i = new Intent(this, DatabaseActivity.class);
+		Intent i = new Intent(this, DatabaseService.class);
 		startActivity(i);
 	}
 	

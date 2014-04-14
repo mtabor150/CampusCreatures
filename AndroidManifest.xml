@@ -50,10 +50,6 @@
             android:label="@string/title_activity_battle" >
         </activity>
         <activity
-            android:name="campuscreatures.main.DatabaseActivity"
-            android:label="@string/title_activity_database" >
-        </activity>
-        <activity
             android:name="campuscreatures.main.CreatureStatsActivity"
             android:label="@string/title_activity_creature_stats" >
         </activity>
@@ -68,7 +64,7 @@
         </activity>
         
         <service android:enabled="true" android:name="campuscreatures.location.LocationService" />
-
+		<service android:enabled="true" android:name="campuscreatures.database.DatabaseService" />
     </application>
 
 </manifest>

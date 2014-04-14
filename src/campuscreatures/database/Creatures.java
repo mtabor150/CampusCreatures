@@ -1,21 +1,18 @@
 package campuscreatures.database;
-
+/**
+ * 	Creatures class: 
+ * 	Private variables:
+ *  - 13 total attributes per creature
+ *  - 4 string attribute values including name
+ *  - 9 integer attribute values, including id
+ */
 public class Creatures {
 	
-	/*
-	 * Private variables:
-	 *  - 13 total attributes per creature
-	 *  - 4 string attribute values including name
-	 *  - 9 integer attribute values, including id
-	 */
-	
-	int _id;		//primary key of the database
+	int _id;			//primary key of the database
 	String _name;
-	
 	String _region;
 	String _district;
 	String _type;
-	
 	int _health;
 	int _magic;
 	int _attack;
@@ -66,20 +63,21 @@ public class Creatures {
 	}
 		
 	public String toString() {
-		return  "This is the toString() function: ..... " +
-				" Creature [id= " + _id +
-				", name = " + _name +
-				", region = " + _region +
-				", district = " + _district +
-				", type = " + _type +
-				", health = " + _health +
-				", magic = " + _magic +
-				", attack = " + _attack +
-				", defense = " + _defense +
-				", speed = " + _speed +
-				", moves per turn = " + _moves_per_turn +
-				", experience = " + _experience +
-				", level = " + _level;	
+//		return  "Creatures toString() function: " +
+//				" ID: " + _id +
+//				", name: " + _name +
+//				", region: " + _region +
+//				", district: " + _district +
+//				", type: " + _type +
+//				", health: " + _health +
+//				", magic: " + _magic +
+//				", attack: " + _attack +
+//				", defense: " + _defense +
+//				", speed: " + _speed +
+//				", moves per turn: " + _moves_per_turn +
+//				", experience: " + _experience +
+//				", level: " + _level;	
+		return  " ID: " + _id + ". " + _name + ", " + _region + "\n";	
 	}
 	
 	/*  All the attribute functions: set and get values */
@@ -187,5 +185,4 @@ public class Creatures {
 	public void setLevel(int level){
 		this._level = level;
 	}
-	
 }

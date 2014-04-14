@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.IBinder;
 import android.util.Log;
 
 /**
@@ -20,10 +23,8 @@ import android.util.Log;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
-	//Logcat tag
-	private static final String LOG = "DatabaseHelper";
 	
+	private Context myContext;
 	//Database Name and Version number 
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "CreatureDB";
@@ -48,12 +49,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String COLUMN_LEVEL = "level";
 	
 	//Player's table column names
-	private static final String COLUMN_ID = "id";
+	private static final String PLAYER_ID = "id";
 	private static final String COLUMN_SEEN = "seen_or_not";
 	private static final String COLUMN_SEEN_AT = "seen_at";
 	private static final String COLUMN_CAPTURED = "captured";
-	
-	/* Table Create Statements */
 	
 	//Creature Table create statement
 	private static final String CREATE_CREATURES_TABLE = "CREATE TABLE " 
@@ -75,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	//Player table create statement
 	private static final String CREATE_PLAYER_TABLE = "CREATE TABLE "
 			+ TABLE_PLAYER + " (" 				
-			+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+			+ PLAYER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 			+ COLUMN_NAME + " TEXT NOT NULL, "
 			+ COLUMN_REGION + " TEXT NOT NULL, " 
 			+ COLUMN_DISTRICT + " TEXT NOT NULL, "
@@ -92,15 +91,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_SEEN_AT + " TEXT NOT NULL, "
 			+ COLUMN_CAPTURED + " TEXT NOT NULL" + ")";
 	
+	
 	// MySQLiteHelper constuctor must call the super class constructor
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		myContext = context;
 	}
 	
 	//Creating Tables
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		Log.d("onCreate", "Creating DB for first time");
+		Log.d("onCreate function in DatabaseHelper", "Creating DB for first time");
 		//creates required database tables
 		database.execSQL(CREATE_CREATURES_TABLE);
 		database.execSQL(CREATE_PLAYER_TABLE);		
@@ -142,7 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	/* 
 	 * INSERTING NEW CREATURE 
 	 */
-	public void addCreature(Creatures creature){
+	public long addCreature(Creatures creature){
 		
 		//1. get reference to writable Database
 		SQLiteDatabase database = this.getWritableDatabase();
@@ -165,82 +166,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		//3. insert rows
 		Log.d("About to insert the entire row for:", creature.getName());
-		database.insert("Creatures", null, values);
+		long creature_id = database.insert(TABLE_CREATURES, null, values);
 		Log.d("Inserted the row for: ", creature.getName());
+		
 		Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
-		//Log.d("getCreature Function", getCreature(0).toString());
-
+		
+		return creature_id;
 		//Close database connection
-		database.close();
+		//database.close();
 	}
 	
-	
-	/* READING ROW(S) */
-	
+	/* 
+	 * READING ROW(S) 
+	 */
 	//get a single creature
-	public Creatures getCreature(int get_id){
-		
+	public Creatures getCreature(int creature_id){
+		String selectQuery = "SELECT * FROM " + TABLE_CREATURES + " WHERE "
+	            + KEY_ID + " = " + creature_id;
 		//1. get reference to readable Database
 		SQLiteDatabase database = this.getReadableDatabase();	
-		
-		String selectQuery = "SELECT * FROM " + TABLE_CREATURES + " WHERE "
-		            + KEY_ID + " = " + get_id;
-	    
-		Log.e(LOG, selectQuery);
-		Cursor cursor = database.rawQuery(selectQuery, null);
-		
+						
 		//2. build query
-//		Cursor cursor = database.query(TABLE_CREATURES, //a. table
-//				new String [] { KEY_ID, COLUMN_NAME, 	//b. column names
-//				COLUMN_REGION, COLUMN_DISTRICT, COLUMN_TYPE, 
-//				COLUMN_HEALTH, COLUMN_MAGIC, COLUMN_ATTACK, 
-//				COLUMN_DEFENSE, COLUMN_SPEED, COLUMN_MPT, 
-//				COLUMN_EXPERIENCE, COLUMN_LEVEL }, 
-//				KEY_ID + "=?",								//c. selections
-//				new String[] {String.valueOf(get_id) },		//d. selection args
-//				null,										//e. group by
-//				null, 										//f. having
-//				null, 										//g. order by
-//				null);										//h. limit
+		Cursor cursor = database.rawQuery(selectQuery, null);
+
+		Creatures creature = null; 
 		//3. if we got results get the first one
 		if (cursor != null)
 			cursor.moveToFirst();
-
+		
 		//4. build creatures object		
-		Creatures creature = new Creatures();
-		creature.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-		creature.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
-		creature.setRegion(cursor.getString(cursor.getColumnIndex(COLUMN_REGION)));
-		creature.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
-		creature.setType(cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)));
-		creature.setHealth(cursor.getInt(cursor.getColumnIndex(COLUMN_HEALTH)));
-		creature.setMagic(cursor.getInt(cursor.getColumnIndex(COLUMN_MAGIC)));
-		creature.setAttack(cursor.getInt(cursor.getColumnIndex(COLUMN_ATTACK)));
-		creature.setDefense(cursor.getInt(cursor.getColumnIndex(COLUMN_DEFENSE)));
-		creature.setSpeed(cursor.getInt(cursor.getColumnIndex(COLUMN_SPEED)));
-		creature.setMovesPerTurn(cursor.getInt(cursor.getColumnIndex(COLUMN_MPT)));
-		creature.setExperience(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPERIENCE)));
-		creature.setLevel(cursor.getInt(cursor.getColumnIndex(COLUMN_LEVEL)));
-		
+		creature = new Creatures();
+		creature.setId(cursor.getInt(0));
+		creature.setName(cursor.getString(1));
+		creature.setRegion(cursor.getString(2));
+		creature.setDistrict(cursor.getString(3));
+		creature.setType(cursor.getString(4));
+		creature.setHealth(cursor.getInt(5));
+		creature.setMagic(cursor.getInt(6));
+		creature.setAttack(cursor.getInt(7));
+		creature.setDefense(cursor.getInt(8));
+		creature.setSpeed(cursor.getInt(9));
+		creature.setMovesPerTurn(cursor.getInt(10));
+		creature.setExperience(cursor.getInt(11));
+		creature.setLevel(cursor.getInt(12));
 		//Log
-		Log.d("getCreature(" + get_id + ")", creature.toString());
-		
+		Log.d("getCreature(" + creature_id + ")", creature.toString());
 		//return creature
 		return creature;
 	}
 		
 	//getting all creatures and all their attribute values
 	public List<Creatures> getAllCreatures(){
-		List<Creatures> creaturesList = new LinkedList<Creatures>();
-		//List<Creatures> creaturesList = new ArrayList<Creatures>();
-		
+		List<Creatures> creaturesList = new ArrayList<Creatures>();
 		//1. build the query
 		String selectQuery = "SELECT * FROM " + TABLE_CREATURES;
 		
 		Log.d("Logging Query for getAllCreatures", selectQuery);
 		
 		//2. get reference to writeable Database
-		SQLiteDatabase database = this.getWritableDatabase();
+		SQLiteDatabase database = this.getReadableDatabase();
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		
 		//3. go over each row, build creature and add it to the list
@@ -262,17 +246,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				creature.setMovesPerTurn(cursor.getInt(10));
 				creature.setExperience(cursor.getInt(11));
 				creature.setLevel(cursor.getInt(12));
-				//Add creature to creatures
+				
+				//Add creature to creaturesList
 				creaturesList.add(creature);
 				Log.d("ID and NAME", String.valueOf(creature.getId()) + " " + creature.getName());
 			} while (cursor.moveToNext());
 		}
 		
-		//Log.d("getAllCreatures()", creaturesList.toString());
+		Log.d("getAllCreatures().toString() function", creaturesList.toString());
 		
 		//return creatures list
-		return creaturesList;	
+		return creaturesList;		
+	}
+	
+	//get creatures count
+	public int getCreaturesCount(){
+		String countQuery = " SELECT * FROM " + TABLE_CREATURES;
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.rawQuery(countQuery, null);
+		int count = cursor.getCount();
+		cursor.close();
 		
+		//return count
+		Log.d("Logging countQuery getCreaturesCount()", String.valueOf(count));
+		return count;
 	}
 	
 	//get all creatures from a certain region
@@ -350,19 +347,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return creaturesList;	
 	}
 	
-	//get creatures count
-	public int getCreaturesCount(){
-		String countQuery = " SELECT * FROM " + TABLE_CREATURES;
-		SQLiteDatabase database = this.getReadableDatabase();
-		Cursor cursor = database.rawQuery(countQuery, null);
-		int count = cursor.getCount();
-		cursor.close();
-		
-		//return count
-		Log.d("Logging countQuery getCreaturesCount()", String.valueOf(count));
-		return count;
-	}
-	
 	//updating single creature
 	public long updateCreature(Creatures creature){
 		
@@ -371,45 +355,121 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		//2. create ContentValues to add key "column"/value
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_NAME, creature.getName());			//get name
-		values.put(COLUMN_REGION, creature.getRegion());		//get region
-		values.put(COLUMN_DISTRICT, creature.getDistrict());	//get district
-		values.put(COLUMN_TYPE, creature.getType());	 		//get type
-		values.put(COLUMN_HEALTH, creature.getHealth());		//get health
-		values.put(COLUMN_MAGIC, creature.getMagic());			//get magic
-		values.put(COLUMN_ATTACK, creature.getAttack());		//get attack
-		values.put(COLUMN_DEFENSE, creature.getDefense());		//get defense
-		values.put(COLUMN_SPEED, creature.getSpeed());			//get speed	
-		values.put(COLUMN_MPT, creature.getMovesPerTurn());			//get moves per turn
-		values.put(COLUMN_EXPERIENCE, creature.getExperience());		//get experience
-		values.put(COLUMN_LEVEL, creature.getLevel());			//get level
+		values.put(COLUMN_NAME, creature.getName());			
+		values.put(COLUMN_REGION, creature.getRegion());		
+		values.put(COLUMN_DISTRICT, creature.getDistrict());	
+		values.put(COLUMN_TYPE, creature.getType());	 		
+		values.put(COLUMN_HEALTH, creature.getHealth());		
+		values.put(COLUMN_MAGIC, creature.getMagic());			
+		values.put(COLUMN_ATTACK, creature.getAttack());		
+		values.put(COLUMN_DEFENSE, creature.getDefense());		
+		values.put(COLUMN_SPEED, creature.getSpeed());		
+		values.put(COLUMN_MPT, creature.getMovesPerTurn());		
+		values.put(COLUMN_EXPERIENCE, creature.getExperience());		
+		values.put(COLUMN_LEVEL, creature.getLevel());			
 		
 		//3. updating row
 		long x = database.update(TABLE_CREATURES, 				 //table
 				values, 										 //column/value
-				KEY_ID+" = ?", 									 //selections
-				new String[] {String.valueOf(creature.getId())});//selection args
-		
+				KEY_ID + " = ?", 									 //selections
+				new String[] { String.valueOf(creature.getId()) });//selection args
 		//4. close
 		database.close();
 		return x;
 	}
 	
 	//delete single creature
-	public void deleteCreature(Creatures creature){
-		
+	public void deleteCreature(long creature_id){
 		//1. get reference to writable Database
 		SQLiteDatabase database = this.getWritableDatabase();
-		
 		//2. delete
 		database.delete(TABLE_CREATURES,							//table
 				KEY_ID + " = ?",   									//selections
-				new String[] {String.valueOf(creature.getId()) });	//selec
+				new String[] {String.valueOf(creature_id) });	//selec
 		
 		//3. close
 		database.close();
 		
 		//log
-		Log.d("deleteCreature", creature.toString());
+		Log.d("deleteCreature", String.valueOf(creature_id));
 	}
+	
+	/**
+	 * 
+	 * Player Table - 16 columns
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * | ID  | Name | Region | District | Type | Health | Magic | Attack | Defense | Speed | Moves Per Turn | Experience | Level | Seen | SeenAt | Captured |   
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * |_____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|    
+	 * |_____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|  
+	 * |_____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|  
+	 * |_____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|  
+	 * 
+	 * All CRUD Operations (Create, Read, Update, Delete)
+	 * 
+	 */
+	
+	// -------------------------------"PLAYER TABLE" methods -------------------------------//
+
+	public void addPlayerCreature(Player playerCreature){
+		// 1. get reference to writable Database
+		SQLiteDatabase database = this.getWritableDatabase(); 	
+		//2. create content values to add key "column"/value
+		ContentValues playerValues = new ContentValues();
+		Log.d("Putting creature name into player table's name column", playerCreature.getName());
+		playerValues.put(COLUMN_NAME, playerCreature.getName());
+		playerValues.put(COLUMN_REGION, playerCreature.getRegion());			//creature region
+		playerValues.put(COLUMN_DISTRICT, playerCreature.getDistrict());		//creature district
+		playerValues.put(COLUMN_TYPE, playerCreature.getType());				//creature type
+		playerValues.put(COLUMN_HEALTH, playerCreature.getHealth());			//creature health
+		playerValues.put(COLUMN_MAGIC, playerCreature.getMagic());			//creature magic
+		playerValues.put(COLUMN_ATTACK, playerCreature.getAttack());			//creature attack
+		playerValues.put(COLUMN_DEFENSE, playerCreature.getDefense());		//creature defense
+		playerValues.put(COLUMN_SPEED, playerCreature.getSpeed());			//creature speed
+		playerValues.put(COLUMN_MPT, playerCreature.getMovesPerTurn());		//creature moves per turn
+		playerValues.put(COLUMN_EXPERIENCE, playerCreature.getExperience());	//creature experience
+		playerValues.put(COLUMN_LEVEL, playerCreature.getLevel());			//creature level
+		playerValues.put(COLUMN_SEEN, playerCreature.getSeen()=="yes");
+		playerValues.put(COLUMN_SEEN_AT, playerCreature.getRegion());
+		playerValues.put(COLUMN_CAPTURED, playerCreature.getCaptured()=="yes");
+	
+		//3. insert rows
+		Log.d("About to insert the entire row for:", playerCreature.getName());
+		database.insert(TABLE_PLAYER, null, playerValues);
+		Log.d("Inserted the row for: ", playerCreature.getName());
+		Log.d("KEY ID for: ", playerCreature.getName() + " is " + playerCreature.getId());
+		
+		//Close database connection
+		database.close();
+	}
+	
+	public Player getPlayerCreature(int playerCreature_id){
+		String selectQuery = "SELECT * FROM " + TABLE_PLAYER + " WHERE "
+	            + KEY_ID + " = " + playerCreature_id;
+		SQLiteDatabase database = this.getReadableDatabase();	
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		Player playerCreature = null; 
+		
+		if (cursor != null)
+			cursor.moveToFirst();
+		
+		playerCreature = new Player();
+		playerCreature.setId(cursor.getInt(0));
+		playerCreature.setName(cursor.getString(1));
+		playerCreature.setRegion(cursor.getString(2));
+		playerCreature.setDistrict(cursor.getString(3));
+		playerCreature.setType(cursor.getString(4));
+		playerCreature.setHealth(cursor.getInt(5));
+		playerCreature.setMagic(cursor.getInt(6));
+		playerCreature.setAttack(cursor.getInt(7));
+		playerCreature.setDefense(cursor.getInt(8));
+		playerCreature.setSpeed(cursor.getInt(9));
+		playerCreature.setMovesPerTurn(cursor.getInt(10));
+		playerCreature.setExperience(cursor.getInt(11));
+		playerCreature.setLevel(cursor.getInt(12));
+		//Log
+		Log.d("getCreature(" + playerCreature_id + ")", playerCreature.toString());
+		//return creature
+		return playerCreature;		
+	}	
 }
