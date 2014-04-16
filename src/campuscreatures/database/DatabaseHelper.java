@@ -254,9 +254,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		
 		Log.d("getAllCreatures().toString() function", creaturesList.toString());
-		
+		database.close();
 		//return creatures list
-		return creaturesList;		
+		return creaturesList;	
+		
 	}
 	
 	//get creatures count

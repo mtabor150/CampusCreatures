@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import profile.UserProfile;
-
+import campuscreatures.database.Creatures;
+import campuscreatures.database.DatabaseHelper;
 import campuscreatures.location.LocationService;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -68,6 +70,30 @@ public class MainActivity extends FragmentActivity {
 		locationIntent = new Intent(this, LocationService.class);
 		startService(locationIntent);
 		location = new LocationService(this);
+		
+		//TODO generate and fill CampusCreatures database;
+		DatabaseHelper database = new DatabaseHelper(this);
+		database.getAllCreatures();
+		
+		Log.d("From MainActivity", "....");
+		database.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+		database.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
+		database.addCreature(new Creatures("Philanderphil", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Weazel Man", "Tegler Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Scan Bot", "Ritter Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Chamber Wolf", "Ritter Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Adam the Intern", "DuBourgh Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Lescher the Lecturer", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Clueless Freshman", "Griesidieck Hall", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Roadrunner", "Reinert Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		database.addCreature(new Creatures("Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		
+		//get all Creatures
+		database.getAllCreatures();
+		database.getCreaturesCount();
+		database.getCreature(1);
+		//database.getAllCreaturesByRegion("Ritter Hall");
+		//database.getLocalCreatures("Ritter Hall", "Saint Louis University");
 	}
 	
 	private void setupMAdapter() {

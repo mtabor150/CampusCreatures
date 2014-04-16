@@ -24,23 +24,23 @@ public class CreatureAtlasFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    
-	    DatabaseHelper database = new DatabaseHelper(getActivity());
+	    //DatabaseHelper database = new DatabaseHelper(getActivity());
 		
 		//get all Creatures
-		List<Creatures> creatureList = database.getAllCreatures();
-		database.close();
+	    Log.d("From CreatureAtlasFragment", "...");
+		//List<Creatures> creatureList = database.getAllCreatures();
+		//database.close();
 		
 		 
-		final String[] creatureNames = new String[] {};
-	    for (int i = 1; i < creatureList.size(); i++) {
-	      creatureNames[i] = creatureList.get(i).getName();
-	    }
-	    
+		//final String[] creatureNames = new String[] {};
+	    //for (int i = 1; i < creatureList.size(); i++) {
+	    //  creatureNames[i] = creatureList.get(i).getName();
+	    //}
 		
-	    /*final String[] creatureNames = new String[] {"Marcus Taborius", "Desi Djinn", "Philanderphil",
+	    final String[] creatureNames = new String[] {"Marcus Taborius", "Desi Djinn", "Philanderphil",
 	    		"Weazel Man", "Scan Bot", "Chamber Wolf", "Adam the Intern", "Lescher the Lecturer", 
 	    		"Clueless Freshman", "Roadrunner", "Billiken"};
-	    */
+	    
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
 	    		android.R.layout.simple_list_item_1, creatureNames);
 	    setListAdapter(adapter);
