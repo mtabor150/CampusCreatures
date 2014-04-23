@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 
-import profile.UserProfile;
+import campuscreatures.profile.UserProfile;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

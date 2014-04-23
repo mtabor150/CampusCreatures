@@ -9,16 +9,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import profile.UserProfile;
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
 import campuscreatures.location.LocationService;
+import campuscreatures.profile.UserProfile;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,6 +40,8 @@ public class MainActivity extends FragmentActivity {
 	private Intent locationIntent = null;
 	public static LocationService location = null;
 
+	DatabaseHelper dbHelper = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,10 +62,7 @@ public class MainActivity extends FragmentActivity {
 			else {
 				setupMAdapter();
 			}
-		}
-		
-		
-		
+		}		
 		// setup mAdapter
 		//setUserInfo();
 		
@@ -72,28 +72,36 @@ public class MainActivity extends FragmentActivity {
 		location = new LocationService(this);
 		
 		//TODO generate and fill CampusCreatures database;
-		DatabaseHelper database = new DatabaseHelper(this);
-		database.getAllCreatures();
+	
+		if (dbHelper == null){  
+			dbHelper = new DatabaseHelper(this);
+			Log.d("From MainActivity", "....");
+			//SQLiteDatabase dbHelper = DatabaseHelper.getWritableDatabase();
+			dbHelper.getAllCreatures();
+			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Philanderphil", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Weazel Man", "Tegler Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Scan Bot", "Ritter Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Chamber Wolf", "Ritter Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Adam the Intern", "DuBourgh Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Lescher the Lecturer", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Clueless Freshman", "Griesidieck Hall", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Roadrunner", "Reinert Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
+		}
 		
-		Log.d("From MainActivity", "....");
-		database.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
-		database.addCreature(new Creatures("Philanderphil", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Weazel Man", "Tegler Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Scan Bot", "Ritter Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Chamber Wolf", "Ritter Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Adam the Intern", "DuBourgh Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Lescher the Lecturer", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Clueless Freshman", "Griesidieck Hall", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Roadrunner", "Reinert Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
-		database.addCreature(new Creatures("Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
 		
+
 		//get all Creatures
-		database.getAllCreatures();
-		database.getCreaturesCount();
-		database.getCreature(1);
-		//database.getAllCreaturesByRegion("Ritter Hall");
-		//database.getLocalCreatures("Ritter Hall", "Saint Louis University");
+		dbHelper.getAllCreatures();
+		dbHelper.getCreaturesCount();
+		dbHelper.getCreature(1);
+		//dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		//dbHelper.getLocalCreatures("Ritter Hall", "Saint Louis University");
+		
+		dbHelper.close();
+		//dbHelper.close();
 	}
 	
 	private void setupMAdapter() {
