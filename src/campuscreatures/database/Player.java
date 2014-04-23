@@ -29,9 +29,6 @@ public class Player {
 	int captured_MPT;
 	int captured_Experience;
 	int captured_Level;
-//	boolean creature_Seen;		//used for recon
-//	String seen_At;				//used for recon
-//	boolean _captured;
 	String creature_Seen;
 	String seen_At;
 	String _captured;
@@ -40,49 +37,43 @@ public class Player {
 	public Player (){
 	}
 
-	public Player (String capturedName, String capturedRegion, String capturedDistrict,
-			String capturedType, int capturedHealth, int capturedMagic, int capturedAttack, int capturedDefense,
-			int capturedSpeed, int capturedMPT, int capturedExperience, int capturedLevel, String creatureSeen, 
-			String seenAt, String captured) {
+	public Player (Creatures creature, String creatureSeen, String seenAt, String captured) {
 		
-		this.captured_Name = capturedName;
-		this.captured_Region = capturedRegion;
-		this.captured_District = capturedDistrict;
-		this.captured_Type = capturedType;
-		this.captured_Health = capturedHealth;
-		this.captured_Magic = capturedMagic;
-		this.captured_Attack = capturedAttack;
-		this.captured_Defense = capturedDefense;
-		this.captured_Speed = capturedSpeed;
-		this.captured_MPT = capturedMPT;
-		this.captured_Experience = capturedExperience;
-		this.captured_Level = capturedLevel;
+		this.captured_Name = creature._name;
+		this.captured_Region = creature._region;
+		this.captured_District = creature._district;
+		this.captured_Type = creature._type;
+		this.captured_Health = creature._health;
+		this.captured_Magic = creature._magic;
+		this.captured_Attack = creature._attack;
+		this.captured_Defense = creature._defense;
+		this.captured_Speed = creature._speed;
+		this.captured_MPT = creature._moves_per_turn;
+		this.captured_Experience = creature._experience;
+		this.captured_Level = creature._level;
 		this.creature_Seen = creatureSeen;
 		this.seen_At = seenAt;
 		this._captured = captured;		
 	}
 	
-	public Player (int id, String capturedName, String capturedRegion, String capturedDistrict,
-			String capturedType, int capturedHealth, int capturedMagic, int capturedAttack, int capturedDefense,
-			int capturedSpeed, int capturedMPT, int capturedExperience, int capturedLevel, String creatureSeen, 
-			String seenAt, String captured) {
+	public Player (Creatures creature, int id, String creatureSeen, String seenAt, String captured) {
 		
 		this._id = id;
-		this.captured_Name = capturedName;
-		this.captured_Region = capturedRegion;
-		this.captured_District = capturedDistrict;
-		this.captured_Type = capturedType;
-		this.captured_Health = capturedHealth;
-		this.captured_Magic = capturedMagic;
-		this.captured_Attack = capturedAttack;
-		this.captured_Defense = capturedDefense;
-		this.captured_Speed = capturedSpeed;
-		this.captured_MPT = capturedMPT;
-		this.captured_Experience = capturedExperience;
-		this.captured_Level = capturedLevel;
+		this.captured_Name = creature._name;
+		this.captured_Region = creature._region;
+		this.captured_District = creature._district;
+		this.captured_Type = creature._type;
+		this.captured_Health = creature._health;
+		this.captured_Magic = creature._magic;
+		this.captured_Attack = creature._attack;
+		this.captured_Defense = creature._defense;
+		this.captured_Speed = creature._speed;
+		this.captured_MPT = creature._moves_per_turn;
+		this.captured_Experience = creature._experience;
+		this.captured_Level = creature._level;
 		this.creature_Seen = creatureSeen;
 		this.seen_At = seenAt;
-		this._captured = captured;		
+		this._captured = captured;	
 	}
 
 	
