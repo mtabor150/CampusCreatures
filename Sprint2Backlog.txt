@@ -1,3 +1,4 @@
+Sers/pjdesi/Documents/PL/Prolog/"; /opt/local/bin/swipl
 Sprint 2 Backlog - April 7th
 
 188 Points:

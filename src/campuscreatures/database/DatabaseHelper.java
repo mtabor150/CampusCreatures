@@ -464,7 +464,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Player playerCreature = null; 
 		if (cursor != null)
 			cursor.moveToFirst();
-		
+		  
 		playerCreature = new Player();
 		playerCreature.setId(cursor.getInt(0));
 		playerCreature.setName(cursor.getString(1));

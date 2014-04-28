@@ -90,18 +90,13 @@ public class MainActivity extends FragmentActivity {
 			dbHelper.addCreature(new Creatures("Roadrunner", "Reinert Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
 		}
-		
-		
 
-		//get all Creatures
 		dbHelper.getAllCreatures();
 		dbHelper.getCreaturesCount();
 		dbHelper.getCreature(1);
 		//dbHelper.getAllCreaturesByRegion("Ritter Hall");
 		//dbHelper.getLocalCreatures("Ritter Hall", "Saint Louis University");
-		
 		dbHelper.close();
-		//dbHelper.close();
 	}
 	
 	private void setupMAdapter() {
@@ -131,6 +126,7 @@ public class MainActivity extends FragmentActivity {
 
 	protected void onDestroy(){
 		stopService(locationIntent);
+		dbHelper.close();
 		super.onDestroy();
 	}
 	
