@@ -1,4 +1,4 @@
-package profile;
+package campuscreatures.profile;
 
 import java.io.File;
 import java.io.FileInputStream;
