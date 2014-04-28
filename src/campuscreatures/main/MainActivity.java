@@ -8,10 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
-import campuscreatures.battleMechanics.BattleAction;
-import campuscreatures.battleMechanics.BattleCreature;
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
 import campuscreatures.location.LocationService;
@@ -39,6 +36,7 @@ public class MainActivity extends FragmentActivity {
 
 	private ViewPager viewPager;
 	private MainPagerAdapter mAdapter;
+
 	private Intent locationIntent = null;
 	public static LocationService location = null;
 
@@ -74,9 +72,9 @@ public class MainActivity extends FragmentActivity {
 		location = new LocationService(this);
 		
 		//TODO generate and fill CampusCreatures database;
-		dbHelper = new DatabaseHelper(this);
-		if (dbHelper.getAllCreatures().size() == 0){  
-			//dbHelper = new DatabaseHelper(this);
+		
+		if (dbHelper == null){  
+			dbHelper = new DatabaseHelper(this);
 			Log.d("From MainActivity", "....");
 			//SQLiteDatabase dbHelper = DatabaseHelper.getWritableDatabase();
 			dbHelper.getAllCreatures();
@@ -174,40 +172,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void goToCreatureStats(View view) {
-		BattleCreature tempCreature;
-		UserProfile tempProfile = new UserProfile(view.getContext());
-		int creatureListIndex = 0;
-		switch(view.getId())
-		{
-			case R.id.imageButton1:
-				creatureListIndex = 0;
-				break;
-			case R.id.imageButton2:
-				creatureListIndex = 1;
-				break;
-			case R.id.imageButton3:
-				creatureListIndex = 2;
-				break;
-			case R.id.imageButton4:
-				creatureListIndex = 3;
-				break;
-			case R.id.imageButton5:
-				creatureListIndex = 4;
-				break;
-			case R.id.imageButton6:
-				creatureListIndex = 5;
-				break;
-			default:
-			throw new RuntimeException("Unknow button ID");
-		}
-		if (creatureListIndex < tempProfile.getCreaturesList().size()) {
-			tempCreature = tempProfile.getCreaturesList().get(creatureListIndex);
-		}
-		else {
-			return;
-		}
-		Intent i = new Intent(this, CreatureEntryActivity.class);
-		i.putExtra("creature", tempCreature);
+		Intent i = new Intent(this, CreatureStatsActivity.class);
 		startActivity(i);
 	}
 	
@@ -235,10 +200,6 @@ public class MainActivity extends FragmentActivity {
 				else {
 					UserProfile newProfile = new UserProfile("userProfile");
 					newProfile.setInitialProfile(firstName, lastName, userName);
-					
-					//TODO below addCreature() is just for test purposes. remove when no longer necessary
-					newProfile.addCreature(new BattleCreature("Example Creature", 1, 10, 10, 10, 0, new ArrayList()));
-					
 					newProfile.saveProfile(v.getContext());
 					UserProfile testProfile = new UserProfile("userProfile");
 					testProfile = testProfile.loadProfile(v.getContext());
