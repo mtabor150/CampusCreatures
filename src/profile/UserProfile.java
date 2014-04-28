@@ -9,7 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.util.*;
 
+import campuscreatures.database.Creatures;
 import android.content.Context;
 
 public class UserProfile implements Serializable {
@@ -25,6 +27,7 @@ public class UserProfile implements Serializable {
 		lastName = "lastName";
 		userName = "userName";
 		hasSignedUp = false;
+		ArrayList<Creatures> party = new ArrayList<Creatures>();
 	}
 	
 	//instantiate the saved user profile in any view
