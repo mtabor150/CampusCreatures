@@ -3,6 +3,8 @@ package campuscreatures.battleMechanics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import campuscreatures.database.Creatures;
+
 public class BattleCreature implements Serializable {
 	//Creatures will have a title, level, max health, current health
 	//experience, and arrayList of attacks.
@@ -17,8 +19,10 @@ public class BattleCreature implements Serializable {
 	private ArrayList<Integer> BattleActionsUseCount;
 	private int CurrentBattleActionUseCount;
 	
+	//TODO add all values which 'Creature' class has which 'BattleCreature' does not have.
+	//TODO create function/s to convert between 'Creature' and 'BattleCreature' classes
 	
-	//instantiate a creature with all stats
+	//construct a creature with all stats
 	public BattleCreature(String title, int level, int speed, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
 		Title = title;
 		Level = level;
@@ -35,16 +39,23 @@ public class BattleCreature implements Serializable {
 		
 		CreatureExperience = xp;
 		BattleActions = actions;
-		currentBattleAction = BattleActions.get(0);
-		System.out.println("Got here I");
+		if(BattleActions.size() > 0) {
+			currentBattleAction = BattleActions.get(0);
+		}
 		BattleActionsUseCount = new ArrayList();
+		System.out.println(BattleActions.size());
 		for(int i=0; i<BattleActions.size();i++) {
 			BattleActionsUseCount.add(0);
 		}
 		System.out.println("Got here K");
 		resetBattleActionsCount(-1); //set all counts to 0;
-		System.out.println("Got here J");
-		
+		System.out.println("Got here J");	
+	}
+	
+	//constructor from a 'Creatures' instance
+	public BattleCreature(Creatures c) {
+		//TODO the below conversion gives an empty battleActions ArrayList.
+		this(c.getName(), c.getLevel(), c.getSpeed(), c.getHealth(), c.getHealth(), 0, new ArrayList());
 	}
 	
 	

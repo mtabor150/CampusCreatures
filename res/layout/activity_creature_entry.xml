@@ -30,7 +30,15 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/HP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HP: "
@@ -38,15 +46,7 @@
                 android:textColor="#FFFFFF" />
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MP: "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
-
-            <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/ATK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ATK"
@@ -54,7 +54,7 @@
                 android:textColor="#FFFFFF" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/DFN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DFN"
@@ -62,7 +62,7 @@
                 android:textColor="#FFFFFF" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/SPD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SPD"
@@ -79,7 +79,7 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#000000"
@@ -88,7 +88,7 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/TypeField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -98,7 +98,7 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/District"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#000000"
@@ -107,7 +107,7 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/DistrictField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -119,7 +119,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/DescriptionField"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
