@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -99,71 +99,67 @@
 
         </LinearLayout>
 
-        <LinearLayout
+       <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical" 
-            android:weightSum="2">
+            android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/battleActionLists"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" 
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="horizontal"
                 android:weightSum="2">
-
-                <Button
-                    android:id="@+id/attack1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal = "true"
-                    android:text="Attack 1"
-                    android:onClick="battleAction1" />
-
-                <Button
-                    android:id="@+id/attack2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal = "true"
-                    android:text="Attack 2"
-                    android:onClick="battleAction2" />
-
+				
+                <ListView 
+				    android:id="@+id/listview1"
+				    android:layout_width="0dp"
+				    android:layout_height="match_parent" 
+				    android:layout_weight="1"/> 
+				    
+                <ListView 
+				    android:id="@+id/listview2"
+				    android:layout_width="0dp"
+				    android:layout_height="match_parent" 
+				    android:layout_weight="1"/>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="2" >
+                android:layout_weight="1" >
 
                 <Button
-                    android:id="@+id/attack3"
+                    android:id="@+id/implementRound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal = "true"
-                    android:text="Attack 3"
-                    android:onClick="battleAction3" />
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:onClick="implementRound"
+                    android:text="Fight" />
 
-                <Button
-                    android:id="@+id/attack4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal = "true"
-                    android:text="Attack 4"
-                    android:onClick="battleAction4" />
-
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/battleMessage"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="TextView" />
+       <ScrollView
+           android:id="@+id/scrollView1"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1" >
+
+                <TextView
+		            android:id="@+id/battleMessage"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            
+		            android:text="TextView" />
+       </ScrollView>
+
+        
 
     </LinearLayout>
 
