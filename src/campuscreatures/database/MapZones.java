@@ -3,6 +3,11 @@ package campuscreatures.database;
 public class MapZones {
 /**
  * 
+ *  Point 1 - Point 2
+ *  Point 1 - Point 3
+ *  Point 3 - Point 4
+ *  Point 2 - Point 4
+ * 
  * DISTRICT:		Point 1						Point 2						Point 3						Point 4
  * SLU 				38.63888, -90.240852		38.636148, -90.241753		38.635671, -90.225681		38.631757, -90.227172
  * 
