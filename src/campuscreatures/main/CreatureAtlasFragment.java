@@ -3,6 +3,7 @@ package campuscreatures.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import campuscreatures.battleMechanics.BattleCreature;
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
 import android.content.Intent;
@@ -21,25 +22,27 @@ import java.io.*;
 
 public class CreatureAtlasFragment extends ListFragment {
 
+	private List<Creatures> creatureList;
+	
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    
-	    //DatabaseHelper database = new DatabaseHelper(getActivity());
+	    DatabaseHelper database = new DatabaseHelper(getActivity());
 		
 		//get all Creatures
 	    Log.d("From CreatureAtlasFragment", "...");
-		//List<Creatures> creatureList = database.getAllCreatures();
-		//database.close();
+		creatureList = database.getAllCreatures();
+		database.close();
 		
 		 
-		//final String[] creatureNames = new String[] {};
-	    //for (int i = 1; i < creatureList.size(); i++) {
-	    //  creatureNames[i] = creatureList.get(i).getName();
-	    //}
+		final String[] creatureNames = new String[creatureList.size()];
+	    for (int i = 0; i < creatureList.size(); i++) {
+	      creatureNames[i] = creatureList.get(i).getName();
+	    }
 		
-	    final String[] creatureNames = new String[] {"Marcus Taborius", "Desi Djinn", "Philanderphil",
-	    		"Weazel Man", "Scan Bot", "Chamber Wolf", "Adam the Intern", "Lescher the Lecturer", 
-	    		"Clueless Freshman", "Roadrunner", "Billiken"};
+	    //final String[] creatureNames = new String[] {"Marcus Taborius", "Desi Djinn", "Philanderphil",
+	    		//"Weazel Man", "Scan Bot", "Chamber Wolf", "Adam the Intern", "Lescher the Lecturer", 
+	    		//"Clueless Freshman", "Roadrunner", "Billiken"};
 	    
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
 	    		android.R.layout.simple_list_item_1, creatureNames);
@@ -48,8 +51,10 @@ public class CreatureAtlasFragment extends ListFragment {
 
 	  @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
+		  BattleCreature tempBC = new BattleCreature(creatureList.get(position));
 		  Intent i = new Intent(getActivity(), CreatureEntryActivity.class);
-			startActivity(i);
+		  i.putExtra("creature", tempBC);
+		  startActivity(i);
 	  }
 
 }

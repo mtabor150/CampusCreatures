@@ -9,7 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 
+import campuscreatures.battleMechanics.BattleCreature;
 import android.content.Context;
 
 public class UserProfile implements Serializable {
@@ -18,6 +20,7 @@ public class UserProfile implements Serializable {
 	private String lastName;
 	private String userName;
 	private Boolean hasSignedUp;
+	private ArrayList<BattleCreature> creaturesList;
 	
 	public UserProfile(String filename) {
 		fileName = filename;
@@ -25,9 +28,10 @@ public class UserProfile implements Serializable {
 		lastName = "lastName";
 		userName = "userName";
 		hasSignedUp = false;
+		creaturesList = new ArrayList();
 	}
 	
-	//instantiate the saved user profile in any view
+	//loads the saved user profile in any view and instantiates a new UserProfile objects
 	public UserProfile(Context context) {
 		UserProfile tempProfile = new UserProfile("userProfile");
 		tempProfile = tempProfile.loadProfile(context);
@@ -36,6 +40,7 @@ public class UserProfile implements Serializable {
 		lastName = tempProfile.getLastName();
 		userName = tempProfile.getUserName();
 		hasSignedUp = tempProfile.hasSignedUp();
+		creaturesList = tempProfile.getCreaturesList();
 	}
 	
 	public boolean hasSignedUp() {
@@ -145,6 +150,10 @@ public class UserProfile implements Serializable {
 		return userName;
 	}
 	
+	public ArrayList<BattleCreature> getCreaturesList() {
+		return creaturesList;
+	}
+	
 	public void setInitialProfile(String first, String last, String user) {
 		if (hasSignedUp) {
 			return;
@@ -153,5 +162,13 @@ public class UserProfile implements Serializable {
 		lastName = last;
 		userName = user;
 		hasSignedUp = true;
+	}
+	
+	public void addCreature(BattleCreature creature) {
+		creaturesList.add(creature);
+	}
+	
+	public void removeCreature(BattleCreature creature) {
+		creaturesList.remove(creature);
 	}
 }
