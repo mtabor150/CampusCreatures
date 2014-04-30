@@ -9,7 +9,7 @@ public class Location {
 		latitude = lat;
 		longitude = lon;
 	}
-
+	
 	public void setLocation(double lat, double lon) {
 		latitude = lat;
 		longitude = lon;
