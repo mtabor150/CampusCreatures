@@ -20,6 +20,7 @@ public class UserProfile implements Serializable {
 	private String lastName;
 	private String userName;
 	private Boolean hasSignedUp;
+	private Party party;
 	
 	public UserProfile(String filename) {
 		fileName = filename;
@@ -27,7 +28,7 @@ public class UserProfile implements Serializable {
 		lastName = "lastName";
 		userName = "userName";
 		hasSignedUp = false;
-		ArrayList<Creatures> party = new ArrayList<Creatures>();
+		ArrayList<Creatures> party = new Party();
 	}
 	
 	//instantiate the saved user profile in any view
