@@ -2,6 +2,10 @@ package campuscreatures.main;
 
 import java.util.ArrayList;
 
+import campuscreatures.database.Creatures;
+import campuscreatures.database.DatabaseHelper;
+import campuscreatures.location.LocationService;
+import campuscreatures.profile.UserProfile;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
@@ -70,8 +74,8 @@ public class TrapCreaturesActivity extends Activity {
 	}
 
 	public void goToDBTesting(View view){
-		Intent i = new Intent(this, DatabaseService.class);
-		startActivity(i);
+		DatabaseHelper dbHelper = new DatabaseHelper(this);
+		System.out.println("Creature count " + dbHelper.getCreature(2));
 	}
 	
 	
