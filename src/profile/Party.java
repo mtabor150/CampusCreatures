@@ -2,6 +2,7 @@ package profile;
 import java.util.*;
 
 import campuscreatures.database.Creatures;
+import campuscreatures.battleMechanics.BattleCreature;
 
 public class Party {
 	
@@ -9,7 +10,7 @@ public class Party {
 	
 	public Party(){
 		
-		ArrayList<Creatures> party = new ArrayList<Creatures>();
+		ArrayList<BattleCreature> party = new ArrayList<BattleCreature>();
 		
 	}
 	

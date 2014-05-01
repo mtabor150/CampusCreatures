@@ -28,7 +28,7 @@ public class UserProfile implements Serializable {
 		lastName = "lastName";
 		userName = "userName";
 		hasSignedUp = false;
-		ArrayList<Creatures> party = new Party();
+		Party party = new Party();
 	}
 	
 	//instantiate the saved user profile in any view

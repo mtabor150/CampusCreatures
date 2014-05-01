@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:background="#333333"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,154 +14,144 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:weightSum="3"
-        android:orientation="vertical" >
+        android:background="#000000"
+        android:orientation="vertical"
+        android:weightSum="3" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="1" 
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="2" >
 
-            <TableLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-                <TableRow
+                <TextView
                     android:id="@+id/playerTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
+                    android:layout_height="wrap_content"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                <TableRow
+                <ImageView
+                    android:id="@+id/playerSprite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
                     android:id="@+id/playerHealth"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            </LinearLayout>
 
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/playerLevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/playerExperience"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
-                <TableRow 
-                    android:id="@+id/playerTurn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                    
-                </TableRow>
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-                <TableRow
+                <TextView
                     android:id="@+id/oppTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
+                    android:layout_height="wrap_content"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                <TableRow
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
                     android:id="@+id/oppHealth"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <TableRow
-                    android:id="@+id/oppLevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/oppExperience"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </TableRow>
-                <TableRow 
-                    android:id="@+id/oppTurn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                    
-                </TableRow>
-            </TableLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
-       <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical" 
-            android:weightSum="3">
+            android:layout_weight="1" >
 
-            <LinearLayout
-                android:id="@+id/battleActionLists"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" 
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="2">
-				
-                <ListView 
-				    android:id="@+id/listview1"
-				    android:layout_width="0dp"
-				    android:layout_height="match_parent" 
-				    android:layout_weight="1"/> 
-				    
-                <ListView 
-				    android:id="@+id/listview2"
-				    android:layout_width="0dp"
-				    android:layout_height="match_parent" 
-				    android:layout_weight="1"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1" >
 
                 <Button
-                    android:id="@+id/implementRound"
+                    android:id="@+id/button1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:onClick="implementRound"
-                    android:text="Fight" />
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_default_small"
+                    android:text="Button" />
 
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_default"
+                    android:text="Button" />
 
-        </LinearLayout>
+            </TableRow>
 
-       <ScrollView
-           android:id="@+id/scrollView1"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1" >
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
 
-                <TextView
-		            android:id="@+id/battleMessage"
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            
-		            android:text="TextView" />
-       </ScrollView>
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_default"
+                    android:text="Button" />
 
-        
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/btn_default"
+                    android:text="Button" />
 
+            </TableRow>
+        </TableLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/battleMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </ScrollView>
     </LinearLayout>
 
 </RelativeLayout>
