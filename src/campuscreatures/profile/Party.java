@@ -1,4 +1,4 @@
-package profile;
+package campuscreatures.profile;
 import java.util.*;
 
 import campuscreatures.database.Creatures;
