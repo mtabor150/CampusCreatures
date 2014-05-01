@@ -71,7 +71,7 @@
             android:alpha="1"
             android:background="@android:drawable/btn_default"
             android:onClick="goToTrap"
-            android:text="Trap" />
+            android:text="World" />
 
         <Button
             android:id="@+id/profileButton"
@@ -79,8 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:drawable/btn_default"
-            android:onClick="goToMap"
-            android:text="Map" />
+            android:onClick="goToBattle"
+            android:text="Battle" />
 
         <Button
             android:id="@+id/settingsButton"
@@ -89,7 +89,7 @@
             android:layout_weight="1"
             android:background="@android:drawable/btn_default"
             android:onClick="goToSettings"
-            android:text="Settings" />
+            android:text="Party" />
     </LinearLayout>
 
     <LinearLayout
