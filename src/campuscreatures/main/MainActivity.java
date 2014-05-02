@@ -172,8 +172,8 @@ public class MainActivity extends FragmentActivity {
 		startActivity(i);
 	}
 
-	public void goToMap(View view) {
-		Intent i = new Intent(this, MapActivity.class);
+	public void goToBattle(View view) {
+		Intent i = new Intent(this, BattleActivity.class);
 		startActivity(i);
 	}
 
