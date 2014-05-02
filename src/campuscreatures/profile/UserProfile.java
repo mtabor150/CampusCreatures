@@ -9,9 +9,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+
 import java.util.ArrayList;
 
 import campuscreatures.battleMechanics.BattleCreature;
+
+import java.util.*;
+
+import campuscreatures.database.Creatures;
+
 import android.content.Context;
 
 public class UserProfile implements Serializable {
@@ -20,7 +26,11 @@ public class UserProfile implements Serializable {
 	private String lastName;
 	private String userName;
 	private Boolean hasSignedUp;
+
 	private ArrayList<BattleCreature> creaturesList;
+
+	private Party party;
+
 	
 	public UserProfile(String filename) {
 		fileName = filename;
@@ -28,7 +38,11 @@ public class UserProfile implements Serializable {
 		lastName = "lastName";
 		userName = "userName";
 		hasSignedUp = false;
+
 		creaturesList = new ArrayList();
+
+		Party party = new Party();
+
 	}
 	
 	//loads the saved user profile in any view and instantiates a new UserProfile objects
