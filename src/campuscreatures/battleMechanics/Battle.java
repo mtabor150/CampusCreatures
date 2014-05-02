@@ -21,6 +21,8 @@ public class Battle implements Serializable {
 	private boolean playerChoseActionForRound;
 	private boolean opponentChoseActionForRound;
 	
+	//TODO take into account creature type when doing battle actions.
+	
 	//the only unknown attributes are playerCreature and oppCreature
 	public Battle(BattleCreature player, BattleCreature opp, Boolean isSinglePlayer) {
 		playerCreature = player;
@@ -62,8 +64,8 @@ public class Battle implements Serializable {
 			otherCreature = playerCreature;
 		}
 		
-		int damage = handleBattleAction(thisCreature, battleAction, true);
-		int regeneration = handleBattleAction(thisCreature, battleAction, false);
+		int damage = handleBattleAction(thisCreature, otherCreature, battleAction, true);
+		int regeneration = handleBattleAction(thisCreature, otherCreature, battleAction, false);
 		
 		damage = otherCreature.adjustHealth(damage);
 		regeneration = thisCreature.adjustHealth(regeneration);
@@ -188,7 +190,6 @@ public class Battle implements Serializable {
 		return oppCreature;
 	}
 	
-
 	public String battlePromptAsString() {
 		return battlePrompt.battlePromptAsString();
 	}
@@ -217,12 +218,12 @@ public class Battle implements Serializable {
 	 * in the battle based on creature stats, types, and other considerations
 	 * For now, we are just going to return a [0,2] random modification range
 	 */
-	private int handleBattleAction(BattleCreature thisCreature, BattleAction battleAction, boolean isAttack){
-		int MinVal;
-		int MaxVal;
+	private int handleBattleAction(BattleCreature thisCreature, BattleCreature otherCreature, BattleAction battleAction, boolean isAttack){
+		float MinVal;
+		float MaxVal;
 		int actionUseCount = thisCreature.getCurrentBattleActionUseCount();
 		if(isAttack) {
-			MinVal = (-2)*battleAction.getModifiedAttackValue(thisCreature.getCurrentBattleActionUseCount());
+			MinVal = (-2)*battleAction.getModifiedAttackValue(thisCreature.getCurrentBattleActionUseCount()) * ((float)thisCreature.getAttack()/((float) otherCreature.getDefense()));//take into consideration creature attack and defense
 			MaxVal = 0;
 		}
 		else {
@@ -232,7 +233,7 @@ public class Battle implements Serializable {
 		System.out.println("MinVal = " + MinVal);
 		System.out.println("MaxVal = " + MaxVal);
 		
-		return MinVal + (int)(Math.random() * ((MaxVal - MinVal) + 1));
+		return (int)MinVal + (int)(Math.random() * ((MaxVal - MinVal) + 1));
 	}
 	
 	/*
@@ -253,5 +254,10 @@ public class Battle implements Serializable {
 			loser.incrementLevel();
 			battlePrompt.addMessage(loser.getTitle() + " increased to level " + loser.getLevel());
 		}
+	}
+	
+	//exchanges the current playerCreature with a new Creature
+	public void exchangePlayerCreature(BattleCreature newCreature) {
+		playerCreature = newCreature;
 	}
 }

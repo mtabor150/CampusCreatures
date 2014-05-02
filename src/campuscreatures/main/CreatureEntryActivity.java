@@ -28,11 +28,11 @@ public class CreatureEntryActivity extends Activity {
 	private void setAllStats() {
 		setStatText(R.id.Title, creature.getTitle());
 		setStatText(R.id.HP, "HP: " + creature.getCurrentHealth() + "/" + creature.getMaxHealth());
-		setStatText(R.id.ATK, "ATK: " + "no attack value yet");
-		setStatText(R.id.DFN, "DFN: " + "no defense value yet");
+		setStatText(R.id.ATK, "ATK: " + creature.getAttack());
+		setStatText(R.id.DFN, "DFN: " + creature.getDefense());
 		setStatText(R.id.SPD, "SPD: " + creature.getSpeed());
-		setStatText(R.id.TypeField, "no type value yet");
-		setStatText(R.id.DistrictField, "no distric value yet");
+		setStatText(R.id.TypeField, creature.getType().toString());
+		setStatText(R.id.DistrictField, creature.getDistrict());
 		setStatText(R.id.DescriptionField, "Description: " + "no description value yet");
 	}
 	
