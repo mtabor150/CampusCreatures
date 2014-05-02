@@ -5,16 +5,21 @@ import java.util.ArrayList;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
+import campuscreatures.battleMechanics.BattleCreature.creatureType;
+import campuscreatures.profile.UserProfile;
 import android.os.Bundle;
 import android.os.Handler;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,14 +34,10 @@ import android.widget.TextView;
 @SuppressLint("NewApi")
 public class BattleActivity extends Activity {
 
-	//private boolean isSinglePlayer;
-	
-	//one battle, two creatures, one boolean to track the player's turn
 	private Battle currentBattle;
-	private BattleCreature player;
-	//private BattleCreature opponent;
 
-	//three modifiable TextViews for player and opponent
+
+	//four modifiable TextViews for player and opponent
 	//those for player:
 	private TextView playerTitle;
 	private TextView playerHealth;
@@ -62,12 +63,14 @@ public class BattleActivity extends Activity {
 		 * set up sample battle if 
 		 */
 		currentBattle = (Battle) getIntent().getSerializableExtra("Battle");
+
 		
 		if(currentBattle==null) {
 			
 			setupSampleBattle();
 		}
 		
+
 		setupBattleStats();
 		
 		/*
@@ -76,6 +79,7 @@ public class BattleActivity extends Activity {
 		assignBattleButtons();
 		messageTextView.setTextColor(0xFFFFFFFF);
 		System.out.println("got here z");
+
 	}
 
 	@Override
@@ -246,9 +250,57 @@ public class BattleActivity extends Activity {
 		//create sample creatures
 		BattleCreature player = new BattleCreature("Phil",1,4,10,10,0,simpleActions1);
 		BattleCreature opponent = new BattleCreature("Mark",1,3,10,10,0,simpleActions2);
+
+		
+		
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);
+	}
+	
+	//gives an alert with choices for which creature the user wants in the battle
+	private void chooseCreatureAlert() {
+		System.out.println("this is A");
+		final UserProfile userProfile = (new UserProfile()).loadProfile(this);
+		System.out.println("this is C");
+		//custom dialog
+		final Dialog dialog = new Dialog(this);
+		System.out.println("this is E");
+		dialog.setContentView(R.layout.choose_creature);
+		System.out.println("this is F");
+		dialog.setTitle("Choose Creature");
+		/*
+		 * setup ListView. clicking on a userProfile creature exchanges that creature
+		 */
+		System.out.println("This is D");
+		ListView creatureListView = (ListView) dialog.findViewById(R.id.chooseCreaturelistView);
+		int numCreatures = userProfile.getCreaturesList().size();
+		String creatureNameList[] = new String[numCreatures];
+		for(int i = 0; i<numCreatures; i++ ) {
+			creatureNameList[i] = userProfile.getCreaturesList().get(i).getTitle();
+		}
+		creatureListView.setAdapter(new ArrayAdapter<String>( this, R.layout.battle_actions_list , creatureNameList));
+		creatureListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				currentBattle.exchangePlayerCreature(userProfile.getCreaturesList().get(position));;
+				
+			}
+		});
+		
+		/*
+		 * setup okay button. If clicked, just dismiss the dialog
+		 */
+		Button dialogButton = (Button) dialog.findViewById(R.id.chooseCreatureOkayButton);
+		dialogButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				refreshStats();
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
+		System.out.println("this is B");
 	}
 
 }
