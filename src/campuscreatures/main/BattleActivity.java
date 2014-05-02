@@ -30,6 +30,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+//TODO on a 7" tablet, varying creature name lengths can completely reposition items on the screen. this needs to be fixed.
 
 @SuppressLint("NewApi")
 public class BattleActivity extends Activity {
@@ -69,6 +70,9 @@ public class BattleActivity extends Activity {
 			
 			setupSampleBattle();
 		}
+		else  {
+			chooseCreatureAlert();
+		}
 		
 
 		setupBattleStats();
@@ -79,6 +83,8 @@ public class BattleActivity extends Activity {
 		assignBattleButtons();
 		messageTextView.setTextColor(0xFFFFFFFF);
 		System.out.println("got here z");
+		
+		
 
 	}
 
@@ -127,7 +133,9 @@ public class BattleActivity extends Activity {
 		BattleCreature player = currentBattle.getPlayerBattleCreature();
 		BattleCreature opponent = currentBattle.getOpponentBattleCreature();
 		
+		playerTitle.setText("Lvl " + player.getLevel() + " " + player.getTitle());
 		playerHealth.setText("Health: " + player.getCurrentHealth());
+		oppTitle.setText("Lvl " + player.getLevel() + " " + opponent.getTitle());
 		oppHealth.setText("Health: " + opponent.getCurrentHealth());
 	}
 	
@@ -248,8 +256,8 @@ public class BattleActivity extends Activity {
 		simpleActions2.add(intimidate);
 		
 		//create sample creatures
-		BattleCreature player = new BattleCreature("Phil",1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature("Mark",1,3,10,10,0,simpleActions2);
+		BattleCreature player = new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);;
 
 		
 		
