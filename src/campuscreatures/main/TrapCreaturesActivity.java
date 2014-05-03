@@ -1,7 +1,13 @@
 package campuscreatures.main;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import campuscreatures.database.Creatures;
+import campuscreatures.database.DatabaseHelper;
+import campuscreatures.database.Player;
+import campuscreatures.location.LocationService;
+import campuscreatures.profile.UserProfile;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
@@ -13,6 +19,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.RadioButton;
+import java.util.Random;
 
 public class TrapCreaturesActivity extends Activity {
 	
@@ -70,8 +77,62 @@ public class TrapCreaturesActivity extends Activity {
 	}
 
 	public void goToDBTesting(View view){
-		Intent i = new Intent(this, DatabaseService.class);
+		DatabaseHelper dbHelper = new DatabaseHelper(this);
+		UserProfile tempProfile = new UserProfile(view.getContext());
+		System.out.println("Creature count " + dbHelper.getCreature(2));
+		//get first creature in player party
+		BattleCreature tempCreature;
+		tempCreature = tempProfile.getCreaturesList().get(0);
+		System.out.println(tempCreature.getTitle());
+		
+		//developing moves for creatures
+		BattleAction kick = new BattleAction("kick",1,0,10);
+		BattleAction heal = new BattleAction("heal",0,2,10);
+		BattleAction burn = new BattleAction("burn",2,0,5);
+		BattleAction intimidate = new BattleAction("intimidate",1,0,10);
+		BattleAction earth = new BattleAction("earth",1,0,10);
+		BattleAction water = new BattleAction("water",1,0,10);
+		BattleAction shock = new BattleAction("shock",1,0,10);
+		BattleAction space = new BattleAction("space",1,0,10);
+		BattleAction spirit = new BattleAction("spirit",1,0,10);
+		BattleAction psych = new BattleAction("psych",1,0,10);
+		
+		//populate moveset for enemy creature
+		ArrayList<BattleAction> simpleActions2 = new ArrayList();
+		simpleActions2.add(kick);
+		simpleActions2.add(heal);
+		simpleActions2.add(burn);
+		simpleActions2.add(intimidate);
+
+		
+		//create enemy creature
+		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
+		//System.out.println("got here F");
+		
+		//make a random number generator to make encountered creature random
+		Random encounter = new Random();
+		int encounterID = encounter.nextInt(4);
+		List<Creatures> locals = new ArrayList<Creatures>();
+		
+		//get current location
+		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		
+		//create a random creature based on location
+		Creatures tempOpponent;
+		tempOpponent = locals.get(encounterID);
+		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
+				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack(), tempOpponent.getDefense(), tempOpponent.getLevel(), 
+				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), simpleActions2);		
+		
+		//start the battle
+		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
+		System.out.println("...setupTrueBattle");
+		
+		Intent i = new Intent(this, BattleActivity.class);
+		i.putExtra("Battle", currentBattle);
+		System.out.println("goToBattle...");
 		startActivity(i);
+		dbHelper.close();
 	}
 	
 	
@@ -102,9 +163,8 @@ public class TrapCreaturesActivity extends Activity {
 		
 		System.out.println("got here E");
 		//create sample creatures
-		BattleCreature player = new BattleCreature(0,"Philanderphil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature(1, "Markus taborius", "home", "kitchen","electric", 2, 5, 1,3,10,10,0,simpleActions2);
-		System.out.println("got here F");
+		BattleCreature player = new BattleCreature(0,"Tester", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);
