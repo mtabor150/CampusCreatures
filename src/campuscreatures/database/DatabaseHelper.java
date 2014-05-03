@@ -255,7 +255,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	/**
 	 * PJ's
-	 * getLocalCreatures() - used to find creatures in a certain region and district
+	 * getAllCreaturesByRegion() - used to find creatures in a certain region and district
 	 * @param region
 	 * @param district
 	 * @return
@@ -268,10 +268,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public List<Creatures> getAllCreaturesByRegion(String region){
 		
 		List<Creatures> regionCreatures = new ArrayList<Creatures>();
-		String selectQuery = "SELECT * FROM " + TABLE_CREATURES + " WHERE "
-		            + COLUMN_REGION + " = " + region;
+		String[] resultColumns = new String[]{KEY_ID, COLUMN_NAME, COLUMN_REGION, COLUMN_DISTRICT, COLUMN_TYPE, COLUMN_HEALTH,
+				COLUMN_MAGIC, COLUMN_ATTACK, COLUMN_DEFENSE, COLUMN_SPEED, COLUMN_MPT, COLUMN_EXPERIENCE, COLUMN_LEVEL}; 
+		String[] condition = {region};
 		SQLiteDatabase database = this.getReadableDatabase();
-		Cursor cursor = database.rawQuery(selectQuery, null);
+		Cursor cursor = database.query(TABLE_CREATURES, resultColumns, COLUMN_REGION + "=" + "?", condition, null, null, null);
 		Creatures creature = null;
 	
 		if (cursor.moveToFirst()){
@@ -441,4 +442,164 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.d("getCreature(" + playerCreature_id + ")", playerCreature.toString());
 		return playerCreature;		
 	}	
+	
+	/**
+	* getAllPlayerCreatures() - returns a list of all creatures in database
+	* 	1. get reference to writable Database
+	* 	2. build the query statement, create cursor
+	* 	3. go over each row, build creature
+	* 	4. add creature to creatureList 
+	* 
+	*/
+	public List<Player> getAllPlayerCreatures(){
+		List<Player> playercreaturesList = new ArrayList<Player>();
+		SQLiteDatabase database = this.getReadableDatabase();
+		
+		String selectQuery = "SELECT * FROM " + TABLE_PLAYER;
+		Log.d("Logging Query for getAllPlayerCreatures", selectQuery);
+		Cursor cursor = database.rawQuery(selectQuery, null);
+		
+		Player pcreature = null;
+		if (cursor.moveToFirst()) {
+			do {
+				pcreature = new Player();
+				pcreature.setId(cursor.getInt(0));
+				pcreature.setName(cursor.getString(1));
+				pcreature.setRegion(cursor.getString(2));
+				pcreature.setDistrict(cursor.getString(3));
+				pcreature.setType(cursor.getString(4));
+				pcreature.setHealth(cursor.getInt(5));
+				pcreature.setMagic(cursor.getInt(6));
+				pcreature.setAttack(cursor.getInt(7));
+				pcreature.setDefense(cursor.getInt(8));
+				pcreature.setSpeed(cursor.getInt(9));
+				pcreature.setMovesPerTurn(cursor.getInt(10));
+				pcreature.setExperience(cursor.getInt(11));
+				pcreature.setLevel(cursor.getInt(12));
+				pcreature.setSeen(cursor.getString(13));
+				pcreature.setSeenAt(cursor.getString(14));
+				pcreature.setCaptured(cursor.getString(15));
+				playercreaturesList.add(pcreature);
+				Log.d("ID and NAME", String.valueOf(pcreature.getId()) + " " + pcreature.getName());
+			} while (cursor.moveToNext());
+		}
+		Log.d("getAllCreatures().toString() function", playercreaturesList.toString());
+		database.close();
+		return playercreaturesList;		
+	}
+		
+	/**
+	 * 
+	 * getAllPlayerCreaturesByRegion() - used to find creatures in a certain region and district
+	 * @param region
+	 * @param district
+	 * @return
+	 * 	1. get reference to readable Database
+	 * 	2. build the query statement, create cursor
+	 * 	3. go over each row, build creature (if in that region)
+	 * 	4. add creature to the list
+	 * 	5. return that list
+	 */
+	public List<Player> getAllPlayerCreaturesByRegion(String region){
+		
+		List<Player> playerregionCreatures = new ArrayList<Player>();
+		String[] resultColumns = new String[]{PLAYER_ID, COLUMN_NAME, COLUMN_REGION, COLUMN_DISTRICT, COLUMN_TYPE, COLUMN_HEALTH,
+				COLUMN_MAGIC, COLUMN_ATTACK, COLUMN_DEFENSE, COLUMN_SPEED, COLUMN_MPT, COLUMN_EXPERIENCE, COLUMN_LEVEL,
+				COLUMN_SEEN, COLUMN_SEEN_AT, COLUMN_CAPTURED}; 
+		String[] condition = {region};
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.query(TABLE_PLAYER, resultColumns, COLUMN_REGION + "=" + "?", condition, null, null, null);
+		Player pcreature = null;
+	
+		if (cursor.moveToFirst()){
+			do {
+				pcreature = new Player();
+				pcreature.setId(cursor.getInt(0));
+				pcreature.setName(cursor.getString(1));
+				pcreature.setRegion(cursor.getString(2));
+				pcreature.setDistrict(cursor.getString(3));
+				pcreature.setType(cursor.getString(4));
+				pcreature.setHealth(cursor.getInt(5));
+				pcreature.setMagic(cursor.getInt(6));
+				pcreature.setAttack(cursor.getInt(7));
+				pcreature.setDefense(cursor.getInt(8));
+				pcreature.setSpeed(cursor.getInt(9));
+				pcreature.setMovesPerTurn(cursor.getInt(10));
+				pcreature.setExperience(cursor.getInt(11));
+				pcreature.setLevel(cursor.getInt(12));
+				pcreature.setSeen(cursor.getString(13));
+				pcreature.setSeenAt(cursor.getString(14));
+				pcreature.setCaptured(cursor.getString(15));
+				playerregionCreatures.add(pcreature);
+			} while (cursor.moveToNext());
+		}
+		Log.d("Logging getAllPlayerCreaturesByRegion()", playerregionCreatures.toString());
+		return playerregionCreatures;
+	}
+	
+	/**
+	* updatePlayerCreature()
+	* @param creature
+	* @return
+	* 	1. get reference to writable Database
+	* 	2. create ContentValues to add key "column"/value
+	* 	3. update row using database.update(table, column/value, selections, selection arguments)
+	* 	4. return creature
+	*/
+	public long updatePlayerCreature(Player pcreature){
+		SQLiteDatabase database = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_NAME, pcreature.getName());			
+		values.put(COLUMN_REGION, pcreature.getRegion());		
+		values.put(COLUMN_DISTRICT, pcreature.getDistrict());	
+		values.put(COLUMN_TYPE, pcreature.getType());	 		
+		values.put(COLUMN_HEALTH, pcreature.getHealth());		
+		values.put(COLUMN_MAGIC, pcreature.getMagic());			
+		values.put(COLUMN_ATTACK, pcreature.getAttack());		
+		values.put(COLUMN_DEFENSE, pcreature.getDefense());		
+		values.put(COLUMN_SPEED, pcreature.getSpeed());		
+		values.put(COLUMN_MPT, pcreature.getMovesPerTurn());		
+		values.put(COLUMN_EXPERIENCE, pcreature.getExperience());		
+		values.put(COLUMN_LEVEL, pcreature.getLevel());			
+		values.put(COLUMN_SEEN, pcreature.getSeen());
+		values.put(COLUMN_SEEN_AT, pcreature.getSeenAt());
+		values.put(COLUMN_CAPTURED, pcreature.getCaptured());
+		
+		long x = database.update(TABLE_PLAYER, 				 
+				values, 										 	
+				PLAYER_ID + " = ?", 									
+				new String[] { String.valueOf(pcreature.getId()) });	
+		//database.close();
+		return x;
+	}
+	
+	/**
+	 * deletePlayerCreature()
+	 * @param creature_id
+	 * 	1. get reference to writable Database
+	 * 	2. use database.delete(table, selections, selection arguments)
+	 * 	3. close database
+	 */
+	public void deletePlayerCreature(long creature_id){
+		
+		SQLiteDatabase database = this.getWritableDatabase();
+		database.delete(TABLE_PLAYER,							
+				PLAYER_ID + " = ?",   									
+				new String[] {String.valueOf(creature_id) });	
+		database.close();
+		Log.d("deletePlayerCreature", String.valueOf(creature_id));
+	}
+	
+	public int getPlayerCreaturesCount(){
+		String countQuery = " SELECT * FROM " + TABLE_PLAYER;
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.rawQuery(countQuery, null);
+		int count = cursor.getCount();
+		cursor.close();
+		Log.d("Logging countQuery getPlayerCreaturesCount()", String.valueOf(count));
+		return count;
+	}
+	
+
 }
