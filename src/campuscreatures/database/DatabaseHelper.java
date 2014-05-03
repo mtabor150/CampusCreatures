@@ -266,7 +266,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * 	5. return that list
 	 */
 	public List<Creatures> getAllCreaturesByRegion(String region){
-	
+		
 		List<Creatures> regionCreatures = new ArrayList<Creatures>();
 		String selectQuery = "SELECT * FROM " + TABLE_CREATURES + " WHERE "
 		            + COLUMN_REGION + " = " + region;
@@ -296,51 +296,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.d("Logging getAllCreaturesByRegion()", regionCreatures.toString());
 		return regionCreatures;
 	}
+	
 	/**
-	 * Adam's
-	 * getLocalCreatures() - used to find creatures in a certain region and district
-	 * @param region
-	 * @param district
-	 * @return
-	 * 	1. get reference to readable Database
-	 * 	2. build the query statement, create cursor
-	 * 	3. go over each row, build creature and add it to the list
-	 * 	4. return that list
-	 */
-	public List<Creatures> getLocalCreatures(String region, String district){
-		List<Creatures> creaturesList = new LinkedList<Creatures>();
-		SQLiteDatabase database = this.getWritableDatabase();
-		
-		String selectQuery = " SELECT * FROM " + TABLE_CREATURES 
-				+ " WHERE " + COLUMN_REGION + " = " + region 
-				+ " AND " + COLUMN_DISTRICT + " = " + district;
-		Cursor cursor = database.rawQuery(selectQuery, null);
-		Creatures creature = null;
-		
-		if (cursor.moveToFirst()) {
-			do {
-				creature = new Creatures();
-				creature.setId(cursor.getInt(0));
-				creature.setName(cursor.getString(1));
-				creature.setRegion(cursor.getString(2));
-				creature.setDistrict(cursor.getString(3));
-				creature.setType(cursor.getString(4));
-				creature.setHealth(cursor.getInt(5));
-				creature.setMagic(cursor.getInt(6));
-				creature.setAttack(cursor.getInt(7));
-				creature.setDefense(cursor.getInt(8));
-				creature.setSpeed(cursor.getInt(9));
-				creature.setMovesPerTurn(cursor.getInt(10));
-				creature.setExperience(cursor.getInt(11));
-				creature.setLevel(cursor.getInt(12));
-				creaturesList.add(creature);
-			} while (cursor.moveToNext());
-		}
-		Log.d("getAllCreatures()", creaturesList.toString());
-		return creaturesList;	
-	}
-	/**
-	* updatinCreature()
+	* updateCreature()
 	* @param creature
 	* @return
 	* 	1. get reference to writable Database
