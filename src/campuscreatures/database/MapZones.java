@@ -1,13 +1,15 @@
 package campuscreatures.database;
 
+import campuscreatures.location.LocationService;
+
 public class MapZones {
 /**
- * 
+ * 	TOTAL: 31 zones
  *  Point 1 - Point 2
  *  Point 1 - Point 3
  *  Point 3 - Point 4
  *  Point 2 - Point 4
- * 
+ *  
  * DISTRICT:		Point 1						Point 2						Point 3						Point 4
  * SLU 				38.63888, -90.240852		38.636148, -90.241753		38.635671, -90.225681		38.631757, -90.227172
  * 
@@ -42,11 +44,74 @@ public class MapZones {
  * Verhaegen Hall	38.637414, -90.234197		38.637357, -90.233974		38.637054, -90.234334		38.637022, -90.234082
  * Village 1		38.637069, -90.239633		38.636767, -90.238249		38.636515, -90.239880		38.636218, -90.238426
  * Village 2		38.636496, -90.240273		38.636274, -90.239393		38.635964, -90.240466		38.635771, -90.239458
- * Xavier Hall		38.637499, -90.237901		38.637388, -90.237308		38.636979, -90.238102		38.636860, -90.237504
- * 
- * 
- * 					
+ * Xavier Hall		38.637499, -90.237901		38.637388, -90.237308		38.636979, -90.238102		38.636860, -90.237504					
  */
+	
+	int _id;			//primary ID, zone ID
+	String zone_name;
+	double _loc1;
+	double _loc2;
+	double _loc3;
+	double _loc4;
+	double _radius;
+	int numPoints;
+	
+	
+	public MapZones(){}
+	
+	public MapZones(String region_name, int numPoints, double point1, double point2, double point3, double point4, double radius){
+		if (numPoints == 4) {
+			this._loc1 = point1;
+			this._loc2 = point2;
+			this._loc3 = point3;
+			this._loc4 = point4;
+	
+		}
+	}
+	
+/**	public Creatures(String name, String region, String district, String type,
+			int health, int magic, int attack, int defense, 
+			int speed, int moves_per_turn, int exp, int level) {
+		this._name = name;
+		this._region = region;
+		this._district = district;
+		this._type = type;
+		this._health = health;
+		this._magic = magic;
+		this._attack = attack;
+		this._defense = defense;
+		this._speed = speed;
+		this._moves_per_turn = moves_per_turn;
+		this._experience = exp;
+		this._level = level;
+	}
+	
+	//constructor
+	public Creatures(int id, String name, String region, String district, 
+			String type, int health, int magic, int attack, int defense, 
+			int speed, int moves_per_turn, int exp, int level) {
+		this._id = id;
+		this._name = name;
+		this._region = region;
+		this._district = district;
+		this._type = type;
+		this._health = health;
+		this._magic = magic;
+		this._attack = attack;
+		this._defense = defense;
+		this._speed = speed;
+		this._moves_per_turn = moves_per_turn;
+		this._experience = exp;
+		this._level = level;
+	}
+
+	**/
+	
+	
+	
+	
+	
+	
 	
 	
 }
