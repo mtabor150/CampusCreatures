@@ -99,12 +99,12 @@ public class TrapCreaturesActivity extends Activity {
 		tempCreature.addBattleAction(burn);
 		tempCreature.addBattleAction(intimidate);
 		//create enemy creature
-		BattleCreature opponent = new BattleCreature("Markus Taborius",1,3,10,10,0,simpleActions2);
+		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
 		System.out.println("got here F");
 		currentBattle = new Battle(tempCreature,opponent, true);
 		System.out.println("...setupTrueBattle");
 		
-		Creatures local = dbHelper.getLocalCreatures("Ritter Hall");  //This line crashes program.
+		//Creatures local = dbHelper.getLocalCreatures("Ritter Hall");  //This line crashes program.
 		//Creatures tempOpponent;
 		//tempOpponent = locals.get(0);
 		//BattleCreature tempBattleOpponent;
@@ -148,15 +148,8 @@ public class TrapCreaturesActivity extends Activity {
 		
 		System.out.println("got here E");
 		//create sample creatures
-<<<<<<< HEAD
-		BattleCreature player = new BattleCreature("philanderphil",1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature("Markus Taborius",1,3,10,10,0,simpleActions2);
-		System.out.println("got here Fuck");
-=======
-		BattleCreature player = new BattleCreature(0,"Philanderphil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature(1, "Markus taborius", "home", "kitchen","electric", 2, 5, 1,3,10,10,0,simpleActions2);
-		System.out.println("got here F");
->>>>>>> d80ae67a70c67785c19d6684bd8cc9c090cfd39a
+		BattleCreature player = new BattleCreature(0,"Tester", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);
