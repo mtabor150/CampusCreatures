@@ -39,10 +39,6 @@ public class CreatureAtlasFragment extends ListFragment {
 	    for (int i = 0; i < creatureList.size(); i++) {
 	      creatureNames[i] = creatureList.get(i).getName();
 	    }
-		
-	    //final String[] creatureNames = new String[] {"Marcus Taborius", "Desi Djinn", "Philanderphil",
-	    		//"Weazel Man", "Scan Bot", "Chamber Wolf", "Adam the Intern", "Lescher the Lecturer", 
-	    		//"Clueless Freshman", "Roadrunner", "Billiken"};
 	    
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
 	    		android.R.layout.simple_list_item_1, creatureNames);

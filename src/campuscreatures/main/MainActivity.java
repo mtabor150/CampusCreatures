@@ -71,12 +71,9 @@ public class MainActivity extends FragmentActivity {
 		startService(locationIntent);
 		location = new LocationService(this);
 		
-		//TODO generate and fill CampusCreatures database;
-		
-		if (dbHelper == null){  
-			dbHelper = new DatabaseHelper(this);
+		dbHelper = new DatabaseHelper(this);
+		if (dbHelper.getAllCreatures().size() == 0){  
 			Log.d("From MainActivity", "....");
-			//SQLiteDatabase dbHelper = DatabaseHelper.getWritableDatabase();
 			dbHelper.getAllCreatures();
 			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
 			dbHelper.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
@@ -94,8 +91,7 @@ public class MainActivity extends FragmentActivity {
 		dbHelper.getAllCreatures();
 		dbHelper.getCreaturesCount();
 		dbHelper.getCreature(1);
-		//dbHelper.getAllCreaturesByRegion("Ritter Hall");
-		//dbHelper.getLocalCreatures("Ritter Hall", "Saint Louis University");
+		dbHelper.getAllCreaturesByRegion("Ritter Hall");
 		dbHelper.close();
 	}
 	
