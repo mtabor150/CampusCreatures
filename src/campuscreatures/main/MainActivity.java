@@ -204,8 +204,8 @@ public class MainActivity extends FragmentActivity {
 			default:
 			throw new RuntimeException("Unknow button ID");
 		}
-		if (creatureListIndex < tempProfile.getCreaturesList().size()) {
-			tempCreature = tempProfile.getCreaturesList().get(creatureListIndex);
+		if (creatureListIndex < tempProfile.getParty().size()) {
+			tempCreature = tempProfile.getParty().getPartyMember(creatureListIndex);
 		}
 		else {
 			return;
