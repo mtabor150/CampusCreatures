@@ -58,7 +58,11 @@ public class MapZones {
 	
 	
 	public MapZones(){}
+<<<<<<< HEAD
 	///why
+=======
+	
+>>>>>>> master
 	public MapZones(String region_name, int numPoints, double point1, double point2, double point3, double point4, double radius){
 		if (numPoints == 4) {
 			this._loc1 = point1;
