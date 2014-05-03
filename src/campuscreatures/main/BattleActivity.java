@@ -287,6 +287,7 @@ public class BattleActivity extends Activity {
 		for(int i = 0; i<numCreatures; i++ ) {
 			creatureNameList[i] = userProfile.getCreaturesList().get(i).getTitle();
 		}
+		//TODO currently using battle_actions_list.xml below. make a new xml and customize more.
 		creatureListView.setAdapter(new ArrayAdapter<String>( this, R.layout.battle_actions_list , creatureNameList));
 		creatureListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
