@@ -266,7 +266,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * 	5. return that list
 	 */
 	public List<Creatures> getAllCreaturesByRegion(String region){
-	
+		
 		List<Creatures> regionCreatures = new ArrayList<Creatures>();
 		String selectQuery = "SELECT * FROM " + TABLE_CREATURES + " WHERE "
 		            + COLUMN_REGION + " = " + region;
@@ -297,7 +297,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		database.close();
 		return regionCreatures;
 	}
+	
 	/**
+<<<<<<< HEAD
 	 * Adam's
 	 * getLocalCreatures() - used to find creatures in a certain region and district
 	 * @param region
@@ -308,34 +310,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * 	3. go over each row, build creature and add it to the list
 	 * 	4. return that list
 	 */
-	public Creatures getLocalCreatures(String region){
-		SQLiteDatabase database = this.getReadableDatabase();
-		
-		String selectQuery = " SELECT * FROM " + TABLE_CREATURES 
-				+ " WHERE " + COLUMN_REGION + " = " + region;
-		Cursor cursor = database.rawQuery(selectQuery, null);
-		Creatures creature = null;
-		if (cursor != null)
-			cursor.moveToFirst();
-		creature = new Creatures();
-		creature.setId(cursor.getInt(0));
-		creature.setName(cursor.getString(1));
-		creature.setRegion(cursor.getString(2));
-		creature.setDistrict(cursor.getString(3));
-		creature.setType(cursor.getString(4));
-		creature.setHealth(cursor.getInt(5));
-		creature.setMagic(cursor.getInt(6));
-		creature.setAttack(cursor.getInt(7));
-		creature.setDefense(cursor.getInt(8));
-		creature.setSpeed(cursor.getInt(9));
-		creature.setMovesPerTurn(cursor.getInt(10));
-		creature.setExperience(cursor.getInt(11));
-		creature.setLevel(cursor.getInt(12));
-		//Log.d("getAllCreatures()", creature);
-		return creature;	
-	}
+	
 	/**
 	* updatinCreature()
+=======
+	* updateCreature()
+>>>>>>> d80ae67a70c67785c19d6684bd8cc9c090cfd39a
 	* @param creature
 	* @return
 	* 	1. get reference to writable Database

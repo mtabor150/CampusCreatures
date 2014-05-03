@@ -51,12 +51,12 @@ public class MainActivity extends FragmentActivity {
 		
 		System.out.println("gere 2");
 		if (!userProfileExists()) { //make sure a file called "userProfile has been created
-			UserProfile templateProfile = new UserProfile("userProfile");
+			UserProfile templateProfile = new UserProfile();
 			templateProfile.saveProfile(this);
 			registrationPrompt();
 		}
 		else {
-			UserProfile tempProf = new UserProfile("userProfile");
+			UserProfile tempProf = new UserProfile();
 			tempProf = tempProf.loadProfile(this);
 			if(!tempProf.hasSignedUp()) { //if no user has signed up, then prompt with registration
 				registrationPrompt();
@@ -144,7 +144,7 @@ public class MainActivity extends FragmentActivity {
 			if(filesList[i].getName().equals("userProfile")) { //this will be the name of the file to hold the user info
 				System.out.println("there is a file with name 'userProfile'");
 				//System.out.println(filesList[i].);
-				UserProfile tempProf = new UserProfile("userProfile");
+				UserProfile tempProf = new UserProfile();
 				tempProf = tempProf.loadProfile(this);
 				if(tempProf!=null) {
 					System.out.println("as user has signed up = " + tempProf.hasSignedUp());
@@ -172,8 +172,8 @@ public class MainActivity extends FragmentActivity {
 		startActivity(i);
 	}
 
-	public void goToMap(View view) {
-		Intent i = new Intent(this, MapActivity.class);
+	public void goToBattle(View view) {
+		Intent i = new Intent(this, BattleActivity.class);
 		startActivity(i);
 	}
 
@@ -237,14 +237,26 @@ public class MainActivity extends FragmentActivity {
 					return;
 				}
 				else {
-					UserProfile newProfile = new UserProfile("userProfile");
+					UserProfile newProfile = new UserProfile();
 					newProfile.setInitialProfile(firstName, lastName, userName);
 					
 					//TODO below addCreature() is just for test purposes. remove when no longer necessary
-					newProfile.addCreature(new BattleCreature("Example Creature", 1, 10, 10, 10, 0, new ArrayList()));
+					//start of test code alpha
+					BattleAction kick = new BattleAction("kick",1,0,10);
+					BattleAction heal = new BattleAction("heal",0,2,10);
+					BattleAction burn = new BattleAction("burn",2,0,5);
+					BattleAction push = new BattleAction("push",2,0,5);
+					BattleAction intimidate = new BattleAction("intimidate",1,0,10);
+					ArrayList<BattleAction> simpleActions1 = new ArrayList();
+					simpleActions1.add(kick);
+					simpleActions1.add(heal);
+					simpleActions1.add(burn);
+					simpleActions1.add(push);
+					newProfile.addCreature(new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1));
+					//end of test code alpha
 					
 					newProfile.saveProfile(v.getContext());
-					UserProfile testProfile = new UserProfile("userProfile");
+					UserProfile testProfile = new UserProfile();
 					testProfile = testProfile.loadProfile(v.getContext());
 					System.out.println("firstName = " + testProfile.getFirstName());
 					setupMAdapter();

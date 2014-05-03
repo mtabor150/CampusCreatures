@@ -9,10 +9,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+
 import java.util.ArrayList;
 
 import campuscreatures.battleMechanics.BattleCreature;
+
+import java.util.*;
+
+import campuscreatures.database.Creatures;
+
 import android.content.Context;
+
+
 
 public class UserProfile implements Serializable {
 	private String fileName;
@@ -20,20 +28,28 @@ public class UserProfile implements Serializable {
 	private String lastName;
 	private String userName;
 	private Boolean hasSignedUp;
+
 	private ArrayList<BattleCreature> creaturesList;
+
+	private Party party;
+
 	
-	public UserProfile(String filename) {
-		fileName = filename;
+	public UserProfile() {
+		fileName = "userProfile";
 		firstName = "firstName";
 		lastName = "lastName";
 		userName = "userName";
 		hasSignedUp = false;
+
 		creaturesList = new ArrayList();
+
+		Party party = new Party();
+
 	}
 	
 	//loads the saved user profile in any view and instantiates a new UserProfile objects
 	public UserProfile(Context context) {
-		UserProfile tempProfile = new UserProfile("userProfile");
+		UserProfile tempProfile = new UserProfile();
 		tempProfile = tempProfile.loadProfile(context);
 		fileName = tempProfile.getFileName();
 		firstName = tempProfile.getFirstName();
@@ -47,7 +63,8 @@ public class UserProfile implements Serializable {
 		return hasSignedUp;
 	}
 	
-	
+	//TODO currently returning a default profile when an error occurs.
+	//^figure out something better to do. This could easily create unexpected results.
 	public UserProfile loadProfile(Context context) {
 		try {
 			FileInputStream fis;
@@ -59,23 +76,19 @@ public class UserProfile implements Serializable {
 				is.close();
 				return tempProf;
 			} catch (StreamCorruptedException e) {
-				// TODO Auto-generated catch block
 				System.out.println("here C");
 				e.printStackTrace();
 				return this;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.println("here D");
 				e.printStackTrace();
 				return this;
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				System.out.println("here E");
 				e.printStackTrace();
 				return this;
 			}
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return this;
 		}
@@ -118,7 +131,7 @@ public class UserProfile implements Serializable {
 			if(filesList[i].getName().equals("userProfile")) { //this will be the name of the file to hold the user info
 				System.out.println("there is a file with name 'userProfile'");
 				//System.out.println(filesList[i].);
-				UserProfile tempProf = new UserProfile("userProfile");
+				UserProfile tempProf = new UserProfile();
 				tempProf = tempProf.loadProfile(context);
 				if(tempProf!=null) {
 					System.out.println("as user has signed up = " + tempProf.hasSignedUp());

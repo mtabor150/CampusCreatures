@@ -148,9 +148,15 @@ public class TrapCreaturesActivity extends Activity {
 		
 		System.out.println("got here E");
 		//create sample creatures
+<<<<<<< HEAD
 		BattleCreature player = new BattleCreature("philanderphil",1,4,10,10,0,simpleActions1);
 		BattleCreature opponent = new BattleCreature("Markus Taborius",1,3,10,10,0,simpleActions2);
 		System.out.println("got here Fuck");
+=======
+		BattleCreature player = new BattleCreature(0,"Philanderphil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(1, "Markus taborius", "home", "kitchen","electric", 2, 5, 1,3,10,10,0,simpleActions2);
+		System.out.println("got here F");
+>>>>>>> d80ae67a70c67785c19d6684bd8cc9c090cfd39a
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);
