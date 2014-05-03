@@ -84,6 +84,7 @@ public class TrapCreaturesActivity extends Activity {
 		BattleCreature tempCreature;
 		tempCreature = tempProfile.getCreaturesList().get(0);
 		System.out.println(tempCreature.getTitle());
+		
 		//developing moves for creatures
 		BattleAction kick = new BattleAction("kick",1,0,10);
 		BattleAction heal = new BattleAction("heal",0,2,10);
@@ -95,40 +96,35 @@ public class TrapCreaturesActivity extends Activity {
 		BattleAction space = new BattleAction("space",1,0,10);
 		BattleAction spirit = new BattleAction("spirit",1,0,10);
 		BattleAction psych = new BattleAction("psych",1,0,10);
+		
 		//populate moveset for enemy creature
 		ArrayList<BattleAction> simpleActions2 = new ArrayList();
 		simpleActions2.add(kick);
 		simpleActions2.add(heal);
 		simpleActions2.add(burn);
 		simpleActions2.add(intimidate);
-		//populate player creature moveset
-		tempCreature.addBattleAction(kick);
-		tempCreature.addBattleAction(heal);
-		tempCreature.addBattleAction(burn);
-		tempCreature.addBattleAction(intimidate);
+
+		
 		//create enemy creature
 		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
 		//System.out.println("got here F");
 		
+		//make a random number generator to make encountered creature random
 		Random encounter = new Random();
 		int encounterID = encounter.nextInt(4);
-		System.out.println("THIS IS THE ENCOUNTER ID!!!!!!!!!!!!: " + encounterID);
 		List<Creatures> locals = new ArrayList<Creatures>();
-		//System.out.println("created the local player list");
-		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");  //This line crashes program.
-		//System.out.println("set local equal to player creatures by region");
-		//System.out.println(locals);
+		
+		//get current location
+		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		
+		//create a random creature based on location
 		Creatures tempOpponent;
-		//System.out.println("initialized temp opponent");
 		tempOpponent = locals.get(encounterID);
-		//System.out.println("used .get(0) to get first in list");
-		//BattleCreature tempBattleOpponent;
-		String fd = tempOpponent.getName();
-		System.out.println("THIS IS THE STRING OF DOOM: " + fd);
 		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
 				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack(), tempOpponent.getDefense(), tempOpponent.getLevel(), 
 				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), simpleActions2);		
 		
+		//start the battle
 		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
 		System.out.println("...setupTrueBattle");
 		
