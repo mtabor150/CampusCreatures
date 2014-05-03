@@ -1,6 +1,7 @@
 package campuscreatures.main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
@@ -75,7 +76,48 @@ public class TrapCreaturesActivity extends Activity {
 
 	public void goToDBTesting(View view){
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
+		UserProfile tempProfile = new UserProfile(view.getContext());
 		System.out.println("Creature count " + dbHelper.getCreature(2));
+		//get first creature in player party
+		BattleCreature tempCreature;
+		tempCreature = tempProfile.getCreaturesList().get(0);
+		System.out.println(tempCreature.getTitle());
+		//developing moves for creatures
+		BattleAction kick = new BattleAction("kick",1,0,10);
+		BattleAction heal = new BattleAction("heal",0,2,10);
+		BattleAction burn = new BattleAction("burn",2,0,5);
+		BattleAction intimidate = new BattleAction("intimidate",1,0,10);
+		//populate moveset for enemy creature
+		ArrayList<BattleAction> simpleActions2 = new ArrayList();
+		simpleActions2.add(kick);
+		simpleActions2.add(heal);
+		simpleActions2.add(burn);
+		simpleActions2.add(intimidate);
+		//populate player creature moveset
+		tempCreature.addBattleAction(kick);
+		tempCreature.addBattleAction(heal);
+		tempCreature.addBattleAction(burn);
+		tempCreature.addBattleAction(intimidate);
+		//create enemy creature
+		BattleCreature opponent = new BattleCreature("Markus Taborius",1,3,10,10,0,simpleActions2);
+		System.out.println("got here F");
+		currentBattle = new Battle(tempCreature,opponent, true);
+		System.out.println("...setupTrueBattle");
+		
+		Creatures local = dbHelper.getLocalCreatures("Ritter Hall");  //This line crashes program.
+		//Creatures tempOpponent;
+		//tempOpponent = locals.get(0);
+		//BattleCreature tempBattleOpponent;
+		//String fd = tempOpponent.getName();
+		//System.out.println("THIS IS THE STRING OF DOOM: " + fd);
+		//tempBattleOpponent = (fd, 1, 10, 10, 10, 10, simpleActions2);
+		//tempBattleOpponent = (tempOpponent.getName(), 1, tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), simpleActions2);
+		
+		Intent i = new Intent(this, BattleActivity.class);
+		i.putExtra("Battle", currentBattle);
+		System.out.println("goToBattle...");
+		startActivity(i);
+		dbHelper.close();
 	}
 	
 	
@@ -108,7 +150,7 @@ public class TrapCreaturesActivity extends Activity {
 		//create sample creatures
 		BattleCreature player = new BattleCreature("philanderphil",1,4,10,10,0,simpleActions1);
 		BattleCreature opponent = new BattleCreature("Markus Taborius",1,3,10,10,0,simpleActions2);
-		System.out.println("got here F");
+		System.out.println("got here Fuck");
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);
