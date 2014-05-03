@@ -6,24 +6,46 @@ import java.util.ArrayList;
 import campuscreatures.database.Creatures;
 
 public class BattleCreature implements Serializable {
+	public enum statType {
+		attack, defense, speed
+	}
+	
+	public enum creatureType {
+		fire, space, normal, electric, psychic, spirit, earth
+	}
+	
 	//Creatures will have a title, level, max health, current health
 	//experience, and arrayList of attacks.
+	private int id;
 	private String Title;
-	private int Level;
-	private int MaxHealth;
-	private int speed;
+	private String region;
+	private String district;
+	private creatureType type;
 	private int CurrentHealth;
+	private int MaxHealth;
+	private int attack;
+	private int defense;
+	private int Level;
+	private int speed;
 	private int CreatureExperience;
 	private ArrayList<BattleAction> BattleActions;
 	private BattleAction currentBattleAction;
 	private ArrayList<Integer> BattleActionsUseCount;
 	private int CurrentBattleActionUseCount;
+	private int upgradePoints;
 	
 	//TODO add all values which 'Creature' class has which 'BattleCreature' does not have.
 	//TODO create function/s to convert between 'Creature' and 'BattleCreature' classes
 	
 	//construct a creature with all stats
-	public BattleCreature(String title, int level, int speed, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
+	public BattleCreature(int id, String title, String region, String district, 
+			String type, int attack, int defense, int level, int speed, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
+		this.id = id;
+		this.region = region;
+		this.district = district;
+		this.type = creatureTypeFromString(type);
+		this.attack = attack;
+		this.defense = defense;
 		Title = title;
 		Level = level;
 		MaxHealth = maxH;
@@ -49,20 +71,67 @@ public class BattleCreature implements Serializable {
 		}
 		System.out.println("Got here K");
 		resetBattleActionsCount(-1); //set all counts to 0;
-		System.out.println("Got here J");	
+		System.out.println("Got here J");
+		upgradePoints = 0;
 	}
 	
 	//constructor from a 'Creatures' instance
 	public BattleCreature(Creatures c) {
 		//TODO the below conversion gives an empty battleActions ArrayList.
-		this(c.getName(), c.getLevel(), c.getSpeed(), c.getHealth(), c.getHealth(), 0, new ArrayList());
+		this(c.getId(), c.getName(), c.getRegion(), c.getDistrict(), c.getType(), c.getAttack(),
+				c.getDefense(), c.getLevel(), c.getSpeed(), c.getHealth(),
+				c.getHealth(), 0, new ArrayList());
+	}
+	
+	//returns the creatureType enumeration for a certain String 
+	private creatureType creatureTypeFromString(String string) {
+		if(string.equals("earth")){
+			return creatureType.earth;
+		} else if (string.equals("fire")) {
+			return creatureType.fire;
+		} else if (string.equals("space")) {
+			return creatureType.space;
+		} else if (string.equals("normal")) {
+			return creatureType.normal;
+		} else if (string.equals("electric")) {
+			return creatureType.electric;
+		} else if (string.equals("psychic")) {
+			return creatureType.psychic;
+		} else if (string.equals("spirit")) {
+			return creatureType.spirit;
+		}else {
+			return creatureType.normal;
+		}
 	}
 	
 	
-	
 	//set of getter methods
+	public int getId() {
+		return id;
+	}
+	
 	public String getTitle(){
 		return Title;
+	}
+	
+	public String getRegion() {
+		return region;
+	}
+	
+	public String getDistrict() {
+		return district;
+	}
+	
+	public creatureType getType() {
+		return type;
+	}
+	
+	public int getAttack() {
+		return attack;
+	}
+	
+	public int getDefense() {
+		return defense;
 	}
 	
 	public int getLevel(){
@@ -93,6 +162,18 @@ public class BattleCreature implements Serializable {
 		return currentBattleAction;
 	}
 	
+	public ArrayList<Integer> getBattleActionsUseCount() {
+		return BattleActionsUseCount;
+	}
+	
+	public int getCurrentBattleActionUseCount() {
+		return CurrentBattleActionUseCount;
+	}
+	
+	public int getUpgradePoints() {
+		return upgradePoints;
+	}
+	
 	
 	//modifier methods for certain attributes
 	public void incrementLevel(){
@@ -101,6 +182,49 @@ public class BattleCreature implements Serializable {
 	
 	public void setSpeed(int newSpeed) {
 		speed = newSpeed;
+	}
+	
+	public void setAttack(int newAttack) {
+		attack = newAttack;
+	}
+	
+	public void setDefense(int newDefense) {
+		defense = newDefense;
+	}
+	
+	public void incrementAttack() {
+		attack++;
+	}
+	
+	public void incrementDefense() {
+		defense++;
+	}
+	
+	public void incrementSpeed() {
+		speed++;
+	}
+	
+	public void addUpgradePoints(int upgrade) {
+		upgradePoints += upgrade;
+	}
+	
+	public void incrementStat(statType stat) {
+		if(upgradePoints > 0) {
+			switch(stat) {
+			case attack:
+				incrementAttack();
+				break;
+			case defense:
+				incrementDefense();
+				break;
+			case speed:
+				incrementSpeed();
+				break;
+			default:
+				return;
+			}
+			upgradePoints--;
+		}		
 	}
 	
 	public int adjustHealth(int val){
@@ -147,25 +271,5 @@ public class BattleCreature implements Serializable {
 			}
 		}
 	}
-	
-	public ArrayList<Integer> getBattleActionsUseCount() {
-		return BattleActionsUseCount;
-	}
-	
-	public int getCurrentBattleActionUseCount() {
-		return CurrentBattleActionUseCount;
-	}
-	public boolean equals(BattleCreature creature){
-		if (this.getTitle() == creature.getTitle() &&
-			this.getLevel() == creature.getLevel() &&
-			this.getMaxHealth() == creature.getMaxHealth() &&
-			this.getSpeed() == creature.getSpeed() &&
-			this.getCurrentHealth() == creature.getCurrentHealth() &&
-			this.getCreatureExperience() == creature.getCreatureExperience())
-		{
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 }
