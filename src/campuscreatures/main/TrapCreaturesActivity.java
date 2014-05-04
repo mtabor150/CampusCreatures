@@ -88,8 +88,8 @@ public class TrapCreaturesActivity extends Activity {
 		System.out.println("Creature count " + dbHelper.getCreature(2));
 		//get first creature in player party
 		BattleCreature tempCreature;
-		tempCreature = tempProfile.getCreaturesList().get(0);
-		System.out.println(tempCreature.getTitle());
+		//tempCreature = tempProfile.getCreaturesList().get(0);
+		//System.out.println(tempCreature.getTitle());
 		
 		//make a random number generator to make encountered creature random
 		Random encounter = new Random();
@@ -109,7 +109,7 @@ public class TrapCreaturesActivity extends Activity {
 				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
-		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
+		//currentBattle = new Battle(tempCreature,localBattleOpponent, true);
 		System.out.println("...setupTrueBattle");
 		
 		Intent i = new Intent(this, BattleActivity.class);

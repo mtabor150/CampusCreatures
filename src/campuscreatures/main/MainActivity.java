@@ -203,31 +203,24 @@ public class MainActivity extends FragmentActivity {
 		BattleCreature tempCreature;
 		UserProfile tempProfile = new UserProfile(view.getContext());
 		int creatureListIndex = 0;
-		switch(view.getId())
-		{
-			case R.id.imageButton1:
-				creatureListIndex = 0;
-				break;
-			case R.id.imageButton2:
-				creatureListIndex = 1;
-				break;
-			case R.id.imageButton3:
-				creatureListIndex = 2;
-				break;
-			case R.id.imageButton4:
-				creatureListIndex = 3;
-				break;
-			case R.id.imageButton5:
-				creatureListIndex = 4;
-				break;
-			case R.id.imageButton6:
-				creatureListIndex = 5;
-				break;
-			default:
+		int id = view.getId();
+		if (id == R.id.imageButton1) {
+			creatureListIndex = 0;
+		} else if (id == R.id.imageButton2) {
+			creatureListIndex = 1;
+		} else if (id == R.id.imageButton3) {
+			creatureListIndex = 2;
+		} else if (id == R.id.imageButton4) {
+			creatureListIndex = 3;
+		} else if (id == R.id.imageButton5) {
+			creatureListIndex = 4;
+		} else if (id == R.id.imageButton6) {
+			creatureListIndex = 5;
+		} else {
 			throw new RuntimeException("Unknow button ID");
 		}
-		if (creatureListIndex < tempProfile.getCreaturesList().size()) {
-			tempCreature = tempProfile.getCreaturesList().get(creatureListIndex);
+		if (creatureListIndex < tempProfile.getParty().size()) {
+			tempCreature = tempProfile.getParty().getPartyMember(creatureListIndex);
 		}
 		else {
 			return;
@@ -286,5 +279,5 @@ public class MainActivity extends FragmentActivity {
 		dialog.show();
 			
 	}
->>>>>>> master
+
 }
