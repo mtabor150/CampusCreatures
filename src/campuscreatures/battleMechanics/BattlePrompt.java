@@ -12,7 +12,7 @@ public class BattlePrompt implements Serializable {
 	
 	public BattlePrompt(int max) {
 		messages = new ArrayList();
-		maxSize = max;
+		maxSize = 25;
 		totalIndexedMessages = 0;
 		addRoundHeader(1);
 	}
@@ -32,7 +32,7 @@ public class BattlePrompt implements Serializable {
 	public void addMessage(String newMessage) {
 		messages.add(newMessage);
 		if(messages.size() > maxSize) {
-			//messages.remove(0);
+			messages.remove(0);
 		}
 		roundHeaderAddedLast = false;
 	}

@@ -21,8 +21,8 @@ public class BattleCreature implements Serializable {
 	private String region;
 	private String district;
 	private creatureType type;
-	private int CurrentHealth;
-	private int MaxHealth;
+	private float CurrentHealth;
+	private float MaxHealth;
 	private int attack;
 	private int defense;
 	private int Level;
@@ -33,13 +33,15 @@ public class BattleCreature implements Serializable {
 	private ArrayList<Integer> BattleActionsUseCount;
 	private int CurrentBattleActionUseCount;
 	private int upgradePoints;
+	private int currentLevelXP;
+	private int nextLevelXP;
 	
 	//TODO add all values which 'Creature' class has which 'BattleCreature' does not have.
 	//TODO create function/s to convert between 'Creature' and 'BattleCreature' classes
 	
 	//construct a creature with all stats
 	public BattleCreature(int id, String title, String region, String district, 
-			String type, int attack, int defense, int level, int speed, int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
+			String type, int attack, int defense, int level, int speed,int maxH, int currentH, int xp, ArrayList<BattleAction> actions) {
 		this.id = id;
 		this.region = region;
 		this.district = district;
@@ -48,7 +50,7 @@ public class BattleCreature implements Serializable {
 		this.defense = defense;
 		Title = title;
 		Level = level;
-		MaxHealth = maxH;
+		MaxHealth = (float)maxH;
 		this.speed = speed;
 		System.out.println("Got here H");
 		//set CurrentHealth and make sure not to make it larger than MaxHealth
@@ -56,7 +58,7 @@ public class BattleCreature implements Serializable {
 			CurrentHealth = maxH;
 		}
 		else {
-			CurrentHealth = currentH;
+			CurrentHealth = (float)currentH;
 		}
 		
 		CreatureExperience = xp;
@@ -73,6 +75,8 @@ public class BattleCreature implements Serializable {
 		resetBattleActionsCount(-1); //set all counts to 0;
 		System.out.println("Got here J");
 		upgradePoints = 0;
+		currentLevelXP = 0;
+		nextLevelXP = 10;
 	}
 	
 	//constructor from a 'Creatures' instance
@@ -138,7 +142,7 @@ public class BattleCreature implements Serializable {
 		return Level;
 	}
 	
-	public int getMaxHealth(){
+	public float getMaxHealth(){
 		return MaxHealth;
 	}
 	
@@ -146,7 +150,7 @@ public class BattleCreature implements Serializable {
 		return speed;
 	}
 	
-	public int getCurrentHealth(){
+	public float getCurrentHealth(){
 		return CurrentHealth;
 	}
 	
@@ -227,8 +231,8 @@ public class BattleCreature implements Serializable {
 		}		
 	}
 	
-	public int adjustHealth(int val){
-		int oldHealth = CurrentHealth;
+	public float adjustHealth(float val){
+		float oldHealth = CurrentHealth;
 		CurrentHealth = CurrentHealth + val;
 		//make sure never to make CurrentHealth greater than max health
 		if(CurrentHealth > MaxHealth) {
@@ -247,6 +251,12 @@ public class BattleCreature implements Serializable {
 	
 	public void increaseCreatureExperience(int val) {
 		CreatureExperience += val;
+		while(CreatureExperience >= nextLevelXP) {
+			incrementLevel();
+			currentLevelXP = nextLevelXP;
+			nextLevelXP *= 1.5;
+			addUpgradePoints(5);
+		}
 	}
 	
 	public void addBattleAction(BattleAction action) {
@@ -260,7 +270,9 @@ public class BattleCreature implements Serializable {
 		resetBattleActionsCount(i);
 	}
 	
-	private void resetBattleActionsCount(int i) {//reset all battle actions count except for the one with index i
+	//reset all battle actions count except for the one with index i
+	//if resetting all of them, use i = -1
+	protected void resetBattleActionsCount(int i) {
 		System.out.println("Got here L");
 		for(int j = 0; j< BattleActions.size(); j++) {
 			System.out.println("Got here M: " + j);
