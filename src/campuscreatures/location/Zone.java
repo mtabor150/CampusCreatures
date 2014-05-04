@@ -12,8 +12,10 @@ public class Zone {
 	private Location[] points = null;
 	private int numPoints = 0;
 	private double radius = 0;
-
-	public Zone(Location center, double rad) {
+	String zoneName;
+	
+	public Zone(String name, Location center, double rad) {
+		this.zoneName = name;
 		numPoints = 1;
 		points = new Location[numPoints];
 		points[0] = center;
@@ -21,7 +23,8 @@ public class Zone {
 		radius = rad;
 	}
 	
-	public Zone(Location center, Location outerpoint){
+	public Zone(String name, Location center, Location outerpoint){
+		this.zoneName = name;
 		numPoints = 1;
 		points = new Location[numPoints];
 		points[0] = center;
@@ -29,7 +32,8 @@ public class Zone {
 		radius = pointDistance(center, outerpoint);
 	}
 
-	public Zone(Location alpha, Location beta, Location gamma, Location delta) {
+	public Zone(String name, Location alpha, Location beta, Location gamma, Location delta) {
+		this.zoneName = name;
 		numPoints = 4;
 		points = new Location[numPoints];
 		setBarycenter(alpha, beta, gamma, delta);
@@ -103,6 +107,8 @@ public class Zone {
 			Location delta) {
 		return ((area(alpha, gamma, beta))+(area(alpha, gamma, delta)));
 	}
-
-
+	
+	public String getName() {
+		return this.zoneName;
+	}
 }

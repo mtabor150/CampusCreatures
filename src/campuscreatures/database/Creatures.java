@@ -1,4 +1,9 @@
 package campuscreatures.database;
+
+import java.util.ArrayList;
+
+import campuscreatures.battleMechanics.BattleAction;
+
 /**
  * 	Creatures class: 
  * 	Private variables:
@@ -184,5 +189,225 @@ public class Creatures {
 	}
 	public void setLevel(int level){
 		this._level = level;
+	}
+	
+	public ArrayList<BattleAction> getMoveSet(Creatures creature){
+		int level = creature.getLevel();
+		String type = creature.getType();
+		ArrayList<BattleAction> move_set = new ArrayList();
+		
+		//Initialize all the moves and their battle values
+		//Basic Abilities
+		BattleAction kick_1 = new BattleAction("Scratch",1,0,10);
+		BattleAction kick_2 = new BattleAction("Swipe",2,0,10);
+		BattleAction kick_3 = new BattleAction("Gouge",3,0,10);
+		BattleAction kick_4 = new BattleAction("Shred",4,0,10);
+		//Recovery Abilities
+		BattleAction heal_1 = new BattleAction("First Aid",0,2,10);
+		BattleAction heal_2 = new BattleAction("Recover",0,4,10);
+		BattleAction heal_3 = new BattleAction("Heal",0,6,10);
+		BattleAction heal_4 = new BattleAction("Regenerate",0,8,10);
+		//Better Basic Abilities
+		BattleAction intimidate_1 = new BattleAction("Slap",2,0,10);
+		BattleAction intimidate_2 = new BattleAction("Punch",3,0,10);
+		BattleAction intimidate_3 = new BattleAction("Kick",3,0,10);
+		BattleAction intimidate_4 = new BattleAction("Throw",4,0,10);
+		//Earth Type Abilities
+		BattleAction earth_1 = new BattleAction("Pebble Shot",1,0,10);
+		BattleAction earth_2 = new BattleAction("Rock Throw", 2, 0, 10);
+		BattleAction earth_3 = new BattleAction("Rock Slide",3,0,10);
+		BattleAction earth_4 = new BattleAction("Earthquake", 4, 0, 10);
+		//Lightning Type Abilities
+		BattleAction shock_1 = new BattleAction("Static",1,0,10);
+		BattleAction shock_2 = new BattleAction("Shock",2,0,10);
+		BattleAction shock_3 = new BattleAction("Electrocute",3,0,10);
+		BattleAction shock_4 = new BattleAction("Lightning Storm",4,0,10);
+		//Space Type Abilities
+		BattleAction space_1 = new BattleAction("Cosmic Dust",1,0,10);
+		BattleAction space_2 = new BattleAction("Comet",2,0,10);
+		BattleAction space_3 = new BattleAction("Meteor Shower",3,0,10);
+		BattleAction space_4 = new BattleAction("Black Hole",4,0,10);
+		//Spirit Type Abilities
+		BattleAction spirit_1 = new BattleAction("Spook",1,0,10);
+		BattleAction spirit_2 = new BattleAction("Haunt",2,0,10);
+		BattleAction spirit_3 = new BattleAction("Horrify",3,0,10);
+		BattleAction spirit_4 = new BattleAction("Soul Steal",4,0,10);
+		//Psychic Type Abilities
+		BattleAction psych_1 = new BattleAction("Confound",1,0,10);
+		BattleAction psych_2 = new BattleAction("Bewitch",2,0,10);
+		BattleAction psych_3 = new BattleAction("Mind Spike",3,0,10);
+		BattleAction psych_4 = new BattleAction("Thought Sieze",4,0,10);
+		//Normal Type Abilities
+		BattleAction normal_1 = new BattleAction("Cut", 1,0,10);
+		BattleAction normal_2 = new BattleAction("Bite", 2,0,10);
+		BattleAction normal_3 = new BattleAction("Hyper Fang", 2,0,10);
+		BattleAction normal_4 = new BattleAction("Rollout", 4,0,10);
+		//Fire Type Abilities
+		BattleAction fire_1 = new BattleAction("Burn", 1,0,10);
+		BattleAction fire_2 = new BattleAction("Scorch", 2,0,10);
+		BattleAction fire_3 = new BattleAction("Conflagrate", 2,0,10);
+		BattleAction fire_4 = new BattleAction("Immolate", 4,0,10);
+		
+		//Assign basic three moves
+		if (level < 5){
+			move_set.add(kick_1);
+			move_set.add(heal_1);
+			move_set.add(intimidate_1);
+		}
+		else{
+			if (level < 16){
+				move_set.add(kick_2);
+				move_set.add(heal_2);
+				move_set.add(intimidate_2);
+			}
+			else{
+				if (level < 25){
+					move_set.add(kick_3);
+					move_set.add(heal_3);
+					move_set.add(intimidate_3);
+				}
+				else{
+					move_set.add(kick_4);
+					move_set.add(heal_4);
+					move_set.add(intimidate_4);
+				}
+			}
+		}
+		//Assign Psychic moves
+		if (type == "psychic"){
+			if (level < 2){
+				move_set.add(psych_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(psych_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(psych_3);
+					}
+					else{
+						move_set.add(psych_4);
+					}
+				}
+			}
+		}
+		//Assign Earth moves
+		if (type == "earth"){
+			if (level < 2){
+				move_set.add(earth_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(earth_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(earth_3);
+					}
+					else{
+						move_set.add(earth_4);
+					}
+				}
+			}
+		}
+		//Assign Fire moves
+		if (type == "fire"){
+			if (level < 2){
+				move_set.add(fire_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(fire_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(fire_3);
+					}
+					else{
+						move_set.add(fire_4);
+					}
+				}
+			}
+		}
+		//Assign Space moves
+		if (type == "space"){
+			if (level < 2){
+				move_set.add(space_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(space_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(space_3);
+					}
+					else{
+						move_set.add(space_4);
+					}
+				}
+			}
+		}
+		//Assign Normal moves
+		if (type == "normal"){
+			if (level < 2){
+				move_set.add(normal_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(normal_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(normal_3);
+					}
+					else{
+						move_set.add(normal_4);
+					}
+				}
+			}
+		}
+		//Assign Spirit moves
+		if (type == "spirit"){
+			if (level < 2){
+				move_set.add(spirit_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(spirit_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(spirit_3);
+					}
+					else{
+						move_set.add(spirit_4);
+					}
+				}
+			}
+		}
+		//Assign Electric moves
+		if (type == "electric"){
+			if (level < 2){
+				move_set.add(shock_1);
+			}
+			else{
+				if (level < 9){
+					move_set.add(shock_2);
+				}
+				else{
+					if (level < 21){
+						move_set.add(shock_3);
+					}
+					else{
+						move_set.add(shock_4);
+					}
+				}
+			}
+		}
+		
+		//Return ArrayList of the moves
+		return move_set;
 	}
 }
