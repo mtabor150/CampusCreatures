@@ -7,18 +7,18 @@ public class BattleAction implements Serializable {
 	//a BattleAction will either attack the other creature
 	//or recover the creature calling the action
 	private String Title;
-	private int AttackVal;
-	private int RecoverVal;
+	private float AttackVal;
+	private float RecoverVal;
 	private int Effectiveness;
 	
 	public BattleAction(String title, int attack, int recover, int effect) {
 		Title = title;
-		AttackVal = attack;
+		AttackVal = (float)attack;
 		if(attack == 0) {  //we won't allow both attack and recover in same action
-			RecoverVal = recover;
+			RecoverVal = (float)recover;
 		}
 		else {
-			RecoverVal = 0; //so if both parameters aren't zero, we default to accept the attack value
+			RecoverVal = (float)0; //so if both parameters aren't zero, we default to accept the attack value
 		}
 		Effectiveness = effect;
 	}
@@ -29,11 +29,11 @@ public class BattleAction implements Serializable {
 		return Title;
 	}
 	
-	private int getAttackVal(){
+	private float getAttackVal(){
 		return AttackVal;
 	}
 	
-	private int getRecoverVal(){
+	private float getRecoverVal(){
 		return RecoverVal;
 	}
 	
@@ -55,19 +55,19 @@ public class BattleAction implements Serializable {
 		Effectiveness = effect;
 	}
 	
-	public int getModifiedAttackValue(int mod) {
+	public float getModifiedAttackValue(int mod) {
 		if(mod == 0) {
 			return AttackVal;
 		}
 		System.out.println("mod = " + mod);
-		return AttackVal/(mod);
+		return AttackVal/(float)mod;
 	}
 	
-	public int getModifiedRecoverValue(int mod) {
+	public float getModifiedRecoverValue(int mod) {
 		if(mod == 0) {
 			return RecoverVal;
 		}
-		return RecoverVal/mod;
+		return RecoverVal/(float)mod;
 	}
 	
 }

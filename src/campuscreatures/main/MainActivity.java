@@ -253,6 +253,8 @@ public class MainActivity extends FragmentActivity {
 					simpleActions1.add(burn);
 					simpleActions1.add(push);
 					newProfile.addCreature(new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1));
+					
+					
 					//end of test code alpha
 					
 					newProfile.saveProfile(v.getContext());
