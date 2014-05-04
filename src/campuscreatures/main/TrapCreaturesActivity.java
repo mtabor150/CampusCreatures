@@ -85,30 +85,6 @@ public class TrapCreaturesActivity extends Activity {
 		tempCreature = tempProfile.getCreaturesList().get(0);
 		System.out.println(tempCreature.getTitle());
 		
-		//developing moves for creatures
-		BattleAction kick = new BattleAction("kick",1,0,10);
-		BattleAction heal = new BattleAction("heal",0,2,10);
-		BattleAction burn = new BattleAction("burn",2,0,5);
-		BattleAction intimidate = new BattleAction("intimidate",1,0,10);
-		BattleAction earth = new BattleAction("earth",1,0,10);
-		BattleAction water = new BattleAction("water",1,0,10);
-		BattleAction shock = new BattleAction("shock",1,0,10);
-		BattleAction space = new BattleAction("space",1,0,10);
-		BattleAction spirit = new BattleAction("spirit",1,0,10);
-		BattleAction psych = new BattleAction("psych",1,0,10);
-		
-		//populate moveset for enemy creature
-		ArrayList<BattleAction> simpleActions2 = new ArrayList();
-		simpleActions2.add(kick);
-		simpleActions2.add(heal);
-		simpleActions2.add(burn);
-		simpleActions2.add(intimidate);
-
-		
-		//create enemy creature
-		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
-		//System.out.println("got here F");
-		
 		//make a random number generator to make encountered creature random
 		Random encounter = new Random();
 		int encounterID = encounter.nextInt(4);
@@ -120,9 +96,11 @@ public class TrapCreaturesActivity extends Activity {
 		//create a random creature based on location
 		Creatures tempOpponent;
 		tempOpponent = locals.get(encounterID);
+		ArrayList<BattleAction> moveset = tempOpponent.getMoveSet(tempOpponent);
+		System.out.println(moveset);
 		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
 				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack(), tempOpponent.getDefense(), tempOpponent.getLevel(), 
-				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), simpleActions2);		
+				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
 		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
