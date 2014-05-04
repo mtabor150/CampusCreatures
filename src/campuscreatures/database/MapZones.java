@@ -63,6 +63,9 @@ public class MapZones implements Iterable<Zone>{
 		Zones = new ArrayList<Zone>();
 		/* Circle based zones */
 		
+		Zone campus = new Zone("Saint Louis University", new Location(38.63888, -90.240852), new Location(38.636148, -90.241753),
+					  new Location(38.635671, -90.225681), new Location(38.631757, -90.227172));
+		
 		Zone chafeitz = new Zone("Chafeitz Arena", new Location(38.637265, -90.238537), new Location(38.637265, -90.238537));
 		Zones.add(chafeitz);
 		
@@ -103,9 +106,9 @@ public class MapZones implements Iterable<Zone>{
 					  new Location(38.635895, -90.236960), new Location(38.635838, -90.236597));
 		Zones.add(dePeres);
 		
-		Zone dubourg = new Zone("Dubourg Hall", new Location(38.636997, -90.234232), new Location(38.636773, -90.233129),
+		Zone dubourgh = new Zone("DuBourgh Hall", new Location(38.636997, -90.234232), new Location(38.636773, -90.233129),
 					   new Location(38.636547, -90.234334), new Location(38.635981, -90.233403));
-		Zones.add(dubourg);
+		Zones.add(dubourgh);
 		
 		Zone griese = new Zone("Griesedieck Hall", new Location(38.636077, -90.235002), new Location(38.635857, -90.234025),
 					  new Location(38.635489, -90.235187), new Location(38.635315, -90.234234));
