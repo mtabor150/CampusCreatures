@@ -191,8 +191,8 @@ public class MainActivity extends FragmentActivity {
 		startActivity(i);
 	}
 
-	public void goToSettings(View view) {
-		Intent i = new Intent(this, SettingsActivity.class);
+	public void goToMap(View view) {
+		Intent i = new Intent(this, MapActivity.class);
 		startActivity(i);
 	}
 
