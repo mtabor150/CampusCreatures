@@ -179,6 +179,8 @@ public class MapZones {
 					  new Location(38.636979, -90.238102), new Location(38.636860, -90.237504));
 		Zones.add(xavier);
 		
+
+		
 	}
 		
 	public Object getMapZone(){
