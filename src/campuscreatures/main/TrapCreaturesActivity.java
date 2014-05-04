@@ -85,13 +85,14 @@ public class TrapCreaturesActivity extends Activity {
 		tempCreature = tempProfile.getCreaturesList().get(0);
 		System.out.println(tempCreature.getTitle());
 		
+		//get current location
+		List<Creatures> locals = new ArrayList<Creatures>();
+		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		int rando = locals.size();
+		
 		//make a random number generator to make encountered creature random
 		Random encounter = new Random();
-		int encounterID = encounter.nextInt(4);
-		List<Creatures> locals = new ArrayList<Creatures>();
-		
-		//get current location
-		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		int encounterID = encounter.nextInt(rando);
 		
 		//create a random creature based on location
 		Creatures tempOpponent;
