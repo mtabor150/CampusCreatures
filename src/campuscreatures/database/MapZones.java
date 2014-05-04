@@ -1,12 +1,13 @@
 package campuscreatures.database;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import campuscreatures.location.Location;
 import campuscreatures.location.LocationService;
 import campuscreatures.location.Zone;
 
-public class MapZones {
+public class MapZones implements Iterable<Zone>{
 /**
  * 	TOTAL: 31 zones
  *  Point 1 - Point 2
@@ -55,7 +56,7 @@ public class MapZones {
 
 	public MapZones () {
 		
-		Zones = new ArrayList();
+		Zones = new ArrayList<Zone>();
 		/* Circle based zones */
 		
 		Zone chafeitz = new Zone("Chafeitz Arena", new Location(38.637265, -90.238537), new Location(38.637265, -90.238537));
@@ -180,8 +181,18 @@ public class MapZones {
 		
 
 	}
+	
+	
 		
 	public Object getMapZone(){
 		return this.zone;
-	}	
+	}
+
+
+
+	@Override
+	public Iterator<Zone> iterator() {
+		Iterator<Zone> iZones = Zones.iterator();
+        return iZones; 
+	}
 }

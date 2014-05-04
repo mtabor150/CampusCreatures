@@ -175,7 +175,7 @@ public class UserProfile implements Serializable {
 	}
 	
 	public void addCreature(BattleCreature creature) {
-		party.addPartyMember(0, creature);
+		party.addPartyMember(creature);
 	}
 	
 	public void removeCreature(BattleCreature creature) {

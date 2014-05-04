@@ -80,6 +80,10 @@ public class Zone {
 		return inArea;
 	}
 	
+	public String getZoneName(){
+		return zoneName;
+	}
+	
 	private void setBarycenter(Location alpha, Location beta, Location gamma, Location delta){
 		double lat = (alpha.getLatitude()+beta.getLatitude()+gamma.getLatitude()+delta.getLatitude())/4;
 		double lon = (alpha.getLongitude()+beta.getLongitude()+gamma.getLongitude()+delta.getLongitude())/4;

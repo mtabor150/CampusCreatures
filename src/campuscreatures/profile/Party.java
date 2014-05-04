@@ -1,10 +1,10 @@
 package campuscreatures.profile;
 import java.util.*;
-
+import java.io.*;
 import campuscreatures.database.Creatures;
 import campuscreatures.battleMechanics.BattleCreature;
 
-public class Party {
+public class Party implements Serializable{
 	
 	ArrayList<BattleCreature> party;
 	
@@ -28,6 +28,11 @@ public class Party {
 			party.set(index, member);
 			firstAvailableSlot(member2);
 		}
+	}
+	
+public void addPartyMember(BattleCreature member){
+		
+		party.add(member);
 	}
 	
 	private void firstAvailableSlot(BattleCreature member2){

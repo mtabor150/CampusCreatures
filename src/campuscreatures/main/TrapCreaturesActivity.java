@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
-import campuscreatures.database.DatabaseService;
+import campuscreatures.database.*;
+import campuscreatures.location.*;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class TrapCreaturesActivity extends Activity {
 	
@@ -23,6 +26,8 @@ public class TrapCreaturesActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trap_creatures);
+		
+		
 		
 		currentBattle = null; //this is used to pass an Intent to a BattleActivity
 		
@@ -74,6 +79,28 @@ public class TrapCreaturesActivity extends Activity {
 		startActivity(i);
 	}
 	
+	public void getZone(View view){
+		
+		TextView locationText = (TextView) findViewById(R.id.locationText);
+		TextView zoneText = (TextView) findViewById(R.id.zoneText);
+		MapZones zones = new MapZones();
+		
+		Location currentLocation = new Location(MainActivity.location.getLatitude(),
+												MainActivity.location.getLongitude());
+		//declares a temporary zone
+		Zone currentZone = new Zone("temp", currentLocation, 0);
+		
+	
+		for (Zone z : zones){
+			System.out.println(z.getZoneName());
+			if (z.inZone(currentLocation)){
+				currentZone = z;
+				break;
+			}
+		}
+		locationText.setText(currentZone.getZoneName());
+		
+	}
 	
 	/*
 	 * this is only used to show that we can pass a Battle object from this activity to another
