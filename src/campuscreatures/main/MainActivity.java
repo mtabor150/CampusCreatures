@@ -1,7 +1,5 @@
 package campuscreatures.main;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,12 +41,12 @@ public class MainActivity extends FragmentActivity {
 	public static LocationService location = null;
 
 	DatabaseHelper dbHelper = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		System.out.println("gere 2");
 		if (!userProfileExists()) { //make sure a file called "userProfile has been created
 			UserProfile templateProfile = new UserProfile();
@@ -67,12 +65,12 @@ public class MainActivity extends FragmentActivity {
 		}		
 		// setup mAdapter
 		//setUserInfo();
-		
+
 		//initialize location service
 		locationIntent = new Intent(this, LocationService.class);
 		startService(locationIntent);
 		location = new LocationService(this);
-		
+
 		//TODO generate and fill CampusCreatures database;
 		dbHelper = new DatabaseHelper(this);
 		if (dbHelper.getAllCreatures().size() == 0){  
@@ -119,8 +117,8 @@ public class MainActivity extends FragmentActivity {
 			dbHelper.addCreature(new Creatures("Fire Fox", "BSC", "Saint Louis University", "fire", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Internet Explorer", "Simon Rec", "Saint Louis University", "normal", 1, 1, 1, 1, 1, 1, 1, 1 ));
 		}
-		
-		
+
+
 
 		//get all Creatures
 		//dbHelper.getAllCreatures();
@@ -129,7 +127,7 @@ public class MainActivity extends FragmentActivity {
 		dbHelper.getAllCreaturesByRegion("Ritter Hall");	
 		dbHelper.close();
 	}
-	
+
 	private void setupMAdapter() {
 
 		mAdapter = new MainPagerAdapter(getSupportFragmentManager());
@@ -159,7 +157,7 @@ public class MainActivity extends FragmentActivity {
 		stopService(locationIntent);
 		super.onDestroy();
 	}
-	
+
 	private boolean userProfileExists() {
 		File directory = getFilesDir();
 		File filesList[] = directory.listFiles();
@@ -205,31 +203,24 @@ public class MainActivity extends FragmentActivity {
 		BattleCreature tempCreature;
 		UserProfile tempProfile = new UserProfile(view.getContext());
 		int creatureListIndex = 0;
-		switch(view.getId())
-		{
-			case R.id.imageButton1:
-				creatureListIndex = 0;
-				break;
-			case R.id.imageButton2:
-				creatureListIndex = 1;
-				break;
-			case R.id.imageButton3:
-				creatureListIndex = 2;
-				break;
-			case R.id.imageButton4:
-				creatureListIndex = 3;
-				break;
-			case R.id.imageButton5:
-				creatureListIndex = 4;
-				break;
-			case R.id.imageButton6:
-				creatureListIndex = 5;
-				break;
-			default:
+		int id = view.getId();
+		if (id == R.id.imageButton1) {
+			creatureListIndex = 0;
+		} else if (id == R.id.imageButton2) {
+			creatureListIndex = 1;
+		} else if (id == R.id.imageButton3) {
+			creatureListIndex = 2;
+		} else if (id == R.id.imageButton4) {
+			creatureListIndex = 3;
+		} else if (id == R.id.imageButton5) {
+			creatureListIndex = 4;
+		} else if (id == R.id.imageButton6) {
+			creatureListIndex = 5;
+		} else {
 			throw new RuntimeException("Unknow button ID");
 		}
-		if (creatureListIndex < tempProfile.getCreaturesList().size()) {
-			tempCreature = tempProfile.getCreaturesList().get(creatureListIndex);
+		if (creatureListIndex < tempProfile.getParty().size()) {
+			tempCreature = tempProfile.getParty().getPartyMember(creatureListIndex);
 		}
 		else {
 			return;
@@ -238,7 +229,7 @@ public class MainActivity extends FragmentActivity {
 		i.putExtra("creature", tempCreature);
 		startActivity(i);
 	}
-	
+
 	//creates an alert box to register for a profile
 	public void registrationPrompt() {
 		// custom dialog
@@ -249,7 +240,7 @@ public class MainActivity extends FragmentActivity {
 		final EditText text2 = (EditText) dialog.findViewById(R.id.editText2);
 		final EditText text3 = (EditText) dialog.findViewById(R.id.editText3);
 		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-		
+
 		// if button is clicked, close the custom dialog
 		dialogButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -263,7 +254,7 @@ public class MainActivity extends FragmentActivity {
 				else {
 					UserProfile newProfile = new UserProfile();
 					newProfile.setInitialProfile(firstName, lastName, userName);
-					
+
 					//TODO below addCreature() is just for test purposes. remove when no longer necessary
 					//start of test code alpha
 					Creatures tempo = new Creatures(0,"Phil", "house", "room", "earth", 5, 2, 1, 4, 10, 1, 0, 22);
@@ -273,7 +264,7 @@ public class MainActivity extends FragmentActivity {
 					newProfile.addCreature(new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 22,4,10,10,0,simpleActions1));
 					newProfile.addCreature(new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10 ,10,10,30,30,10,simpleActions2));
 					//end of test code alpha
-					
+
 					newProfile.saveProfile(v.getContext());
 					UserProfile testProfile = new UserProfile();
 					testProfile = testProfile.loadProfile(v.getContext());
@@ -281,11 +272,12 @@ public class MainActivity extends FragmentActivity {
 					setupMAdapter();
 					dialog.dismiss();
 				}
-				
+
 			}
 		});
  
 		dialog.show();
-			
+
 	}
+
 }

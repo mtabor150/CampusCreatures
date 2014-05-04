@@ -1,42 +1,57 @@
 package campuscreatures.profile;
 import java.util.*;
-
+import java.io.*;
 import campuscreatures.database.Creatures;
 import campuscreatures.battleMechanics.BattleCreature;
 
-public class Party {
+public class Party implements Serializable{
 	
-	ArrayList<Creatures> party;
+	ArrayList<BattleCreature> party;
 	
 	public Party(){
 		
-		ArrayList<BattleCreature> party = new ArrayList<BattleCreature>();
-		
+		party = new ArrayList<BattleCreature>();
 	}
 	
-	public Creatures getPartyMember(int index){
+	public BattleCreature getPartyMember(int index){
 		return party.get(index);
 	}
 	
-	public void addPartyMember(int index, Creatures member){
+	public void addPartyMember(int index, BattleCreature member){
 		
 		if (party.get(index) == null){
 			
 		party.set(index, member);
 		
 		} else {
-			Creatures member2 = party.get(index);
+			BattleCreature member2 = party.get(index);
 			party.set(index, member);
 			firstAvailableSlot(member2);
 		}
 	}
 	
-	private void firstAvailableSlot(Creatures member){
+public void addPartyMember(BattleCreature member){
+		
+		party.add(member);
+	}
+	
+	private void firstAvailableSlot(BattleCreature member2){
 		int count = 0;
 		while (party.get(count) == null){
 			count++;
 		}
-		party.set(count, member);
+		party.set(count, member2);
+	}
+	
+	public void removePartyMember(BattleCreature creature){
+		for(int i=0; i<6; i++){
+			if (creature == party.get(i)){
+				party.remove(i);
+			} 
+		}
+	}
+	public int size(){
+		return party.size();
 	}
 		
 }
