@@ -1,6 +1,7 @@
 package campuscreatures.database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import campuscreatures.location.Location;
 import campuscreatures.location.LocationService;
@@ -179,9 +180,12 @@ public class MapZones {
 		Zones.add(xavier);
 		
 
+		
 	}
 		
 	public Object getMapZone(){
 		return this.zone;
-	}	
+	}
+	
+
 }
