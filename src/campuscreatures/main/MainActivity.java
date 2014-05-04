@@ -76,34 +76,58 @@ public class MainActivity extends FragmentActivity {
 		//TODO generate and fill CampusCreatures database;
 		dbHelper = new DatabaseHelper(this);
 		if (dbHelper.getAllCreatures().size() == 0){  
-			//dbHelper = new DatabaseHelper(this);
 			Log.d("From MainActivity", "....");
-			//SQLiteDatabase dbHelper = DatabaseHelper.getWritableDatabase();
 			dbHelper.getAllCreatures();
-			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));			
 			dbHelper.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
 			dbHelper.addCreature(new Creatures("Philanderphil", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
-			dbHelper.addCreature(new Creatures("Weazel Man", "Tegler Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Weazel Man", "Tegeler Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Scan Bot", "Ritter Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Chamber Wolf", "Ritter Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
-			dbHelper.addCreature(new Creatures("Adam the Intern", "DuBourgh Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Lescher the Lecturer", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Clueless Freshman", "Griesidieck Hall", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
-			dbHelper.addCreature(new Creatures("Roadrunner", "Reinert Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Roadrunner", "Adorjan Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Inyourway", "BSC", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Biondi", "DuBourgh Hall", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Bartanneke", "Beracha Hall", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Clair Bear", "Chafeitz Center", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Drushel", " Clock Tower", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Freemanster", "College Church", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Frittsterer", "Lecture Halls", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Silverwasser", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Harristowe", "Cupples House", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Hebda", "B School", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Kalliongis", "Demattias Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Lamarcus", "DesPeres Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Markist", "Fitzgerald Hall", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
+			dbHelper.addCreature(new Creatures("Parrishable", "Fusz Hall", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Rainbolt", "Intramural Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Lovasosa", "Macelwane Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Shpeegle", "Marguerite Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Srivasta", "McDonnell Douglas Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Evinstevin", "McGannon Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Sudowsky", "Monsanto Hall", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Tsauster", "Pruellage Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Wackerle", "Shannon Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Rasal Ghul", "Verhaegen Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Turingsteen", "Village 1", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Dijkstra", "Village 2", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Pikachu", "Xavier Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Algarithmo", "Clock Tower", "Saint Louis University", "fire", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Pied Piper", "Simon Rec", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Fire Fox", "BSC", "Saint Louis University", "fire", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Internet Explorer", "Simon Rec", "Saint Louis University", "normal", 1, 1, 1, 1, 1, 1, 1, 1 ));
 		}
 		
 		
 
 		//get all Creatures
-		dbHelper.getAllCreatures();
+		//dbHelper.getAllCreatures();
 		dbHelper.getCreaturesCount();
 		dbHelper.getCreature(1);
-		//dbHelper.getAllCreaturesByRegion("Ritter Hall");
-		//dbHelper.getLocalCreatures("Ritter Hall", "Saint Louis University");
-		
+		dbHelper.getAllCreaturesByRegion("Ritter Hall");	
 		dbHelper.close();
-		//dbHelper.close();
 	}
 	
 	private void setupMAdapter() {
