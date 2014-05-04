@@ -48,14 +48,14 @@ public class BattleArtificialIntelligence implements Serializable {
 			System.out.println("Got to findStrongMove B." + i);
 			int attemptedModValue = AICreature.getBattleActionsUseCount().get(i);
 			System.out.println("Got to findStrongMove B.A." + i);
-			int AttemptedValue = AICreature.getBattleActions().get(i).getModifiedAttackValue(attemptedModValue);
-			int StrongestValue = AICreature.getBattleActions().get(strongestIndex).getModifiedAttackValue(strongestModValue);
+			float AttemptedValue = AICreature.getBattleActions().get(i).getModifiedAttackValue(attemptedModValue);
+			float StrongestValue = AICreature.getBattleActions().get(strongestIndex).getModifiedAttackValue(strongestModValue);
 			if(AttemptedValue > StrongestValue){
 				strongestIndex = i;
 			}
 			else if(AttemptedValue == StrongestValue) {
 				if(Math.random() < 0.5) {
-					strongestIndex = AttemptedValue;
+					strongestIndex = i;
 				}
 			}
 			System.out.println("Got to findstrongMove C." + i);
