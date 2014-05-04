@@ -352,7 +352,7 @@ public class BattleActivity extends Activity {
 			}
 		});
 		Button exitButton = (Button) dialog.findViewById(R.id.chooseCreatureExitButton);
-		dialogButton.setOnClickListener(new OnClickListener() {
+		exitButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				userProfile.destroyBattle();
