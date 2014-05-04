@@ -107,6 +107,8 @@ public class Zone {
 			Location delta) {
 		return ((area(alpha, gamma, beta))+(area(alpha, gamma, delta)));
 	}
-
-
+	
+	public String getName() {
+		return this.zoneName;
+	}
 }
