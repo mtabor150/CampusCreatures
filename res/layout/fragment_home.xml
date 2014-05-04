@@ -83,13 +83,13 @@
             android:text="Battle" />
 
         <Button
-            android:id="@+id/settingsButton"
+            android:id="@+id/mapButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:drawable/btn_default"
-            android:onClick="goToSettings"
-            android:text="Party" />
+            android:onClick="goToMap"
+            android:text="Map" />
     </LinearLayout>
 
     <LinearLayout
