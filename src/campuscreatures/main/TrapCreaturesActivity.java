@@ -6,20 +6,27 @@ import java.util.List;
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
 import campuscreatures.database.Player;
+import campuscreatures.location.Location;
 import campuscreatures.location.LocationService;
+import campuscreatures.location.Zone;
 import campuscreatures.profile.UserProfile;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
-import campuscreatures.database.DatabaseService;
+import campuscreatures.database.*;
+import campuscreatures.location.*;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.RadioButton;
+import android.widget.TextView;
+
 import java.util.Random;
+
 
 public class TrapCreaturesActivity extends Activity {
 	
@@ -30,6 +37,8 @@ public class TrapCreaturesActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trap_creatures);
+		
+		
 		
 		currentBattle = null; //this is used to pass an Intent to a BattleActivity
 		
@@ -82,8 +91,8 @@ public class TrapCreaturesActivity extends Activity {
 		System.out.println("Creature count " + dbHelper.getCreature(2));
 		//get first creature in player party
 		BattleCreature tempCreature;
-		tempCreature = tempProfile.getCreaturesList().get(0);
-		System.out.println(tempCreature.getTitle());
+		//tempCreature = tempProfile.getCreaturesList().get(0);
+		//System.out.println(tempCreature.getTitle());
 		
 		//get current location
 		List<Creatures> locals = new ArrayList<Creatures>();
@@ -104,7 +113,7 @@ public class TrapCreaturesActivity extends Activity {
 				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
-		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
+		//currentBattle = new Battle(tempCreature,localBattleOpponent, true);
 		System.out.println("...setupTrueBattle");
 		
 		Intent i = new Intent(this, BattleActivity.class);
@@ -114,6 +123,35 @@ public class TrapCreaturesActivity extends Activity {
 		dbHelper.close();
 	}
 	
+	public void getZone(View view){
+		
+		TextView locationText = (TextView) findViewById(R.id.locationText);
+		TextView zoneText = (TextView) findViewById(R.id.zoneText);
+		MapZones zones = new MapZones();
+		
+		Location currentLocation = new Location(MainActivity.location.getLatitude(),
+												MainActivity.location.getLongitude());
+		//declares a temporary zone
+		Zone currentZone = new Zone("temp", currentLocation, 0);
+		/*
+	
+		for (Zone z : zones){
+			System.out.println(z.getZoneName());
+			if (z.inZone(currentLocation)){
+				currentZone = z;
+				break;
+			}
+		}
+		*/
+		Zone ritter = new Zone("Ritter Hall", new Location(38.636307, -90.232845), new Location(38.636203, -90.232432), 
+				  new Location(38.635798, -90.232569), new Location(38.635867, -90.232968));
+		if (ritter.inZone(currentLocation)){
+			zoneText.setText(ritter.getZoneName());
+		}
+		//zoneText.setText(currentZone.getZoneName());
+		locationText.setText(String.valueOf(MainActivity.location.getLatitude()) + " "
+				+ String.valueOf(MainActivity.location.getLongitude()));
+	}
 	
 	/*
 	 * this is only used to show that we can pass a Battle object from this activity to another

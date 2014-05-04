@@ -64,8 +64,8 @@ public class Battle implements Serializable {
 			otherCreature = playerCreature;
 		}
 		
-		int damage = handleBattleAction(thisCreature, otherCreature, battleAction, true);
-		int regeneration = handleBattleAction(thisCreature, otherCreature, battleAction, false);
+		float damage = handleBattleAction(thisCreature, otherCreature, battleAction, true);
+		float regeneration = handleBattleAction(thisCreature, otherCreature, battleAction, false);
 		
 		damage = otherCreature.adjustHealth(damage);
 		regeneration = thisCreature.adjustHealth(regeneration);
@@ -175,6 +175,8 @@ public class Battle implements Serializable {
 			losingCreature = oppCreature;
 		}
 		if(round == 0) {
+			playerCreature.resetBattleActionsCount(-1);
+			oppCreature.resetBattleActionsCount(-1);
 			modifyExperienceAndLevel(winningCreature, losingCreature);
 		}
 	}
@@ -218,22 +220,32 @@ public class Battle implements Serializable {
 	 * in the battle based on creature stats, types, and other considerations
 	 * For now, we are just going to return a [0,2] random modification range
 	 */
-	private int handleBattleAction(BattleCreature thisCreature, BattleCreature otherCreature, BattleAction battleAction, boolean isAttack){
+	private float handleBattleAction(BattleCreature thisCreature, BattleCreature otherCreature, BattleAction battleAction, boolean isAttack){
+		int actionUseCount = thisCreature.getCurrentBattleActionUseCount();
+		System.out.println(thisCreature.getTitle() + " is using " + battleAction.getTitle() + " which has a damage of " 
+				+ battleAction.getModifiedAttackValue(actionUseCount) + " and a recover value of " + battleAction.getModifiedRecoverValue(actionUseCount) + ".");
 		float MinVal;
 		float MaxVal;
-		int actionUseCount = thisCreature.getCurrentBattleActionUseCount();
+		
 		if(isAttack) {
 			MinVal = (-2)*battleAction.getModifiedAttackValue(thisCreature.getCurrentBattleActionUseCount()) * ((float)thisCreature.getAttack()/((float) otherCreature.getDefense()));//take into consideration creature attack and defense
 			MaxVal = 0;
 		}
 		else {
 			MinVal = 0;
-			MaxVal = 2*battleAction.getModifiedRecoverValue(thisCreature.getCurrentBattleActionUseCount())/actionUseCount;
+			MaxVal = (2)*battleAction.getModifiedRecoverValue(thisCreature.getCurrentBattleActionUseCount())/actionUseCount;
 		}
+		
+		//get a random float in the range between MinVal and MaxVal
+		float minX = MinVal;
+		float maxX = MaxVal;
+		Random rand = new Random();
+		float finalX = rand.nextFloat() * (maxX - minX) + minX;
+		
 		System.out.println("MinVal = " + MinVal);
 		System.out.println("MaxVal = " + MaxVal);
-		
-		return (int)MinVal + (int)(Math.random() * ((MaxVal - MinVal) + 1));
+		System.out.println("return value is " + finalX);
+		return finalX;
 	}
 	
 	/*
@@ -246,14 +258,11 @@ public class Battle implements Serializable {
 		int loseExpIncrease = winner.getLevel()*3;
 		loser.increaseCreatureExperience(winner.getLevel()*3);
 		battlePrompt.addMessage(loser.getTitle() + "'s experience increased by " + loseExpIncrease);
-		while(winner.getCreatureExperience() > winner.getLevel()*100) {
-			winner.incrementLevel();
-			battlePrompt.addMessage(winner.getTitle() + " increased to level " + winner.getLevel());
-		}
-		while(loser.getCreatureExperience() > winner.getLevel()*100) {
-			loser.incrementLevel();
-			battlePrompt.addMessage(loser.getTitle() + " increased to level " + loser.getLevel());
-		}
+		
+		System.out.println("playerCreature is level " + playerCreature.getLevel());
+		System.out.println("oppCreature is level " + oppCreature.getLevel());
+		System.out.println("playerCreature has " + playerCreature.getUpgradePoints() + " upgrade points");
+		System.out.println("oppCreature has " + oppCreature.getUpgradePoints() + " upgrade points");
 	}
 	
 	//exchanges the current playerCreature with a new Creature
