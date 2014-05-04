@@ -242,17 +242,12 @@ public class MainActivity extends FragmentActivity {
 					
 					//TODO below addCreature() is just for test purposes. remove when no longer necessary
 					//start of test code alpha
-					BattleAction kick = new BattleAction("kick",1,0,10);
-					BattleAction heal = new BattleAction("heal",0,2,10);
-					BattleAction burn = new BattleAction("burn",2,0,5);
-					BattleAction push = new BattleAction("push",2,0,5);
-					BattleAction intimidate = new BattleAction("intimidate",1,0,10);
-					ArrayList<BattleAction> simpleActions1 = new ArrayList();
-					simpleActions1.add(kick);
-					simpleActions1.add(heal);
-					simpleActions1.add(burn);
-					simpleActions1.add(push);
-					newProfile.addCreature(new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1));
+					Creatures tempo = new Creatures(0,"Phil", "house", "room", "earth", 5, 2, 1, 4, 10, 1, 0, 22);
+					Creatures tempo2 = new Creatures(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10, 10, 10, 10, 10, 10, 10);
+					ArrayList<BattleAction> simpleActions1 = tempo.getMoveSet(tempo);
+					ArrayList<BattleAction> simpleActions2 = tempo2.getMoveSet(tempo2);
+					newProfile.addCreature(new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 22,4,10,10,0,simpleActions1));
+					newProfile.addCreature(new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10 ,10,10,30,30,10,simpleActions2));
 					//end of test code alpha
 					
 					newProfile.saveProfile(v.getContext());
