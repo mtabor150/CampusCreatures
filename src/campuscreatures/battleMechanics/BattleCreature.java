@@ -271,5 +271,18 @@ public class BattleCreature implements Serializable {
 			}
 		}
 	}
-
+	
+	public boolean equals(BattleCreature creature){
+		if (this.getTitle() == creature.getTitle() &&
+			this.getLevel() == creature.getLevel() &&
+			this.getMaxHealth() == creature.getMaxHealth() &&
+			this.getSpeed() == creature.getSpeed() &&
+			this.getCurrentHealth() == creature.getCurrentHealth() &&
+			this.getCreatureExperience() == creature.getCreatureExperience())
+		{
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
