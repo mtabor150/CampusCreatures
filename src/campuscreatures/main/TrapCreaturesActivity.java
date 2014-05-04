@@ -6,7 +6,9 @@ import java.util.List;
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
 import campuscreatures.database.Player;
+import campuscreatures.location.Location;
 import campuscreatures.location.LocationService;
+import campuscreatures.location.Zone;
 import campuscreatures.profile.UserProfile;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
@@ -22,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
 import java.util.Random;
 
 
@@ -129,7 +132,7 @@ public class TrapCreaturesActivity extends Activity {
 												MainActivity.location.getLongitude());
 		//declares a temporary zone
 		Zone currentZone = new Zone("temp", currentLocation, 0);
-		
+		/*
 	
 		for (Zone z : zones){
 			System.out.println(z.getZoneName());
@@ -138,7 +141,13 @@ public class TrapCreaturesActivity extends Activity {
 				break;
 			}
 		}
-		zoneText.setText(currentZone.getZoneName());
+		*/
+		Zone ritter = new Zone("Ritter Hall", new Location(38.636307, -90.232845), new Location(38.636203, -90.232432), 
+				  new Location(38.635798, -90.232569), new Location(38.635867, -90.232968));
+		if (ritter.inZone(currentLocation)){
+			zoneText.setText(ritter.getZoneName());
+		}
+		//zoneText.setText(currentZone.getZoneName());
 		locationText.setText(String.valueOf(MainActivity.location.getLatitude()) + " "
 				+ String.valueOf(MainActivity.location.getLongitude()));
 	}
