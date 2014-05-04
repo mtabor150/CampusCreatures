@@ -42,11 +42,15 @@ public class UserProfile implements Serializable {
 		userName = "userName";
 		hasSignedUp = false;
 
+		party = new Party();
+
+
 		creaturesList = new ArrayList();
 
 		Party party = new Party();
 		isCurrentlyInBattle = false;
 		currentUserBattle = null;
+
 
 	}
 	
@@ -59,7 +63,7 @@ public class UserProfile implements Serializable {
 		lastName = tempProfile.getLastName();
 		userName = tempProfile.getUserName();
 		hasSignedUp = tempProfile.hasSignedUp();
-		creaturesList = tempProfile.getCreaturesList();
+		party = tempProfile.getParty();
 	}
 	
 	public boolean hasSignedUp() {
@@ -166,8 +170,8 @@ public class UserProfile implements Serializable {
 		return userName;
 	}
 	
-	public ArrayList<BattleCreature> getCreaturesList() {
-		return creaturesList;
+	public Party getParty() {
+		return party;
 	}
 	
 	public void setInitialProfile(String first, String last, String user) {
@@ -181,11 +185,11 @@ public class UserProfile implements Serializable {
 	}
 	
 	public void addCreature(BattleCreature creature) {
-		creaturesList.add(creature);
+		party.addPartyMember(creature);
 	}
 	
 	public void removeCreature(BattleCreature creature) {
-		creaturesList.remove(creature);
+		party.removePartyMember(creature);
 	}
 	
 	//sets the current battle

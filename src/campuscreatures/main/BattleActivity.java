@@ -302,10 +302,10 @@ public class BattleActivity extends Activity {
 		 * setup arraylist of indexes of active creatures (creatures with more than zero health)
 		 */
 		final ArrayList<Integer> activeUserProfileCreatureIndexes; //<- All kinds of technical debt embodied in this variable
-		int numCreatures = userProfile.getCreaturesList().size();
+		int numCreatures = userProfile.getParty().size();
 		activeUserProfileCreatureIndexes = new ArrayList();
 		for(int i = 0; i< numCreatures; i++) {
-			if(userProfile.getCreaturesList().get(i).getCurrentHealth()>0) {
+			if(userProfile.getParty().getPartyMember(i).getCurrentHealth()>0) {
 				activeUserProfileCreatureIndexes.add((Integer)i);
 			}
 		}
@@ -318,10 +318,16 @@ public class BattleActivity extends Activity {
 		 * setup ListView. clicking on a userProfile creature exchanges that creature
 		 */
 		ListView creatureListView = (ListView) dialog.findViewById(R.id.chooseCreaturelistView);
-		
+
+		//int numCreatures = userProfile.getParty().size();
 		String creatureNameList[] = new String[numCreatures];
 		for(int i = 0; i<numCreatures; i++ ) {
-			creatureNameList[i] = userProfile.getCreaturesList().get(activeUserProfileCreatureIndexes.get(i)).getTitle();
+			creatureNameList[i] = userProfile.getParty().getPartyMember(i).getTitle();
+		}
+		
+		for(int i = 0; i<numCreatures; i++ ) {
+			creatureNameList[i] = userProfile.getParty().getPartyMember(activeUserProfileCreatureIndexes.get(i)).getTitle();
+
 		}
 		System.out.println("creatureNameList.length = " + creatureNameList.length);
 		//TODO currently using battle_actions_list.xml below. make a new xml and customize more.
@@ -329,11 +335,15 @@ public class BattleActivity extends Activity {
 		creatureListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				currentBattle.exchangePlayerCreature(userProfile.getCreaturesList().get(activeUserProfileCreatureIndexes.get(position)));
+
+				currentBattle.exchangePlayerCreature(userProfile.getParty().getPartyMember(position));;
+
+				currentBattle.exchangePlayerCreature(userProfile.getParty().getPartyMember(activeUserProfileCreatureIndexes.get(position)));
 				userProfile.setBattle(currentBattle);
 				userProfile.saveProfile(thisBattleActivity);
 				thisBattleActivity.assignBattleButtons();
 				creatureHasBeenChosen = true;
+
 			}
 		});
 		
@@ -360,7 +370,6 @@ public class BattleActivity extends Activity {
 			}
 		});
 		dialog.show();
-		System.out.println("this is B");
 	}
 	
 	//no valid creatures alert
