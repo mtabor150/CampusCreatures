@@ -1,7 +1,11 @@
 package campuscreatures.database;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
+
+import java.util.List;
+
 
 import campuscreatures.location.Location;
 import campuscreatures.location.LocationService;
@@ -180,6 +184,7 @@ public class MapZones implements Iterable<Zone>{
 		Zones.add(xavier);
 		
 
+		
 	}
 	
 	
@@ -190,9 +195,11 @@ public class MapZones implements Iterable<Zone>{
 
 
 
+
 	@Override
 	public Iterator<Zone> iterator() {
 		Iterator<Zone> iZones = Zones.iterator();
         return iZones; 
 	}
+
 }

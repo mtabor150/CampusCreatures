@@ -1,7 +1,13 @@
 package campuscreatures.main;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import campuscreatures.database.Creatures;
+import campuscreatures.database.DatabaseHelper;
+import campuscreatures.database.Player;
+import campuscreatures.location.LocationService;
+import campuscreatures.profile.UserProfile;
 import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
@@ -16,6 +22,8 @@ import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import java.util.Random;
+
 
 public class TrapCreaturesActivity extends Activity {
 	
@@ -75,8 +83,40 @@ public class TrapCreaturesActivity extends Activity {
 	}
 
 	public void goToDBTesting(View view){
-		Intent i = new Intent(this, DatabaseService.class);
+		DatabaseHelper dbHelper = new DatabaseHelper(this);
+		UserProfile tempProfile = new UserProfile(view.getContext());
+		System.out.println("Creature count " + dbHelper.getCreature(2));
+		//get first creature in player party
+		BattleCreature tempCreature;
+		tempCreature = tempProfile.getCreaturesList().get(0);
+		System.out.println(tempCreature.getTitle());
+		
+		//make a random number generator to make encountered creature random
+		Random encounter = new Random();
+		int encounterID = encounter.nextInt(4);
+		List<Creatures> locals = new ArrayList<Creatures>();
+		
+		//get current location
+		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		
+		//create a random creature based on location
+		Creatures tempOpponent;
+		tempOpponent = locals.get(encounterID);
+		ArrayList<BattleAction> moveset = tempOpponent.getMoveSet(tempOpponent);
+		System.out.println(moveset);
+		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
+				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack(), tempOpponent.getDefense(), tempOpponent.getLevel(), 
+				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
+		
+		//start the battle
+		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
+		System.out.println("...setupTrueBattle");
+		
+		Intent i = new Intent(this, BattleActivity.class);
+		i.putExtra("Battle", currentBattle);
+		System.out.println("goToBattle...");
 		startActivity(i);
+		dbHelper.close();
 	}
 	
 	public void getZone(View view){
@@ -98,8 +138,9 @@ public class TrapCreaturesActivity extends Activity {
 				break;
 			}
 		}
-		locationText.setText(currentZone.getZoneName());
-		
+		zoneText.setText(currentZone.getZoneName());
+		locationText.setText(String.valueOf(MainActivity.location.getLatitude()) + " "
+				+ String.valueOf(MainActivity.location.getLongitude()));
 	}
 	
 	/*
@@ -129,9 +170,8 @@ public class TrapCreaturesActivity extends Activity {
 		
 		System.out.println("got here E");
 		//create sample creatures
-		BattleCreature player = new BattleCreature(0,"Philanderphil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature(1, "Markus taborius", "home", "kitchen","electric", 2, 5, 1,3,10,10,0,simpleActions2);
-		System.out.println("got here F");
+		BattleCreature player = new BattleCreature(0,"Tester", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);

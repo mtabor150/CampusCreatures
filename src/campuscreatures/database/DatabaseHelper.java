@@ -296,11 +296,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			} while (cursor.moveToNext());
 		}
 		Log.d("Logging getAllCreaturesByRegion()", regionCreatures.toString());
+		database.close();
 		return regionCreatures;
 	}
 	
 	/**
+<<<<<<< HEAD
+	 * Adam's
+	 * getLocalCreatures() - used to find creatures in a certain region and district
+	 * @param region
+	 * @param district
+	 * @return
+	 * 	1. get reference to readable Database
+	 * 	2. build the query statement, create cursor
+	 * 	3. go over each row, build creature and add it to the list
+	 * 	4. return that list
+	 */
+	
+	/**
+	* updatinCreature()
+=======
 	* updateCreature()
+>>>>>>> d80ae67a70c67785c19d6684bd8cc9c090cfd39a
 	* @param creature
 	* @return
 	* 	1. get reference to writable Database
