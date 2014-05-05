@@ -24,7 +24,7 @@ public class LocationService extends Service implements LocationListener {
 	private double longitude;
 
 	private static final long MIN_UPDATE_DISTANCE = 10; // meters
-	private static final long MIN_UPDATE_TIME = 1000*30; // milliseconds
+	private static final long MIN_UPDATE_TIME = 1000; // milliseconds
 	
 	protected LocationManager locationManager;
 

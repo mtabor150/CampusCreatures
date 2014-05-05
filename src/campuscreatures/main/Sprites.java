@@ -20,7 +20,7 @@ public class Sprites {
 				context.getResources().getDrawable(R.drawable.biondi));
 		spriteMap.put("Chamber Wolf",
 				context.getResources().getDrawable(R.drawable.chamberwolf));
-		spriteMap.put("Claire Bear",
+		spriteMap.put("Clair Bear",
 				context.getResources().getDrawable(R.drawable.clairebear));
 		spriteMap.put("Clueless Freshman",
 				context.getResources().getDrawable(R.drawable.cluelessfreshman));
@@ -52,7 +52,7 @@ public class Sprites {
 				context.getResources().getDrawable(R.drawable.lamarcus));
 		spriteMap.put("Lescher the Lecturer",
 				context.getResources().getDrawable(R.drawable.lescher));
-		spriteMap.put("Lovososa",
+		spriteMap.put("Lovasosa",
 				context.getResources().getDrawable(R.drawable.lovasosa));
 		spriteMap.put("Marcus Taborius",
 				context.getResources().getDrawable(R.drawable.markustaborius));
@@ -66,7 +66,7 @@ public class Sprites {
 				context.getResources().getDrawable(R.drawable.piedpiper));
 		spriteMap.put("Pikachu",
 				context.getResources().getDrawable(R.drawable.pikachu));
-		spriteMap.put("Rasal Goul",
+		spriteMap.put("Rasal Ghul",
 				context.getResources().getDrawable(R.drawable.rasalgoul));
 		spriteMap.put("Reinbolt",
 				context.getResources().getDrawable(R.drawable.reinbolt));
@@ -80,7 +80,7 @@ public class Sprites {
 				context.getResources().getDrawable(R.drawable.silverwasser));
 		spriteMap.put("Srivasta",
 				context.getResources().getDrawable(R.drawable.srivasta));
-		spriteMap.put("Sudosky",
+		spriteMap.put("Sudowsky",
 				context.getResources().getDrawable(R.drawable.sudosky));
 		spriteMap.put("Tsauster",
 				context.getResources().getDrawable(R.drawable.tsauster));

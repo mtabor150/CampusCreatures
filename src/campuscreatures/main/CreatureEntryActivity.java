@@ -5,6 +5,7 @@ import campuscreatures.battleMechanics.BattleCreature;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CreatureEntryActivity extends Activity {
@@ -21,6 +22,9 @@ public class CreatureEntryActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.creature_entry, menu);
+		Sprites sprites = new Sprites(this.getApplicationContext());
+		ImageView sprite = (ImageView)findViewById(R.id.sprite);
+		sprite.setImageDrawable(sprites.getSprite(creature.getTitle()));
 		setAllStats();
 		return true;
 	}

@@ -106,9 +106,7 @@ public class BattleActivity extends Activity {
 	 * after choosing a creature. This is for aesthetic transition purposes
 	 */
 	private void setBattleContent() {
-		if(setBattleContentCalled) {
-			return;
-		}
+		
 		setContentView(R.layout.activity_battle);
 		
 		//set up stats and buttons
@@ -383,8 +381,8 @@ public class BattleActivity extends Activity {
 				if (!creatureHasBeenChosen) {
 					return;
 				}
-				setBattleContent();
-				refreshStats();
+				thisBattleActivity.setBattleContent();
+				thisBattleActivity.refreshStats();
 				dialog.dismiss();
 			}
 		});
@@ -449,6 +447,7 @@ public class BattleActivity extends Activity {
 			userProfile.destroyBattle();
 		}
 		else {
+			userProfile.destroyBattle();
 			chooseCreatureAlert();//offer the user to continue battling
 		}
 		System.out.println(currentBattle.getPlayerBattleCreature().getCurrentHealth() + " dis health");

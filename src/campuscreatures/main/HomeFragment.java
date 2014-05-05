@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,9 +42,28 @@ public class HomeFragment extends Fragment {
 	}
 	
 	private void setUserInfo() {
+		
+		thumbSprites sprites = new thumbSprites(getActivity());
+		UserProfile tempProfile = new UserProfile(getActivity());
+		
 		TextView firstName = (TextView) rootView.findViewById(R.id.textView1);
 		TextView lastName = (TextView) rootView.findViewById(R.id.textView2);
 		TextView userName = (TextView) rootView.findViewById(R.id.textView3);
+		
+		ImageButton creature1 = (ImageButton) rootView.findViewById(R.id.imageButton1);
+		ImageButton creature2 = (ImageButton) rootView.findViewById(R.id.imageButton2);
+		ImageButton creature3 = (ImageButton) rootView.findViewById(R.id.imageButton3);
+		ImageButton creature4 = (ImageButton) rootView.findViewById(R.id.imageButton4);
+		ImageButton creature5 = (ImageButton) rootView.findViewById(R.id.imageButton5);
+		ImageButton creature6 = (ImageButton) rootView.findViewById(R.id.imageButton6);
+		
+		creature1.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(0).getTitle()));
+		creature2.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(1).getTitle()));
+		creature3.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(2).getTitle()));
+		creature4.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(3).getTitle()));
+		//creature5.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(4).getTitle()));
+		//creature6.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(5).getTitle()));
+		
 		UserProfile profile = loadProfile(rootView.getContext());
 		
 		System.out.println(profile.getFirstName());
