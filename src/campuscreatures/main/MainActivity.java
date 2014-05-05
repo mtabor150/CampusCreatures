@@ -100,7 +100,7 @@ public class MainActivity extends FragmentActivity {
 			dbHelper.addCreature(new Creatures("Lamarcus", "DesPeres Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10));
 			dbHelper.addCreature(new Creatures("Markist", "Fitzgerald Hall", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10));
 			dbHelper.addCreature(new Creatures("Parrishable", "Fusz Hall", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10 ));
-			dbHelper.addCreature(new Creatures("Rainbolt", "Intramural Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
+			dbHelper.addCreature(new Creatures("Reinbolt", "Intramural Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Lovasosa", "Macelwane Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Shpeegle", "Marguerite Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
 			dbHelper.addCreature(new Creatures("Srivasta", "McDonnell Douglas Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10 ));
