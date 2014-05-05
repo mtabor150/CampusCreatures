@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity {
 			//dbHelper.getAllCreatures();
 
 			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));			
-			dbHelper.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
+			dbHelper.addCreature(new Creatures("Desi Djinn", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Philanthropist", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Weasel Man", "Tegeler Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Adom", "Lecture Halls", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
@@ -92,19 +92,18 @@ public class MainActivity extends FragmentActivity {
 			dbHelper.addCreature(new Creatures("Billiken", "Saint Louis University", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Inyourway", "BSC", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Biondi", "DuBourgh Hall", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
-			dbHelper.addCreature(new Creatures("Bartanneke", "Beracha Hall", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Clair Bear", "Chafeitz Center", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Drushel", " Clock Tower", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Freemanster", "College Church", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Frittsterer", "Lecture Halls", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Silverwasser", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
-			dbHelper.addCreature(new Creatures("Harristowe", "Cupples House", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
+			dbHelper.addCreature(new Creatures("Harrisstowe", "Cupples House", "Saint Louis University", "spirit", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Hebda", "B School", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Kalliongis", "Demattias Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Lamarcus", "DesPeres Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0));
 			dbHelper.addCreature(new Creatures("Markist", "Fitzgerald Hall", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10, 0, 0));
 			dbHelper.addCreature(new Creatures("Parrishable", "Fusz Hall", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
-			dbHelper.addCreature(new Creatures("Rainbolt", "Intramural Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
+			dbHelper.addCreature(new Creatures("Reinbolt", "Intramural Field", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Lovasosa", "Macelwane Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Shpeegle", "Marguerite Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Srivasta", "McDonnell Doug", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
@@ -318,10 +317,10 @@ public class MainActivity extends FragmentActivity {
 					ArrayList<BattleAction> simpleActions1 = tempo.getMoveSet(tempo);
 					ArrayList<BattleAction> simpleActions2 = tempo2.getMoveSet(tempo2);
 					ArrayList<BattleAction> simpleActions3 = tempo3.getMoveSet(tempo3);
-					newProfile.addCreature(new BattleCreature(0,"Philanthropist", "house", "room", "earth", 5, 2, 22,4,10,10,0,simpleActions1));
-					newProfile.addCreature(new BattleCreature(1,"Marcus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10 ,10,10,30,30,10,simpleActions2));
-					newProfile.addCreature(new BattleCreature(1,"Weasel Man", "Tegeler Hall", "Saint Louis University", "normal",10, 10 ,10,10,30,30,10,simpleActions3));
-					newProfile.addCreature(new BattleCreature(1,"Desi Djinn", "Tegeler Hall", "Saint Louis University", "normal",10, 10 ,10,10,30,30,10,simpleActions2));
+					newProfile.addCreature(new BattleCreature(0,"Philanthropist", "house", "room", "earth", 1, 1 ,1,1,10,10,0,simpleActions1));
+					newProfile.addCreature(new BattleCreature(1,"Marcus Taborius", "Ritter Hall", "Saint Louis University", "psychic",2, 1 ,1,1,5,5,0,simpleActions2));
+					newProfile.addCreature(new BattleCreature(1,"Weasel Man", "Tegeler Hall", "Saint Louis University", "normal",1, 2 ,1,1,5,5,0,simpleActions3));
+					newProfile.addCreature(new BattleCreature(1,"Desi Djinn", "Tegeler Hall", "Saint Louis University", "normal",1, 1 ,1,2,5,5,0,simpleActions2));
 					//end of test code alpha
 
 					newProfile.saveProfile(v.getContext());

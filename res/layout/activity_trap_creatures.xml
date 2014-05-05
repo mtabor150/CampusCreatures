@@ -69,7 +69,7 @@
             			android:layout_width="wrap_content"
             			android:layout_height="wrap_content"
             			android:onClick="getZone"
-           	 			android:text="Get Zone" />
+           	 			android:text="Encounter" />
                     
                     <TextView android:id="@+id/zoneText"
               			android:layout_width="wrap_content"

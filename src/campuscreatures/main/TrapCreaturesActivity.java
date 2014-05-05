@@ -89,17 +89,52 @@ public class TrapCreaturesActivity extends Activity {
 	}
 
 	public void goToDBTesting(View view){
+		
+	}
+	
+	public void getZone(View view){
+		
+		TextView locationText = (TextView) findViewById(R.id.locationText);
+		TextView zoneText = (TextView) findViewById(R.id.zoneText);
+		MapZones zones = new MapZones();
+		
+		
+		
+		//Location currentLocation1 = MainActivity.location.getLocation();
+		Location currentLocation = new Location(MainActivity.location.getLatitude(), MainActivity.location.getLongitude());
+		//declares a temporary zone
+		Zone currentZone = new Zone("temp", currentLocation, 0);
+		
+		for (Zone z : zones){
+			System.out.println(z.getZoneName() + "getZoneName");
+		
+		}
+		
+		double currentError = 10000000.0;
+		for (Zone z : zones){
+			System.out.println(z.getZoneName());
+			if (z.inZone(currentLocation) < currentError){
+				currentZone = z;
+				currentError = z.inZone(currentLocation);
+			}
+		}
+		/*
+		zoneText.setText(currentZone.getZoneName());
+		locationText.setText(String.valueOf(MainActivity.location.getLatitude()) + " "
+				+ String.valueOf(MainActivity.location.getLongitude()));
+		*/
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
 		UserProfile tempProfile = new UserProfile(view.getContext());
 		System.out.println("Creature count " + dbHelper.getCreature(2));
 		//get first creature in player party
 		BattleCreature tempCreature;
 		tempCreature = tempProfile.getParty().getPartyMember(0);
+		System.out.println("tempCreatureLevel = " + tempCreature.getLevel());
 		//System.out.println(tempCreature.getTitle());
 		
 		//get current location
 		List<Creatures> locals = new ArrayList<Creatures>();
-		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		locals = dbHelper.getAllCreaturesByRegion(currentZone.getZoneName());
 		int rando = locals.size();
 		
 		//make a random number generator to make encountered creature random
@@ -108,7 +143,7 @@ public class TrapCreaturesActivity extends Activity {
 		
 		//create a random creature based on location
 		Creatures tempOpponent;
-		int modifier = tempCreature.getLevel() * 5;
+		int modifier = tempCreature.getLevel() * 5-4;
 		int attMOD = 0;
 		int defMOD = 0;
 		int speedMOD = 0;
@@ -133,8 +168,8 @@ public class TrapCreaturesActivity extends Activity {
 		ArrayList<BattleAction> moveset = tempOpponent.getMoveSet(tempOpponent);
 		System.out.println(moveset);
 		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
-				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack() + attMOD, tempOpponent.getDefense() + defMOD, tempOpponent.getLevel(), 
-				tempOpponent.getSpeed() + speedMOD, tempOpponent.getHealth() + (5 * healthMOD), tempOpponent.getHealth() + (5 * healthMOD), tempOpponent.getExperience(), moveset);		
+				tempOpponent.getDistrict(), tempOpponent.getType(), 1 + attMOD, 1 + defMOD, tempCreature.getLevel(), 
+				1 + speedMOD, 5+ (5 * healthMOD), 5 + (5 * healthMOD), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
 		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
@@ -145,43 +180,6 @@ public class TrapCreaturesActivity extends Activity {
 		System.out.println("goToBattle...");
 		startActivity(i);
 		dbHelper.close();
-	}
-	
-	public void getZone(View view){
-		
-		TextView locationText = (TextView) findViewById(R.id.locationText);
-		TextView zoneText = (TextView) findViewById(R.id.zoneText);
-		MapZones zones = new MapZones();
-		
-		
-		
-		android.location.Location currentLocation1 = MainActivity.location.getLocation();
-		Location currentLocation = new Location(currentLocation1.getLatitude(), currentLocation1.getLongitude());
-		//declares a temporary zone
-		Zone currentZone = new Zone("temp", currentLocation, 0);
-		
-		for (Zone z : zones){
-			System.out.println(z.getZoneName() + "getZoneName");
-		
-		}
-		/*
-	
-		for (Zone z : zones){
-			System.out.println(z.getZoneName());
-			if (z.inZone(currentLocation)){
-				currentZone = z;
-				break;
-			}
-		}
-		*/
-		Zone ritter = new Zone("Ritter Hall", new Location(38.636307, -90.232845), new Location(38.636203, -90.232432), 
-				  new Location(38.635798, -90.232569), new Location(38.635867, -90.232968));
-		if (ritter.inZone(currentLocation)){
-			zoneText.setText(ritter.getZoneName());
-		}
-		//zoneText.setText(currentZone.getZoneName());
-		locationText.setText(String.valueOf(MainActivity.location.getLatitude()) + " "
-				+ String.valueOf(MainActivity.location.getLongitude()));
 	}
 	
 	/*

@@ -38,13 +38,18 @@ public class CreatureAtlasFragment extends ListFragment {
 		database.close();
 		
 		seenCreatureList = new ArrayList();
-		
+		/*
 		for (int i=0; i <creatureList.size(); i++){
 			if (creatureList.get(i).getSeen() == 1){
 				seenCreatureList.add(creatureList.get(i));
 			}
 		}
-		
+		*/
+		for (int i=0; i <creatureList.size(); i++){
+			
+				seenCreatureList.add(creatureList.get(i));
+			
+		}
 		final String[] creatureNames = new String[seenCreatureList.size()];
 	    for (int i = 0; i < seenCreatureList.size(); i++) {
 	    	creatureNames[i] = seenCreatureList.get(i).getName();

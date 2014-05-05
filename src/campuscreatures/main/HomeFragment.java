@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
 	
 	private void setUserInfo() {
 		
-		Sprites sprites = new Sprites(getActivity());
+		thumbSprites sprites = new thumbSprites(getActivity());
 		UserProfile tempProfile = new UserProfile(getActivity());
 		
 		TextView firstName = (TextView) rootView.findViewById(R.id.textView1);
@@ -57,12 +57,12 @@ public class HomeFragment extends Fragment {
 		ImageButton creature5 = (ImageButton) rootView.findViewById(R.id.imageButton5);
 		ImageButton creature6 = (ImageButton) rootView.findViewById(R.id.imageButton6);
 		
-		creature1.setImageDrawable(sprites.getSprite(tempProfile.getParty().getPartyMember(0).getTitle()));
-		creature2.setImageDrawable(sprites.getSprite(tempProfile.getParty().getPartyMember(1).getTitle()));
-		creature3.setImageDrawable(sprites.getSprite(tempProfile.getParty().getPartyMember(2).getTitle()));
-		creature4.setImageDrawable(sprites.getSprite(tempProfile.getParty().getPartyMember(3).getTitle()));
-		creature5.setImageDrawable(sprites.getSprite(tempProfile.getParty().getPartyMember(4).getTitle()));
-		creature6.setImageDrawable(sprites.getSprite(tempProfile.getParty().getPartyMember(5).getTitle()));
+		creature1.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(0).getTitle()));
+		creature2.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(1).getTitle()));
+		creature3.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(2).getTitle()));
+		creature4.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(3).getTitle()));
+		//creature5.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(4).getTitle()));
+		//creature6.setImageDrawable(sprites.getthumbSprite(tempProfile.getParty().getPartyMember(5).getTitle()));
 		
 		UserProfile profile = loadProfile(rootView.getContext());
 		

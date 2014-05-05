@@ -38,37 +38,38 @@ public class Zone {
 		points = temp;
 	}
 
-	public boolean inZone(Location point) {
+	public double inZone(Location point) {
 		if (numPoints == 1) {
 			if (pointDistance(points[0], point) <= radius) {
-				return true;
+				return 0.0;
 			}
 		} else if (numPoints == 4) {
 			
-			boolean tri1 = inZone(point,points[0],points[1],points[2]);
-			boolean tri2 = inZone(point,points[1],points[2],points[3]);
-			boolean tri3 = inZone(point,points[2],points[3],points[0]);
-			boolean tri4 = inZone(point,points[3],points[0],points[1]);
+			double tri1 = inZoneErrorMargin(point,points[0],points[1],points[2]);
+			double tri2 = inZoneErrorMargin(point,points[1],points[2],points[3]);
+			double tri3 = inZoneErrorMargin(point,points[2],points[3],points[0]);
+			double tri4 = inZoneErrorMargin(point,points[3],points[0],points[1]);
 			
-			if (tri1 || tri2 || tri3 || tri4) {
-				return true;
-			}
+			return Math.min(Math.min(tri1, tri2), Math.min(tri3, tri4));
 		}
-		return false;
+		return 2;
 	}
 	
 	//triangle
-	public boolean inZone(Location player, Location alpha, Location beta,
+	public double inZoneErrorMargin(Location player, Location alpha, Location beta,
 			Location gamma) {
 		double playerArea = area(player, alpha, beta)
 				+ area(player, alpha, gamma) + area(player, beta, gamma);
 		double zoneArea = area(alpha, beta, gamma);
-
-		if (playerArea == zoneArea) {
-			return true;
-		} else {
-			return false;
-		}
+		System.out.println("playerArea = " + playerArea);
+		System.out.println("zoneArea = " + zoneArea);
+		return withinError(playerArea,zoneArea);
+	}
+	
+	private double withinError(double A, double B) {
+		double error =  Math.abs((A-B)/((A+B)/2));
+		System.out.println("error = " + error);
+		return error;
 	}
 
 	public String getZoneName() {
@@ -83,12 +84,12 @@ public class Zone {
 
 	// triangle
 	private double area(Location alpha, Location beta, Location gamma) {
-		double a, b, c;
-		a = alpha.getLatitude() * (beta.getLongitude() - gamma.getLongitude());
-		b = beta.getLatitude() * (gamma.getLongitude() - alpha.getLongitude());
-		c = gamma.getLatitude() * (alpha.getLongitude() - beta.getLongitude());
-
-		return ((a + b + c) / 2);
+		double a = Math.abs(alpha.getLatitude()*beta.getLongitude()) - Math.abs(beta.getLatitude()*alpha.getLongitude());
+		double b = Math.abs(beta.getLatitude()*gamma.getLongitude()) - Math.abs(gamma.getLatitude()*beta.getLongitude());
+		double c = Math.abs(gamma.getLatitude()*alpha.getLongitude()) - Math.abs(alpha.getLatitude()*gamma.getLongitude());
+		double area = (Math.abs((a + b + c)) / 2);
+		System.out.println("area is = " + area);
+		return area;
 	}
 
 }
