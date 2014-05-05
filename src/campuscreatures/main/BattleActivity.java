@@ -6,6 +6,8 @@ import campuscreatures.battleMechanics.Battle;
 import campuscreatures.battleMechanics.BattleAction;
 import campuscreatures.battleMechanics.BattleCreature;
 import campuscreatures.battleMechanics.BattleCreature.creatureType;
+import campuscreatures.battleMechanics.BattleUpgrade;
+import campuscreatures.main.R.id;
 import campuscreatures.profile.UserProfile;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -40,6 +43,7 @@ public class BattleActivity extends Activity {
 
 	private Battle currentBattle;
 
+	private BattleActivity thisBattleActivity;
 
 	//four modifiable TextViews for player and opponent
 	//those for player:
@@ -57,55 +61,64 @@ public class BattleActivity extends Activity {
 	private Button bActionButton3;
 	private Button bActionButton4;
 	
+	private ImageView playerSprite;
+	private ImageView oppSprite;
+	
 	private boolean creatureHasBeenChosen;
 	
-	
+	private boolean setBattleContentCalled = false;
 	//UserProfile
 	private UserProfile userProfile;
-
+	private Sprites sprites;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_battle);
-		
 		userProfile = (new UserProfile()).loadProfile(this);
 		/*
 		 * set up sample battle if 
 		 */
 		currentBattle = (Battle) getIntent().getSerializableExtra("Battle");
-
-		
-		if(currentBattle==null) {
-			setupSampleBattle();
+		if (currentBattle == null) {
+			onBackPressed();//if no battle is passed in the intent, this will back out
 		}
 		else  {
 			if (!userProfile.userCurrentlyInBattle()){
 				chooseCreatureAlert();
 			}
+			else {
+				setBattleContent();
+			}
 		}
 		
-
-		setupBattleStats();
-		
-		/*
-		 * set up Buttons
-		 */
-		assignBattleButtons();
-		messageTextView.setTextColor(0xFFFFFFFF);
-		System.out.println("got here z");
-		refreshStats();
-		refreshMessage();
-		
-		
-
+		thisBattleActivity = this;
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.battle, menu);
 		return true;
+	}
+	
+	/*
+	 * this is function allows us to call "setContentView" and other setup functions
+	 * after choosing a creature. This is for aesthetic transition purposes
+	 */
+	private void setBattleContent() {
+		if(setBattleContentCalled) {
+			return;
+		}
+		setContentView(R.layout.activity_battle);
+		
+		//set up stats and buttons
+		setupBattleStats();
+		assignBattleButtons();
+		messageTextView.setTextColor(0xFFFFFFFF);
+		System.out.println("got here z");
+		refreshStats();
+		refreshMessage();
+		setBattleContentCalled = true;
 	}
 	
 	//The only button should now be connected to this function
@@ -169,8 +182,14 @@ public class BattleActivity extends Activity {
 			return;
 		}
 		
+		sprites = new Sprites(this.getApplicationContext());
+		
 		//create player textViews to be added to tableRows
 		BattleCreature player = currentBattle.getPlayerBattleCreature();
+		
+		playerSprite = (ImageView)findViewById(R.id.playerSprite);
+		playerSprite.setImageDrawable(sprites.getSprite(player.getTitle()));
+		//playerSprite.setImageDrawable(getResources().getDrawable(R.drawable.markustaborius));
 		
 		playerTitle = (TextView)findViewById(R.id.playerTitle);
 		playerTitle.setText("Lvl " + player.getLevel() + " " + player.getTitle());
@@ -182,6 +201,10 @@ public class BattleActivity extends Activity {
 		
 		//create opponent TextViews to be added to TableRows
 		BattleCreature opponent = currentBattle.getOpponentBattleCreature();
+		
+		oppSprite = (ImageView)findViewById(R.id.oppSprite);
+		oppSprite.setImageDrawable(sprites.getSprite(opponent.getTitle()));
+		//oppSprite.setImageDrawable(getResources().getDrawable(R.drawable.markustaborius));
 		
 		oppTitle = (TextView)findViewById(R.id.oppTitle);
 		oppTitle.setText("Lvl " + player.getLevel() + " " + opponent.getTitle());
@@ -254,6 +277,7 @@ public class BattleActivity extends Activity {
         });
 	}
 	
+
 	/*
 	 * This function creates several battle actions for two battle creatures, who are
 	 * then used to make the battle for this activity. That is, if a sample is needed
@@ -278,8 +302,8 @@ public class BattleActivity extends Activity {
 		simpleActions2.add(intimidate);
 		
 		//create sample creatures
-		BattleCreature player = new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);;
+		BattleCreature player = new BattleCreature(0,"Philanthropist", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(0,"Philanthropist", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);;
 
 		
 		
@@ -288,7 +312,9 @@ public class BattleActivity extends Activity {
 		currentBattle = new Battle(player,opponent, true);
 	}
 	
+
 	//gives an alert with choices for which creature the user wants in the battle
+	//Very Fragile code 
 	private void chooseCreatureAlert() {
 		//final UserProfile userProfile = (new UserProfile()).loadProfile(this);
 		//custom dialog
@@ -336,13 +362,13 @@ public class BattleActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				currentBattle.exchangePlayerCreature(userProfile.getParty().getPartyMember(position));;
-
+				//currentBattle.exchangePlayerCreature(userProfile.getParty().getPartyMember(position));
 				currentBattle.exchangePlayerCreature(userProfile.getParty().getPartyMember(activeUserProfileCreatureIndexes.get(position)));
 				userProfile.setBattle(currentBattle);
 				userProfile.saveProfile(thisBattleActivity);
-				thisBattleActivity.assignBattleButtons();
+				//thisBattleActivity.assignBattleButtons();
 				creatureHasBeenChosen = true;
+				
 
 			}
 		});
@@ -357,10 +383,15 @@ public class BattleActivity extends Activity {
 				if (!creatureHasBeenChosen) {
 					return;
 				}
+				setBattleContent();
 				refreshStats();
 				dialog.dismiss();
 			}
 		});
+		
+		/*
+		 * setup exit button. if pressed, exit the activity
+		 */
 		Button exitButton = (Button) dialog.findViewById(R.id.chooseCreatureExitButton);
 		exitButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -369,6 +400,23 @@ public class BattleActivity extends Activity {
 				onBackPressed();
 			}
 		});
+		
+		
+		dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+			@Override
+			public boolean onKey(DialogInterface dialog, int keyCode,
+					KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_BACK){
+					dialog.dismiss();
+					thisBattleActivity.onBackPressed();
+				}
+				return false;
+			}
+		});
+		
+		//user gets only two ways to exit the alert box (back button, and exit button)
+		dialog.setCanceledOnTouchOutside(false);
+		
 		dialog.show();
 	}
 	
@@ -396,7 +444,7 @@ public class BattleActivity extends Activity {
 		//player won
 		if(currentBattle.getPlayerBattleCreature().getCurrentHealth() > 0) {
 			captureCreaturePrompt();
-			updatePartyCreaturesPrompt();
+			upgradePartyCreatures();
 			userProfile.destroyBattle();
 		}
 		else {
@@ -429,11 +477,110 @@ public class BattleActivity extends Activity {
         .setNegativeButton("No", captureClickListener).show();
 	}
 	
-	private void updatePartyCreaturesPrompt() {
+	//to be called at the end of battling
+	private void upgradePartyCreatures() {
 		//loop through user party and if a Creature has upgrade points, show an alert
-		//for(int i = 0; i< userProfile.getCreaturesList().size(); i++) {
-			//if(userProfile.getCreaturesList().get(i) )
-		//}
+		for(int i = 0; i< userProfile.getParty().size(); i++) {
+			if(userProfile.getParty().getPartyMember(i).getUpgradePoints()>0) {
+				upgradeSingleCreaturePrompt(userProfile.getParty().getPartyMember(i));
+			}
+		}
+	}
+	
+	//prompt for upgrading a single creature
+	private void upgradeSingleCreaturePrompt(final BattleCreature creature) {
+		final Dialog dialog = new Dialog(this);
+		//final BattleActivity thisBattleActivity = this;
+		dialog.setContentView(R.layout.upgrade_creature);
+		dialog.setTitle("Upgrade Creature");
+		
+		final BattleUpgrade upgrade = new BattleUpgrade(creature.getUpgradePoints());
+		
+		final TextView Header = (TextView) dialog.findViewById(R.id.upgradeHeader);
+		final TextView Health = (TextView) dialog.findViewById(R.id.healthUpgrade);
+		final TextView Attack = (TextView) dialog.findViewById(R.id.attackUpgrade);
+		final TextView Speed = (TextView) dialog.findViewById(R.id.speedUpgrade);
+		final TextView Defense = (TextView) dialog.findViewById(R.id.defenseUpgrade);
+		final TextView healthAdd = (TextView) dialog.findViewById(R.id.healthAdd);
+		final TextView attackAdd = (TextView) dialog.findViewById(R.id.attackAdd);
+		final TextView speedAdd = (TextView) dialog.findViewById(R.id.speedAdd);
+		final TextView defenseAdd = (TextView) dialog.findViewById(R.id.defenseAdd);
+		
+		Header.setText(creature.getTitle() + " upgrade points left: " + upgrade.getUpgradeLeft());
+		Health.setText ("Health  " + creature.getMaxHealth());
+		Attack.setText ("Attack  " + creature.getAttack());
+		Speed.setText  ("Speed   " + creature.getSpeed());
+		Defense.setText("Defense " + creature.getDefense());
+		healthAdd.setText("0");
+		attackAdd.setText("0");
+		speedAdd.setText("0");
+		defenseAdd.setText("0");
+		
+		OnClickListener onClickListener = new OnClickListener() {
+		     @Override
+		     public void onClick(View v) {
+		         switch(v.getId()){
+		             case R.id.healthMinus:
+		                 upgrade.decrementHealth();
+		                // healthAdd.setText(upgrade.getHealthPlus());
+		             break;
+		             case R.id.healthPlus:
+		                 upgrade.incrementHealth();
+		                 //healthAdd.setText(upgrade.getHealthPlus());
+		             break;
+		             case R.id.attackMinus:
+		                 upgrade.decrementAttack();
+		             break;
+		             case R.id.attackPlus:
+		            	 upgrade.incrementAttack();
+		             break;
+		             case R.id.speedMinus:
+		            	 upgrade.decrementSpeed();
+		             break;
+		             case R.id.speedPlus:
+		            	 upgrade.incrementSpeed();
+		             break;
+		             case R.id.defenseMinus:
+		            	 upgrade.decrementDefense();
+		             break;
+		             case R.id.defensePlus:
+		            	 upgrade.incrementDefense();
+		             break;
+		             case R.id.exitUpgrade:
+		            	 if(upgrade.upgradeComplete()) {
+		            		 creature.enactUpgrade(upgrade);
+	            			 Health.setText ("Health  " + creature.getMaxHealth());
+	            			 Attack.setText ("Attack  " + creature.getAttack());
+	            			 Speed.setText  ("Speed   " + creature.getSpeed());
+	            			 Defense.setText("Defense " + creature.getDefense());
+	            			 userProfile.saveProfile(thisBattleActivity);
+		            		 dialog.dismiss();
+		            	 }
+		             break;
+		             default:
+		             return;
+		         }
+		         Header.setText(creature.getTitle() + " upgrade points left: " + upgrade.getUpgradeLeft());
+		         healthAdd.setText("" +upgrade.getHealthPlus());
+		         attackAdd.setText("" +upgrade.getAttackPlus());
+		         speedAdd.setText("" +upgrade.getSpeedPlus());
+		         defenseAdd.setText("" +upgrade.getDefensePlus());
+		   }
+		};
+
+		int[] buttonIds = {R.id.healthPlus, R.id.healthMinus, R.id.attackPlus, R.id.attackMinus,
+				R.id.speedPlus, R.id.speedMinus, R.id.defensePlus, R.id.defenseMinus, R.id.exitUpgrade};
+		System.out.println("buttonIds.length = " + buttonIds.length);
+		for(int i = 0; i<buttonIds.length; i++) {
+			dialog.findViewById(buttonIds[i]).setOnClickListener(onClickListener);
+		}
+		
+		
+		
+		
+		
+		
+		dialog.show();
 	}
 	
 	public void onPause() {

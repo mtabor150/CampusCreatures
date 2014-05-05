@@ -10,14 +10,18 @@ import java.io.StreamCorruptedException;
 
 import campuscreatures.profile.UserProfile;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
+	
+	ImageView profilePic;
 
 	View rootView;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,6 +29,7 @@ public class HomeFragment extends Fragment {
  
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         setUserInfo();
+        
         
         return rootView;
 	    
