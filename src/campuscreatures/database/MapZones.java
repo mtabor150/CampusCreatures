@@ -19,6 +19,8 @@ public class MapZones implements Iterable<Zone>{
  *  Point 3 - Point 4
  *  Point 2 - Point 4
  *  
+ *  Point1's Latitude > Point3 Latitude but 
+ *  
  * DISTRICT:		Point 1						Point 2						Point 3						Point 4
  * SLU 				38.63888, -90.240852		38.636148, -90.241753		38.635671, -90.225681		38.631757, -90.227172
  * 
@@ -56,6 +58,12 @@ public class MapZones implements Iterable<Zone>{
  * Xavier Hall		38.637499, -90.237901		38.637388, -90.237308		38.636979, -90.238102		38.636860, -90.237504					
  */
 	Zone zone;
+	int _id;
+	Location _point1;
+	Location _point2;
+	Location _point3;
+	Location _point4;
+	String zone_name;
 	public ArrayList<Zone> Zones;
 
 	public MapZones () {
@@ -185,9 +193,23 @@ public class MapZones implements Iterable<Zone>{
 		Zone xavier = new Zone("Xavier Hall", new Location(38.637499, -90.237901), new Location(38.637388, -90.237308), 
 					  new Location(38.636979, -90.238102), new Location(38.636860, -90.237504));
 		Zones.add(xavier);
-		
+	}
 
-		
+	public MapZones(String name, Location one, Location two, Location three, Location four){
+		this.zone_name = name;
+		this._point1 = one;
+		this._point2 = two;
+		this._point3 = three;
+		this._point4 = four;
+	}
+	
+	public MapZones(int id, String name, Location one, Location two, Location three, Location four){
+		this._id = id;
+		this.zone_name = name;
+		this._point1 = one;
+		this._point2 = two;
+		this._point3 = three;
+		this._point4 = four;
 	}
 	
 	

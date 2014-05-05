@@ -55,7 +55,10 @@ public class Zone {
 			
 		}
 	}
-	
+
+	public String getZoneName(){
+		return zoneName;
+	}
 	
 	public boolean inZone(Location point) {
 
@@ -76,12 +79,7 @@ public class Zone {
 				inArea = true;
 			} 
 		}
-
 		return inArea;
-	}
-	
-	public String getZoneName(){
-		return zoneName;
 	}
 	
 	private void setBarycenter(Location alpha, Location beta, Location gamma, Location delta){
@@ -95,7 +93,8 @@ public class Zone {
 		double dy = (alpha.getLongitude() - beta.getLongitude());
 		return Math.sqrt((dx * dx) + (dy * dy));
 	}
-
+	
+	
 	// triangle
 	private double area(Location alpha, Location beta, Location gamma) {
 		double a, b, c;
@@ -107,8 +106,7 @@ public class Zone {
 	}
 
 	// quadrilateral
-	private double area(Location alpha, Location beta, Location gamma,
-			Location delta) {
+	private double area(Location alpha, Location beta, Location gamma, Location delta) {
 		return ((area(alpha, gamma, beta))+(area(alpha, gamma, delta)));
 	}
 	

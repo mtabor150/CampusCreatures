@@ -275,10 +275,13 @@ public class MainActivity extends FragmentActivity {
 					//start of test code alpha
 					Creatures tempo = new Creatures(0,"Phil", "house", "room", "earth", 5, 2, 1, 4, 10, 1, 0, 22, 1, 1);
 					Creatures tempo2 = new Creatures(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10, 10, 10, 10, 10, 10, 10, 1, 1);
+					Creatures tempo3 = new Creatures(2, "Weazel Man", "Tegeler Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 1, 1);
 					ArrayList<BattleAction> simpleActions1 = tempo.getMoveSet(tempo);
 					ArrayList<BattleAction> simpleActions2 = tempo2.getMoveSet(tempo2);
+					ArrayList<BattleAction> simpleActions3 = tempo3.getMoveSet(tempo3);
 					newProfile.addCreature(new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 22,4,10,10,0,simpleActions1));
 					newProfile.addCreature(new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10 ,10,10,30,30,10,simpleActions2));
+					newProfile.addCreature(new BattleCreature(1,"Weazel Man", "Tegeler Hall", "Saint Louis University", "normal",10, 10 ,10,10,30,30,10,simpleActions3));
 					//end of test code alpha
 
 					newProfile.saveProfile(v.getContext());
