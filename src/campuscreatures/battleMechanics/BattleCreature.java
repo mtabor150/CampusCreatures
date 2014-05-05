@@ -297,4 +297,13 @@ public class BattleCreature implements Serializable {
 			return false;
 		}
 	}
+	
+	public void enactUpgrade(BattleUpgrade upgrade) {
+		MaxHealth += upgrade.getHealthPlus();
+		attack += upgrade.getAttackPlus();
+		speed += upgrade.getSpeedPlus();
+		defense += upgrade.getDefensePlus();
+		upgradePoints -= upgrade.getUpgradeUsed();
+		CurrentHealth = MaxHealth;
+	}
 }
