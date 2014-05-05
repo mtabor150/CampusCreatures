@@ -23,7 +23,7 @@ import java.io.*;
 
 public class CreatureAtlasFragment extends ListFragment {
 
-	private List<Player> pcreatureList;
+	private ArrayList<Creatures> pcreatureList;
 	private List<Creatures> creatureList;
 
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -33,14 +33,20 @@ public class CreatureAtlasFragment extends ListFragment {
 		
 		//get all Creatures
 	    Log.d("From CreatureAtlasFragment", "...");
-		pcreatureList = database.getAllPlayerCreatures();
+		creatureList = database.getAllCreatures();
 		database.close();
+		
+		pcreatureList = new ArrayList();
+		
+		for(int i = 0; i< creatureList.size(); i++) {
+			if(creatureList.get(i).getSeen() == 1) {
+				pcreatureList.add(creatureList.get(i));
+			}
+		}
 		
 		final String[] creatureNames = new String[pcreatureList.size()];
 	    for (int i = 0; i < pcreatureList.size(); i++) {
-	    	if (pcreatureList.get(i).getSeen() == 1){
-	    		creatureNames[i] = pcreatureList.get(i).getName();
-	    	}
+	    	creatureNames[i] = pcreatureList.get(i).getName();
 	    }
 		
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
