@@ -6,6 +6,7 @@ import java.util.List;
 import campuscreatures.battleMechanics.BattleCreature;
 import campuscreatures.database.Creatures;
 import campuscreatures.database.DatabaseHelper;
+import campuscreatures.database.Player;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -22,8 +23,9 @@ import java.io.*;
 
 public class CreatureAtlasFragment extends ListFragment {
 
+	private List<Player> pcreatureList;
 	private List<Creatures> creatureList;
-	
+
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    
@@ -31,19 +33,16 @@ public class CreatureAtlasFragment extends ListFragment {
 		
 		//get all Creatures
 	    Log.d("From CreatureAtlasFragment", "...");
-		creatureList = database.getAllCreatures();
+		pcreatureList = database.getAllPlayerCreatures();
 		database.close();
 		
-		 
-		final String[] creatureNames = new String[creatureList.size()];
-	    for (int i = 0; i < creatureList.size(); i++) {
-	      creatureNames[i] = creatureList.get(i).getName();
+		final String[] creatureNames = new String[pcreatureList.size()];
+	    for (int i = 0; i < pcreatureList.size(); i++) {
+	    	if (pcreatureList.get(i).getSeen() == 1){
+	    		creatureNames[i] = pcreatureList.get(i).getName();
+	    	}
 	    }
 		
-	    //final String[] creatureNames = new String[] {"Marcus Taborius", "Desi Djinn", "Philanderphil",
-	    		//"Weazel Man", "Scan Bot", "Chamber Wolf", "Adam the Intern", "Lescher the Lecturer", 
-	    		//"Clueless Freshman", "Roadrunner", "Billiken"};
-	    
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
 	    		android.R.layout.simple_list_item_1, creatureNames);
 	    setListAdapter(adapter);

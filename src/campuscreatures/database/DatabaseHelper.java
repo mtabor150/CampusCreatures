@@ -41,12 +41,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String COLUMN_MPT = "moves_per_turn";
 	private static final String COLUMN_EXPERIENCE = "experience";
 	private static final String COLUMN_LEVEL = "level";
+	private static final String COLUMN_SEEN = "seen_or_not";
+	private static final String COLUMN_CAPTURED = "captured";
 	
 	//Column names - unique to Player Table
 	private static final String PLAYER_ID = "_id";
-	private static final String COLUMN_SEEN = "seen_or_not";
-	private static final String COLUMN_SEEN_AT = "seen_at";
-	private static final String COLUMN_CAPTURED = "captured";
+	
 	
 	private static final String CREATE_CREATURES_TABLE = "CREATE TABLE " 
 			+ TABLE_CREATURES + " (" 				
@@ -62,7 +62,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_SPEED + " INTEGER NOT NULL, "
 			+ COLUMN_MPT + " INTEGER NOT NULL, "
 			+ COLUMN_EXPERIENCE + " INTEGER NOT NULL, "
-			+ COLUMN_LEVEL + " INTEGER NOT NULL" + ")";
+			+ COLUMN_LEVEL + " INTEGER NOT NULL, " 
+			+ COLUMN_SEEN + " INTEGER NOT NULL, "
+			+ COLUMN_CAPTURED + " INTEGER NOT NULL" + ")";
 	
 	private static final String CREATE_PLAYER_TABLE = "CREATE TABLE "
 			+ TABLE_PLAYER + " (" 				
@@ -79,9 +81,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_MPT + " INTEGER NOT NULL, "
 			+ COLUMN_EXPERIENCE + " INTEGER NOT NULL, "
 			+ COLUMN_LEVEL + " INTEGER NOT NULL, " 
-			+ COLUMN_SEEN + " TEXT NOT NULL, "
-			+ COLUMN_SEEN_AT + " TEXT NOT NULL, "
-			+ COLUMN_CAPTURED + " TEXT NOT NULL" + ")";
+			+ COLUMN_SEEN + " INTEGER NOT NULL, "
+			+ COLUMN_CAPTURED + " INTEGER NOT NULL" + ")";
 	
 	
 	// MySQLiteHelper constructor must call the super class constructor
@@ -112,14 +113,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	/**
 	 * 
-	 * Creatures Table - 13 columns
-	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * | ID | Name | Region | District | Type | Health | Magic | Attack | Defense | Speed | Moves Per Turn | Experience | Level |   
-	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|    
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______| 
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______| 
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______| 
+	 * Creatures Table - 15 columns
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * | ID | Name | Region | District | Type | Health | Magic | Attack | Defense | Speed | Moves Per Turn | Experience | Level | Seen | Cap |   
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|_____|    
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|_____|   
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|_____|  
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|_____|  
 	 * 
 	 * All CRUD Operations (Create, Read, Update, Delete)
 	 * 
@@ -140,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();		
-		Log.d("Putting name into name column: ", creature.getName());
+		//Log.d("Putting name into name column: ", creature.getName());
 		values.put(COLUMN_NAME, creature.getName());				
 		values.put(COLUMN_REGION, creature.getRegion());			
 		values.put(COLUMN_DISTRICT, creature.getDistrict());		
@@ -152,13 +153,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_SPEED, creature.getSpeed());				
 		values.put(COLUMN_MPT, creature.getMovesPerTurn());			
 		values.put(COLUMN_EXPERIENCE, creature.getExperience());	
-		values.put(COLUMN_LEVEL, creature.getLevel());				
+		values.put(COLUMN_LEVEL, creature.getLevel());		
+		values.put(COLUMN_SEEN, creature.getSeen());
+		values.put(COLUMN_CAPTURED, creature.getCaptured());
 		
 		Log.d("About to insert the entire row for:", creature.getName());
 		long creature_id = database.insert(TABLE_CREATURES, null, values);
 		
 		Log.d("Inserted the row for: ", creature.getName());
-		Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
+		//Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
 		
 		return creature_id;
 		//Close database connection
@@ -199,6 +202,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		creature.setMovesPerTurn(cursor.getInt(10));
 		creature.setExperience(cursor.getInt(11));
 		creature.setLevel(cursor.getInt(12));
+		creature.setSeen(cursor.getInt(13));
+		creature.setCaptured(cursor.getInt(14));
 		Log.d("getCreature(" + creature_id + ")", creature.toString());
 		return creature;
 	}
@@ -216,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = this.getReadableDatabase();
 		
 		String selectQuery = "SELECT * FROM " + TABLE_CREATURES;
-		Log.d("Logging Query for getAllCreatures", selectQuery);
+		//Log.d("Logging Query for getAllCreatures", selectQuery);
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		
 		Creatures creature = null;
@@ -236,11 +241,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				creature.setMovesPerTurn(cursor.getInt(10));
 				creature.setExperience(cursor.getInt(11));
 				creature.setLevel(cursor.getInt(12));
+				creature.setSeen(cursor.getInt(13));
+				creature.setCaptured(cursor.getInt(14));
 				creaturesList.add(creature);
-				Log.d("ID and NAME", String.valueOf(creature.getId()) + " " + creature.getName());
+				//Log.d("ID and NAME", String.valueOf(creature.getId()) + " " + creature.getName());
 			} while (cursor.moveToNext());
 		}
-		Log.d("getAllCreatures().toString() function", creaturesList.toString());
+		//Log.d("getAllCreatures().toString() function", creaturesList.toString());
 		database.close();
 		return creaturesList;		
 	}
@@ -270,7 +277,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		List<Creatures> regionCreatures = new ArrayList<Creatures>();
 		String[] resultColumns = new String[]{KEY_ID, COLUMN_NAME, COLUMN_REGION, COLUMN_DISTRICT, COLUMN_TYPE, COLUMN_HEALTH,
-				COLUMN_MAGIC, COLUMN_ATTACK, COLUMN_DEFENSE, COLUMN_SPEED, COLUMN_MPT, COLUMN_EXPERIENCE, COLUMN_LEVEL}; 
+				COLUMN_MAGIC, COLUMN_ATTACK, COLUMN_DEFENSE, COLUMN_SPEED, COLUMN_MPT, COLUMN_EXPERIENCE, COLUMN_LEVEL, 
+				COLUMN_SEEN, COLUMN_CAPTURED}; 
 		String[] condition = {region};
 		SQLiteDatabase database = this.getReadableDatabase();
 		Cursor cursor = database.query(TABLE_CREATURES, resultColumns, COLUMN_REGION + "=" + "?", condition, null, null, null);
@@ -292,6 +300,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				creature.setMovesPerTurn(cursor.getInt(10));
 				creature.setExperience(cursor.getInt(11));
 				creature.setLevel(cursor.getInt(12));
+				creature.setSeen(cursor.getInt(13));
+				creature.setCaptured(cursor.getInt(14));
 				regionCreatures.add(creature);
 			} while (cursor.moveToNext());
 		}
@@ -300,31 +310,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return regionCreatures;
 	}
 	
-	/**
-<<<<<<< HEAD
-	 * Adam's
-	 * getLocalCreatures() - used to find creatures in a certain region and district
-	 * @param region
-	 * @param district
-	 * @return
-	 * 	1. get reference to readable Database
-	 * 	2. build the query statement, create cursor
-	 * 	3. go over each row, build creature and add it to the list
-	 * 	4. return that list
-	 */
-	
-	/**
-	* updatinCreature()
-=======
-	* updateCreature()
->>>>>>> d80ae67a70c67785c19d6684bd8cc9c090cfd39a
-	* @param creature
-	* @return
-	* 	1. get reference to writable Database
-	* 	2. create ContentValues to add key "column"/value
-	* 	3. update row using database.update(table, column/value, selections, selection arguments)
-	* 	4. return creature
-	*/
+
+/**	 updateCreature()
+ * @param creature
+ * @return
+ * 	1. get reference to writable Database
+ * 	2. create ContentValues to add key "column"/value
+ * 	3. update row using database.update(table, column/value, selections, selection arguments)
+ * 	4. return creature
+ */
 	public long updateCreature(Creatures creature){
 		
 		SQLiteDatabase database = this.getWritableDatabase();
@@ -341,7 +335,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_SPEED, creature.getSpeed());		
 		values.put(COLUMN_MPT, creature.getMovesPerTurn());		
 		values.put(COLUMN_EXPERIENCE, creature.getExperience());		
-		values.put(COLUMN_LEVEL, creature.getLevel());			
+		values.put(COLUMN_LEVEL, creature.getLevel());	
+		values.put(COLUMN_SEEN, creature.getSeen());		
+		values.put(COLUMN_CAPTURED, creature.getCaptured());
 		
 		long x = database.update(TABLE_CREATURES, 				 
 				values, 										 	
@@ -370,14 +366,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	/**
 	 * 
-	 * Player Table - 16 columns
-	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * | ID | Name | Region | District | Type | Health | Magic | Attack | Defense | Speed | Moves Per Turn | Experience | Level | Seen | SeenAt | Captured |   
-	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|    
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|  
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|  
-	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|________|__________|  
+	 * Player Table - 15 columns
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * | ID | Name | Region | District | Type | Health | Magic | Attack | Defense | Speed | Moves Per Turn | Experience | Level | Seen | Captured |   
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|__________|    
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|__________|  
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|__________|  
+	 * |____|______|________|__________|______|________|_______|________|_________|_______|________________|____________|_______|______|__________|  
 	 * 
 	 * All CRUD Operations (Create, Read, Update, Delete)
 	 * 
@@ -410,14 +406,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		playerValues.put(COLUMN_MPT, playerCreature.getMovesPerTurn());		
 		playerValues.put(COLUMN_EXPERIENCE, playerCreature.getExperience());
 		playerValues.put(COLUMN_LEVEL, playerCreature.getLevel());			
-		playerValues.put(COLUMN_SEEN, playerCreature.getSeen()=="yes");
-		playerValues.put(COLUMN_SEEN_AT, playerCreature.getRegion());
-		playerValues.put(COLUMN_CAPTURED, playerCreature.getCaptured()=="yes");
+		playerValues.put(COLUMN_SEEN, playerCreature.getSeen());
+		playerValues.put(COLUMN_CAPTURED, playerCreature.getCaptured());
 	
 		Log.d("About to insert the entire row for:", playerCreature.getName());
 		long playerCreature_ID = database.insert(TABLE_PLAYER, null, playerValues);
 		Log.d("Inserted the row for: ", playerCreature.getName());
-		Log.d("KEY ID for: ", playerCreature.getName() + " is " + playerCreature.getId());
+		//Log.d("KEY ID for: ", playerCreature.getName() + " is " + playerCreature.getId());
 		
 		return playerCreature_ID;
 		//database.close();
@@ -456,6 +451,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		playerCreature.setMovesPerTurn(cursor.getInt(10));
 		playerCreature.setExperience(cursor.getInt(11));
 		playerCreature.setLevel(cursor.getInt(12));
+		playerCreature.setSeen(cursor.getInt(13));
+		playerCreature.setCaptured(cursor.getInt(14));
 		
 		Log.d("getCreature(" + playerCreature_id + ")", playerCreature.toString());
 		return playerCreature;		
@@ -494,9 +491,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				pcreature.setMovesPerTurn(cursor.getInt(10));
 				pcreature.setExperience(cursor.getInt(11));
 				pcreature.setLevel(cursor.getInt(12));
-				pcreature.setSeen(cursor.getString(13));
-				pcreature.setSeenAt(cursor.getString(14));
-				pcreature.setCaptured(cursor.getString(15));
+				pcreature.setSeen(cursor.getInt(13));
+				pcreature.setCaptured(cursor.getInt(14));
 				playercreaturesList.add(pcreature);
 				Log.d("ID and NAME", String.valueOf(pcreature.getId()) + " " + pcreature.getName());
 			} while (cursor.moveToNext());
@@ -523,7 +519,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		List<Player> playerregionCreatures = new ArrayList<Player>();
 		String[] resultColumns = new String[]{PLAYER_ID, COLUMN_NAME, COLUMN_REGION, COLUMN_DISTRICT, COLUMN_TYPE, COLUMN_HEALTH,
 				COLUMN_MAGIC, COLUMN_ATTACK, COLUMN_DEFENSE, COLUMN_SPEED, COLUMN_MPT, COLUMN_EXPERIENCE, COLUMN_LEVEL,
-				COLUMN_SEEN, COLUMN_SEEN_AT, COLUMN_CAPTURED}; 
+				COLUMN_SEEN, COLUMN_CAPTURED}; 
 		String[] condition = {region};
 		SQLiteDatabase database = this.getReadableDatabase();
 		Cursor cursor = database.query(TABLE_PLAYER, resultColumns, COLUMN_REGION + "=" + "?", condition, null, null, null);
@@ -545,9 +541,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				pcreature.setMovesPerTurn(cursor.getInt(10));
 				pcreature.setExperience(cursor.getInt(11));
 				pcreature.setLevel(cursor.getInt(12));
-				pcreature.setSeen(cursor.getString(13));
-				pcreature.setSeenAt(cursor.getString(14));
-				pcreature.setCaptured(cursor.getString(15));
+				pcreature.setSeen(cursor.getInt(13));
+				pcreature.setCaptured(cursor.getInt(14));
 				playerregionCreatures.add(pcreature);
 			} while (cursor.moveToNext());
 		}
@@ -581,7 +576,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_EXPERIENCE, pcreature.getExperience());		
 		values.put(COLUMN_LEVEL, pcreature.getLevel());			
 		values.put(COLUMN_SEEN, pcreature.getSeen());
-		values.put(COLUMN_SEEN_AT, pcreature.getSeenAt());
 		values.put(COLUMN_CAPTURED, pcreature.getCaptured());
 		
 		long x = database.update(TABLE_PLAYER, 				 
