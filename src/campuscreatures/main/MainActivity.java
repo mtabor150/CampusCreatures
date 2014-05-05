@@ -77,11 +77,12 @@ public class MainActivity extends FragmentActivity {
 		if (dbHelper.getAllCreatures().size() == 0){  
 			Log.d("From MainActivity", "....");
 			dbHelper.getAllCreatures();
+
 			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));			
 			dbHelper.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
-			dbHelper.addCreature(new Creatures("Philanderphil", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
-			dbHelper.addCreature(new Creatures("Weazel Man", "Tegeler Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
-			dbHelper.addCreature(new Creatures("Adam The Intern", "Lecture Halls", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
+			dbHelper.addCreature(new Creatures("Philanthropist", "Pius Library", "Saint Louis University", "space", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
+			dbHelper.addCreature(new Creatures("Weasel Man", "Tegeler Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
+			dbHelper.addCreature(new Creatures("Adom", "Lecture Halls", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Scan Bot", "Ritter Hall", "Saint Louis University", "electric", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Chamber Wolf", "Ritter Hall", "Saint Louis University", "normal", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
 			dbHelper.addCreature(new Creatures("Lescher the Lecturer", "Ritter Hall", "Saint Louis University", "psychic", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
@@ -132,6 +133,7 @@ public class MainActivity extends FragmentActivity {
 					"earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0)));	
 			dbHelper.addPlayerCreature(new Player(new Creatures("Rasal Ghul", "Ritter Hall", "Saint Louis University", 
 					"earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0)));	
+
 		}
 
 

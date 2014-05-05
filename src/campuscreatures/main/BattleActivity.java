@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -57,12 +58,15 @@ public class BattleActivity extends Activity {
 	private Button bActionButton3;
 	private Button bActionButton4;
 	
+	private ImageView playerSprite;
+	private ImageView oppSprite;
+	
 	private boolean creatureHasBeenChosen;
 	
 	
 	//UserProfile
 	private UserProfile userProfile;
-
+	private Sprites sprites;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -169,8 +173,14 @@ public class BattleActivity extends Activity {
 			return;
 		}
 		
+		sprites = new Sprites(this.getApplicationContext());
+		
 		//create player textViews to be added to tableRows
 		BattleCreature player = currentBattle.getPlayerBattleCreature();
+		
+		playerSprite = (ImageView)findViewById(R.id.playerSprite);
+		playerSprite.setImageDrawable(sprites.getSprite(player.getTitle()));
+		//playerSprite.setImageDrawable(getResources().getDrawable(R.drawable.markustaborius));
 		
 		playerTitle = (TextView)findViewById(R.id.playerTitle);
 		playerTitle.setText("Lvl " + player.getLevel() + " " + player.getTitle());
@@ -182,6 +192,10 @@ public class BattleActivity extends Activity {
 		
 		//create opponent TextViews to be added to TableRows
 		BattleCreature opponent = currentBattle.getOpponentBattleCreature();
+		
+		oppSprite = (ImageView)findViewById(R.id.oppSprite);
+		oppSprite.setImageDrawable(sprites.getSprite(opponent.getTitle()));
+		//oppSprite.setImageDrawable(getResources().getDrawable(R.drawable.markustaborius));
 		
 		oppTitle = (TextView)findViewById(R.id.oppTitle);
 		oppTitle.setText("Lvl " + player.getLevel() + " " + opponent.getTitle());
@@ -278,8 +292,8 @@ public class BattleActivity extends Activity {
 		simpleActions2.add(intimidate);
 		
 		//create sample creatures
-		BattleCreature player = new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature(0,"Phil", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);;
+		BattleCreature player = new BattleCreature(0,"Philanthropist", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);
+		BattleCreature opponent = new BattleCreature(0,"Philanthropist", "house", "room", "earth", 5, 2, 1,4,10,10,0,simpleActions1);;
 
 		
 		
