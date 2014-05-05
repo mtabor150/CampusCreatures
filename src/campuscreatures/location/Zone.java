@@ -1,9 +1,7 @@
 package campuscreatures.location;
 
 /* Zones are either circles designated with a center and a radius
- * or they are convex quadrilaterals designated by 4 points.  If the
- * zone is a quadrilateral the constructor will sort the points so 
- * that they are in clockwise order in the array of points.
+ * or they are convex quadrilaterals designated by 4 points.
  */
 
 public class Zone {
@@ -35,25 +33,26 @@ public class Zone {
 	public Zone(String name, Location alpha, Location beta, Location gamma, Location delta) {
 		this.zoneName = name;
 		numPoints = 4;
-		points = new Location[numPoints];
-		setBarycenter(alpha, beta, gamma, delta);
 		Location temp[] = {alpha, beta, gamma, delta};
-		
-		for(int i =0; i<4; i++){
-			double latDiff = temp[i].getLatitude() - barycenter.getLatitude(); 
-			double lonDiff = temp[i].getLongitude() - barycenter.getLongitude();
-			
-			if((latDiff > 0 && lonDiff > 0)||(latDiff > 0 && lonDiff == 0)){
-				points[0] = temp[i];
-			}else if((latDiff < 0 && lonDiff > 0)||(latDiff == 0 && lonDiff > 0)){
-				points[1] = temp[i];
-			}else if((latDiff < 0 && lonDiff < 0)||(latDiff < 0 && lonDiff == 0)){
-				points[2] = temp[i];
-			}else{
-				points[3] = temp[i];
-			}
-			
-		}
+		points = temp;
+//		setBarycenter(alpha, beta, gamma, delta);
+//		Location temp[] = {alpha, beta, gamma, delta};
+//		
+//		for(int i =0; i<4; i++){
+//			double latDiff = temp[i].getLatitude() - barycenter.getLatitude(); 
+//			double lonDiff = temp[i].getLongitude() - barycenter.getLongitude();
+//			
+//			if((latDiff > 0 && lonDiff > 0)||(latDiff > 0 && lonDiff == 0)){
+//				points[0] = temp[i];
+//			}else if((latDiff < 0 && lonDiff > 0)||(latDiff == 0 && lonDiff > 0)){
+//				points[1] = temp[i];
+//			}else if((latDiff < 0 && lonDiff < 0)||(latDiff < 0 && lonDiff == 0)){
+//				points[2] = temp[i];
+//			}else{
+//				points[3] = temp[i];
+//			}
+//			
+//		}
 	}
 	
 	
@@ -80,15 +79,23 @@ public class Zone {
 		return inArea;
 	}
 	
+	public boolean inZone(Location player, Location point1, Location point2, Location point3){
+		return true;
+	}
+	
 	public String getZoneName(){
 		return zoneName;
 	}
 	
-	private void setBarycenter(Location alpha, Location beta, Location gamma, Location delta){
-		double lat = (alpha.getLatitude()+beta.getLatitude()+gamma.getLatitude()+delta.getLatitude())/4;
-		double lon = (alpha.getLongitude()+beta.getLongitude()+gamma.getLongitude()+delta.getLongitude())/4;
-		barycenter = new Location(lat, lon);
-	}
+//	public String getName() {
+//		return this.zoneName;
+//	}
+	
+//	private void setBarycenter(Location alpha, Location beta, Location gamma, Location delta){
+//		double lat = (alpha.getLatitude()+beta.getLatitude()+gamma.getLatitude()+delta.getLatitude())/4;
+//		double lon = (alpha.getLongitude()+beta.getLongitude()+gamma.getLongitude()+delta.getLongitude())/4;
+//		barycenter = new Location(lat, lon);
+//	}
 
 	private double pointDistance(Location alpha, Location beta) {
 		double dx = (alpha.getLatitude() - beta.getLatitude());
@@ -107,12 +114,9 @@ public class Zone {
 	}
 
 	// quadrilateral
-	private double area(Location alpha, Location beta, Location gamma,
-			Location delta) {
-		return ((area(alpha, gamma, beta))+(area(alpha, gamma, delta)));
-	}
+//	private double area(Location alpha, Location beta, Location gamma,
+//			Location delta) {
+//		return ((area(alpha, gamma, beta))+(area(alpha, gamma, delta)));
+//	}
 	
-	public String getName() {
-		return this.zoneName;
-	}
 }
