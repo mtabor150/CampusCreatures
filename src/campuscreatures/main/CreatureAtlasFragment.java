@@ -23,11 +23,8 @@ import java.io.*;
 
 public class CreatureAtlasFragment extends ListFragment {
 
-<<<<<<< HEAD
-	private ArrayList<Creatures> pcreatureList;
-=======
 	private ArrayList<Creatures> seenCreatureList;
->>>>>>> master
+
 	private List<Creatures> creatureList;
 
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -40,19 +37,6 @@ public class CreatureAtlasFragment extends ListFragment {
 		creatureList = database.getAllCreatures();
 		database.close();
 		
-<<<<<<< HEAD
-		pcreatureList = new ArrayList();
-		
-		for(int i = 0; i< creatureList.size(); i++) {
-			if(creatureList.get(i).getSeen() == 1) {
-				pcreatureList.add(creatureList.get(i));
-			}
-		}
-		
-		final String[] creatureNames = new String[pcreatureList.size()];
-	    for (int i = 0; i < pcreatureList.size(); i++) {
-	    	creatureNames[i] = pcreatureList.get(i).getName();
-=======
 		seenCreatureList = new ArrayList();
 		
 		for (int i=0; i <creatureList.size(); i++){
@@ -65,7 +49,6 @@ public class CreatureAtlasFragment extends ListFragment {
 	    for (int i = 0; i < seenCreatureList.size(); i++) {
 	    	creatureNames[i] = seenCreatureList.get(i).getName();
 
->>>>>>> master
 	    }
 		
 	    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
