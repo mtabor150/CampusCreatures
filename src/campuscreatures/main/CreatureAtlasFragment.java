@@ -24,6 +24,7 @@ import java.io.*;
 public class CreatureAtlasFragment extends ListFragment {
 
 	private ArrayList<Creatures> seenCreatureList;
+
 	private List<Creatures> creatureList;
 
 	public void onActivityCreated(Bundle savedInstanceState) {
