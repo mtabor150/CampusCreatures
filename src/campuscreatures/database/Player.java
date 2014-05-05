@@ -29,15 +29,13 @@ public class Player {
 	int captured_MPT;
 	int captured_Experience;
 	int captured_Level;
-	String creature_Seen;
-	String seen_At;
-	String _captured;
+	int creature_Seen;
+	int _captured;
+	
+	public Player(){}
 	
 	//constructors
-	public Player (){
-	}
-
-	public Player (Creatures creature, String creatureSeen, String seenAt, String captured) {
+	public Player(Creatures creature) {
 		
 		this.captured_Name = creature._name;
 		this.captured_Region = creature._region;
@@ -51,12 +49,11 @@ public class Player {
 		this.captured_MPT = creature._moves_per_turn;
 		this.captured_Experience = creature._experience;
 		this.captured_Level = creature._level;
-		this.creature_Seen = creatureSeen;
-		this.seen_At = seenAt;
-		this._captured = captured;		
+		this.creature_Seen = creature._seen + 1;
+		this._captured = creature._captured + 1;		
 	}
 	
-	public Player (Creatures creature, int id, String creatureSeen, String seenAt, String captured) {
+	public Player(Creatures creature, int id) {
 		
 		this._id = id;
 		this.captured_Name = creature._name;
@@ -71,14 +68,12 @@ public class Player {
 		this.captured_MPT = creature._moves_per_turn;
 		this.captured_Experience = creature._experience;
 		this.captured_Level = creature._level;
-		this.creature_Seen = creatureSeen;
-		this.seen_At = seenAt;
-		this._captured = captured;	
+		this.creature_Seen = creature._seen;
+		this._captured = creature._captured;		
 	}
 
 	
 	/*  All the attribute functions: set and get values */
-	
 	//ID attribute
 	public int getId() {
 		return this._id;
@@ -184,26 +179,18 @@ public class Player {
 	}
 	
 	//has creature been seen or not
-	public String getSeen(){
+	public int getSeen(){
 		return this.creature_Seen;
 	}
-	public void setSeen(String answer){
-		this.creature_Seen = answer; 
-	}
-	
-	//if seen, then where?
-	public String getSeenAt(){
-		return this.seen_At;
-	}
-	public void setSeenAt(String seenAt){
-		this.seen_At = seenAt;
+	public void setSeen(int seen){		//set to 1 when seen
+		this.creature_Seen = seen; 
 	}
 	
 	//has creature been seen or not
-	public String getCaptured(){
+	public int getCaptured(){
 		return this.creature_Seen;
 	}
-	public void setCaptured(String answer){
-		this._captured = answer; 
+	public void setCaptured(int cap){	//set to 1 when captured
+		this._captured = cap; 
 	}
 }
