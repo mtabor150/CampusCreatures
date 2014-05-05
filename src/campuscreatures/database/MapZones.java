@@ -319,38 +319,90 @@ public class MapZones implements Iterable<Zone>{
 		this._fourLong = fourLong;
 	}
 	
-	
-	
-/*	
-	public double getLocationOneLong(){
-		return this._point1.getLongitude();
+	public double getBiggestLat(MapZones zone){
+		double bigLat = 0;
+		if (zone.getLocationOneLat() > zone.getLocationTwoLat() && 
+			zone.getLocationOneLat() > zone.getLocationThreeLat() &&
+			zone.getLocationOneLat()  > zone.getLocationFourLat()){
+			bigLat = zone._oneLat;
+		}
+		else if (zone.getLocationTwoLat() > zone.getLocationOneLat() && 
+				 zone.getLocationTwoLat() > zone.getLocationThreeLat() && 
+				 zone.getLocationTwoLat()  > zone.getLocationFourLat()){
+				 bigLat = zone._twoLat;
+		}
+		else if (zone.getLocationThreeLat() > zone.getLocationOneLat() && 
+				 zone.getLocationThreeLat() > zone.getLocationTwoLat() && 
+				 zone.getLocationThreeLat()  > zone.getLocationFourLat()){
+				 bigLat = zone._threeLat;
+		}
+		else bigLat = zone._fourLat;
+		return bigLat;		
 	}
 	
-	//Point 2
-	public double getLocationTwoLat(){
-		return this._point2.getLatitude();
-	}
-	public double getLocationTwoLong(){
-		return this._point2.getLongitude();
+	public double getSmallestLat(MapZones zone){
+		double smallLat = 0;
+		if (zone.getLocationOneLat() < zone.getLocationTwoLat() && 
+			zone.getLocationOneLat() < zone.getLocationThreeLat() &&
+			zone.getLocationOneLat() < zone.getLocationFourLat()){
+			smallLat = zone._oneLat;
+		}
+		else if (zone.getLocationTwoLat() < zone.getLocationOneLat() && 
+				 zone.getLocationTwoLat() < zone.getLocationThreeLat() && 
+				 zone.getLocationTwoLat() < zone.getLocationFourLat()){
+				 smallLat = zone._twoLat;
+		}
+		else if (zone.getLocationThreeLat() < zone.getLocationOneLat() && 
+				 zone.getLocationThreeLat() < zone.getLocationTwoLat() && 
+				 zone.getLocationThreeLat() < zone.getLocationFourLat()){
+				 smallLat = zone._threeLat;
+		}
+		else smallLat = zone._fourLat;
+		return smallLat;		
 	}
 	
-	//Point 3
-	public double getLocationThreeLat(){
-		return this._point3.getLatitude();
-	}
-	public double getLocationThreeLong(){
-		return this._point1.getLongitude();
+	public double getBiggestLong(MapZones zone){
+		double bigLong = 0;
+		if (zone.getLocationOneLong() > zone.getLocationTwoLong() && 
+			zone.getLocationOneLong() > zone.getLocationThreeLong() &&
+			zone.getLocationOneLong()  > zone.getLocationFourLong()){
+			bigLong = zone._oneLong;
+		}
+		else if (zone.getLocationTwoLong() > zone.getLocationOneLong() && 
+				 zone.getLocationTwoLong() > zone.getLocationThreeLong() && 
+				 zone.getLocationTwoLong()  > zone.getLocationFourLong()){
+				 bigLong = zone._twoLong;
+		}
+		else if (zone.getLocationThreeLong() > zone.getLocationOneLong() && 
+				 zone.getLocationThreeLong() > zone.getLocationTwoLong() && 
+				 zone.getLocationThreeLong()  > zone.getLocationFourLong()){
+				 bigLong = zone._threeLat;
+		}
+		else bigLong = zone._fourLong;
+		return bigLong;		
 	}
 	
-	//Point 4
-	public double getLocationFourLat(){
-		return this._point4.getLatitude();
+	public double getSmallestLong(MapZones zone){
+		double smallLg = 0;
+		if (zone.getLocationOneLong() < zone.getLocationTwoLong() && 
+			zone.getLocationOneLong() < zone.getLocationThreeLong() &&
+			zone.getLocationOneLong() < zone.getLocationFourLong()){
+			smallLg = zone._oneLong;
+		}
+		else if (zone.getLocationTwoLong() < zone.getLocationOneLong() && 
+				 zone.getLocationTwoLong() < zone.getLocationThreeLong() && 
+				 zone.getLocationTwoLong() < zone.getLocationFourLong()){
+				 smallLg = zone._twoLong;
+		}
+		else if (zone.getLocationThreeLong() < zone.getLocationOneLong() && 
+				 zone.getLocationThreeLong() < zone.getLocationTwoLong() && 
+				 zone.getLocationThreeLong() < zone.getLocationFourLong()){
+				 smallLg = zone._threeLong;
+		}
+		else smallLg = zone._fourLong;
+		return smallLg;		
 	}
-	public double getLocationFourLong(){
-		return this._point4.getLongitude();
-	}
-	*/
-		
+	
 	public Object getMapZone(){
 		return this.zone;
 	}

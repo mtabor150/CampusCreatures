@@ -77,7 +77,7 @@ public class MainActivity extends FragmentActivity {
 		dbHelper = new DatabaseHelper(this);
 		if (dbHelper.getAllCreatures().size() == 0){  
 			Log.d("From MainActivity", "....");
-			dbHelper.getAllCreatures();
+			//dbHelper.getAllCreatures();
 
 			dbHelper.addCreature(new Creatures("Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth", 10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));			
 			dbHelper.addCreature(new Creatures("Desi Djinn ", "Simon Rec", "Saint Louis University", "fire",  10, 10, 10, 10, 10, 10, 10, 10, 0, 0 ));
@@ -172,10 +172,11 @@ public class MainActivity extends FragmentActivity {
 		}
 
 
-		dbHelper.getAllPlayerCreatures();
+		//dbHelper.getAllPlayerCreatures();
 		//get all Creatures
 		//dbHelper.getAllCreatures();
 		dbHelper.getCreaturesCount();
+		dbHelper.getAllPlayerCreatures();
 		dbHelper.getRegionsCount();
 		dbHelper.getCreature(35);
 		dbHelper.getAllCreaturesByRegion("Ritter Hall");	

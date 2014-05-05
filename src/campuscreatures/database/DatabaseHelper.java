@@ -199,10 +199,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_SEEN, creature.getSeen());
 		values.put(COLUMN_CAPTURED, creature.getCaptured());
 		
-		Log.d("About to insert the entire row for:", creature.getName());
+		//Log.d("About to insert the entire row for:", creature.getName());
 		long creature_id = database.insert(TABLE_CREATURES, null, values);
 		
-		Log.d("Inserted the row for: ", creature.getName());
+		//Log.d("Inserted the row for: ", creature.getName());
 		//Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
 		
 		return creature_id;
@@ -246,7 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		creature.setLevel(cursor.getInt(12));
 		creature.setSeen(cursor.getInt(13));
 		creature.setCaptured(cursor.getInt(14));
-		Log.d("getCreature(" + creature_id + ")", creature.toString());
+		//Log.d("getCreature(" + creature_id + ")", creature.toString());
 		return creature;
 	}
 		
@@ -435,7 +435,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = this.getWritableDatabase(); 	
 		ContentValues playerValues = new ContentValues();
 		
-		Log.d("Putting creature name into player table's name column", playerCreature.getName());
+		//Log.d("Putting creature name into player table's name column", playerCreature.getName());
 		playerValues.put(COLUMN_NAME, playerCreature.getName());
 		playerValues.put(COLUMN_REGION, playerCreature.getRegion());			
 		playerValues.put(COLUMN_DISTRICT, playerCreature.getDistrict());		
@@ -451,9 +451,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		playerValues.put(COLUMN_SEEN, playerCreature.getSeen());
 		playerValues.put(COLUMN_CAPTURED, playerCreature.getCaptured());
 	
-		Log.d("About to insert the entire row for:", playerCreature.getName());
+		//Log.d("About to insert the entire row for:", playerCreature.getName());
 		long playerCreature_ID = database.insert(TABLE_PLAYER, null, playerValues);
-		Log.d("Inserted the row for: ", playerCreature.getName());
+		//Log.d("Inserted the row for: ", playerCreature.getName());
 		//Log.d("KEY ID for: ", playerCreature.getName() + " is " + playerCreature.getId());
 		
 		return playerCreature_ID;
@@ -496,7 +496,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		playerCreature.setSeen(cursor.getInt(13));
 		playerCreature.setCaptured(cursor.getInt(14));
 		
-		Log.d("getCreature(" + playerCreature_id + ")", playerCreature.toString());
+		//Log.d("getCreature(" + playerCreature_id + ")", playerCreature.toString());
 		return playerCreature;		
 	}	
 	
@@ -513,7 +513,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase database = this.getReadableDatabase();
 		
 		String selectQuery = "SELECT * FROM " + TABLE_PLAYER;
-		Log.d("Logging Query for getAllPlayerCreatures", selectQuery);
+		//Log.d("Logging Query for getAllPlayerCreatures", selectQuery);
 		Cursor cursor = database.rawQuery(selectQuery, null);
 		
 		Player pcreature = null;
@@ -539,7 +539,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				Log.d("ID and NAME", String.valueOf(pcreature.getId()) + " " + pcreature.getName());
 			} while (cursor.moveToNext());
 		}
-		Log.d("getAllCreatures().toString() function", playercreaturesList.toString());
+		//Log.d("getAllCreatures().toString() function", playercreaturesList.toString());
 		database.close();
 		return playercreaturesList;		
 	}
@@ -588,7 +588,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				playerregionCreatures.add(pcreature);
 			} while (cursor.moveToNext());
 		}
-		Log.d("Logging getAllPlayerCreaturesByRegion()", playerregionCreatures.toString());
+		//Log.d("Logging getAllPlayerCreaturesByRegion()", playerregionCreatures.toString());
 		return playerregionCreatures;
 	}
 	
@@ -642,7 +642,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				PLAYER_ID + " = ?",   									
 				new String[] {String.valueOf(creature_id) });	
 		database.close();
-		Log.d("deletePlayerCreature", String.valueOf(creature_id));
+		//Log.d("deletePlayerCreature", String.valueOf(creature_id));
 	}
 	
 	public int getPlayerCreaturesCount(){
@@ -685,10 +685,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(POINT_FOUR_LAT, region.getLocationFourLat());			
 		values.put(POINT_FOUR_LONG, region.getLocationFourLong());
 		
-		Log.d("About to insert points for region:", region.getZoneName());
+		//Log.d("About to insert points for region:", region.getZoneName());
 		long region_id = database.insert(TABLE_REGIONS, null, values);
 		
-		Log.d("Inserted the row for: ", region.getZoneName());
+		//Log.d("Inserted the row for: ", region.getZoneName());
 		//Log.d("KEY ID for: ", creature.getName() + " is " + creature.getId());
 		
 		return region_id;
