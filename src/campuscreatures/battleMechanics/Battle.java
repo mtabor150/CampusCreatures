@@ -252,12 +252,16 @@ public class Battle implements Serializable {
 	 * inccreases creature experience and level accordingly
 	 */
 	private void modifyExperienceAndLevel(BattleCreature winner, BattleCreature loser) {
-		int winExpIncrease = loser.getLevel()*10;
-		winner.increaseCreatureExperience(winExpIncrease);
-		battlePrompt.addMessage(winner.getTitle() + "'s experience increased by " + winExpIncrease);
-		int loseExpIncrease = winner.getLevel()*3;
-		loser.increaseCreatureExperience(winner.getLevel()*3);
-		battlePrompt.addMessage(loser.getTitle() + "'s experience increased by " + loseExpIncrease);
+		int winExpIncrease = loser.getLevel()*4;
+		//int loseExpIncrease = winner.getLevel()*3;
+		if(playerCreature.getCurrentHealth() > 0) {
+			playerCreature.increaseCreatureExperience(winExpIncrease);
+			battlePrompt.addMessage(winner.getTitle() + "'s experience increased by " + winExpIncrease);
+		}
+		//winner.increaseCreatureExperience(winExpIncrease);
+		
+		//loser.increaseCreatureExperience(winner.getLevel()*3);
+		//battlePrompt.addMessage(loser.getTitle() + "'s experience increased by " + loseExpIncrease);
 		
 		System.out.println("playerCreature is level " + playerCreature.getLevel());
 		System.out.println("oppCreature is level " + oppCreature.getLevel());
@@ -268,5 +272,7 @@ public class Battle implements Serializable {
 	//exchanges the current playerCreature with a new Creature
 	public void exchangePlayerCreature(BattleCreature newCreature) {
 		playerCreature = newCreature;
+		round = 1;
+		battlePrompt = new BattlePrompt(10);
 	}
 }

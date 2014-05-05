@@ -18,6 +18,7 @@ import java.util.*;
 
 import campuscreatures.database.Creatures;
 import android.content.Context;
+import android.text.format.Time;
 
 
 
@@ -56,6 +57,7 @@ public class UserProfile implements Serializable {
 	
 	//loads the saved user profile in any view and instantiates a new UserProfile objects
 	public UserProfile(Context context) {
+		this.loadProfile(context);
 		UserProfile tempProfile = new UserProfile();
 		tempProfile = tempProfile.loadProfile(context);
 		fileName = tempProfile.getFileName();
@@ -64,6 +66,7 @@ public class UserProfile implements Serializable {
 		userName = tempProfile.getUserName();
 		hasSignedUp = tempProfile.hasSignedUp();
 		party = tempProfile.getParty();
+		isCurrentlyInBattle = tempProfile.userCurrentlyInBattle();
 	}
 	
 	public boolean hasSignedUp() {
@@ -182,6 +185,7 @@ public class UserProfile implements Serializable {
 		lastName = last;
 		userName = user;
 		hasSignedUp = true;
+		//(lastHealed = new Time()).setToNow();
 	}
 	
 	public void addCreature(BattleCreature creature) {

@@ -35,6 +35,7 @@ public class BattleCreature implements Serializable {
 	private int upgradePoints;
 	private int currentLevelXP;
 	private int nextLevelXP;
+	private int incrementLevelXP;
 	
 	//TODO add all values which 'Creature' class has which 'BattleCreature' does not have.
 	//TODO create function/s to convert between 'Creature' and 'BattleCreature' classes
@@ -76,6 +77,7 @@ public class BattleCreature implements Serializable {
 		System.out.println("Got here J");
 		upgradePoints = 0;
 		currentLevelXP = 0;
+		incrementLevelXP = 10;
 		nextLevelXP = 10;
 	}
 	
@@ -254,7 +256,8 @@ public class BattleCreature implements Serializable {
 		while(CreatureExperience >= nextLevelXP) {
 			incrementLevel();
 			currentLevelXP = nextLevelXP;
-			nextLevelXP *= 1.5;
+			incrementLevelXP *= 1.5;
+			nextLevelXP += incrementLevelXP;
 			addUpgradePoints(5);
 		}
 	}
@@ -296,5 +299,14 @@ public class BattleCreature implements Serializable {
 		} else {
 			return false;
 		}
+	}
+	
+	public void enactUpgrade(BattleUpgrade upgrade) {
+		MaxHealth += upgrade.getHealthPlus();
+		attack += upgrade.getAttackPlus();
+		speed += upgrade.getSpeedPlus();
+		defense += upgrade.getDefensePlus();
+		upgradePoints -= upgrade.getUpgradeUsed();
+		CurrentHealth = MaxHealth;
 	}
 }
