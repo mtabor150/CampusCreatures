@@ -79,13 +79,13 @@ public class TrapCreaturesActivity extends Activity {
 	 */
 	public void goToBattle(View view) {
 		
-		/*
+		
 		setupSampleBattle(); //only used to setup currentBattle but any battle can be used.
 		Intent i = new Intent(this, BattleActivity.class);
 		i.putExtra("Battle", currentBattle);
 		System.out.println("goToBattle...");
 		startActivity(i);
-		*/
+		
 	}
 
 	public void goToDBTesting(View view){
@@ -205,7 +205,7 @@ public class TrapCreaturesActivity extends Activity {
 		System.out.println("got here E");
 		//create sample creatures
 		BattleCreature player = new BattleCreature(0,"Tester", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions1);
-		BattleCreature opponent = new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
+		BattleCreature opponent = new BattleCreature(1,"Marcus Taborius", "Ritter Hall", "Saint Louis University", "earth",10, 10 ,1,3,10,10,0,simpleActions2);
 		//create the battle for this activity
 		//boolean isSinglePlayer= getIntent().getExtras().getBoolean("isSinglePlayer");
 		currentBattle = new Battle(player,opponent, true);

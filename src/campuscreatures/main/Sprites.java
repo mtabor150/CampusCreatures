@@ -9,7 +9,7 @@ public class Sprites {
 	Map<String, Drawable> spriteMap = new HashMap<String, Drawable>();
 	
 	public Sprites(Context context){
-		
+		System.out.println("SPAWNING ALL SPRITES");
 		spriteMap.put("Adom",
 				context.getResources().getDrawable(R.drawable.adom));
 		spriteMap.put("Alogorithmo",
@@ -90,10 +90,11 @@ public class Sprites {
 				context.getResources().getDrawable(R.drawable.wackerle));
 		spriteMap.put("Weasel Man",
 				context.getResources().getDrawable(R.drawable.weaselman));
+		System.out.println("SPAWNING ALL SPRITES");
 	}
 	
 	public Drawable getSprite(String s){
-		
+		System.out.println(s);
 		Drawable sprite = spriteMap.get(s);
 		
 		return sprite;
