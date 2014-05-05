@@ -78,11 +78,14 @@ public class TrapCreaturesActivity extends Activity {
 	 * might want to start a battle.
 	 */
 	public void goToBattle(View view) {
+		
+		/*
 		setupSampleBattle(); //only used to setup currentBattle but any battle can be used.
 		Intent i = new Intent(this, BattleActivity.class);
 		i.putExtra("Battle", currentBattle);
 		System.out.println("goToBattle...");
 		startActivity(i);
+		*/
 	}
 
 	public void goToDBTesting(View view){
@@ -91,7 +94,7 @@ public class TrapCreaturesActivity extends Activity {
 		System.out.println("Creature count " + dbHelper.getCreature(2));
 		//get first creature in player party
 		BattleCreature tempCreature;
-		//tempCreature = tempProfile.getCreaturesList().get(0);
+		tempCreature = tempProfile.getParty().getPartyMember(0);
 		//System.out.println(tempCreature.getTitle());
 		
 		//get current location
@@ -113,7 +116,7 @@ public class TrapCreaturesActivity extends Activity {
 				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
-		//currentBattle = new Battle(tempCreature,localBattleOpponent, true);
+		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
 		System.out.println("...setupTrueBattle");
 		
 		Intent i = new Intent(this, BattleActivity.class);

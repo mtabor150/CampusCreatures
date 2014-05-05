@@ -98,7 +98,7 @@
                     <Button android:id="@+id/exploreButton"
             			android:layout_width="wrap_content"
             			android:layout_height="wrap_content"
-            			android:onClick="goToBattle"
+            			android:onClick="goToDBTesting"
            	 			android:text="Explore the Area." />
                     
                 </LinearLayout>
