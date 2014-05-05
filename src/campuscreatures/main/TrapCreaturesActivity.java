@@ -153,10 +153,17 @@ public class TrapCreaturesActivity extends Activity {
 		TextView zoneText = (TextView) findViewById(R.id.zoneText);
 		MapZones zones = new MapZones();
 		
-		Location currentLocation = new Location(MainActivity.location.getLatitude(),
-												MainActivity.location.getLongitude());
+		
+		
+		android.location.Location currentLocation1 = MainActivity.location.getLocation();
+		Location currentLocation = new Location(currentLocation1.getLatitude(), currentLocation1.getLongitude());
 		//declares a temporary zone
 		Zone currentZone = new Zone("temp", currentLocation, 0);
+		
+		for (Zone z : zones){
+			System.out.println(z.getZoneName() + "getZoneName");
+		
+		}
 		/*
 	
 		for (Zone z : zones){

@@ -1,11 +1,8 @@
 package campuscreatures.database;
 
 import java.util.ArrayList;
-
 import java.util.Iterator;
-
 import java.util.List;
-
 
 import campuscreatures.location.Location;
 import campuscreatures.location.LocationService;
@@ -18,6 +15,8 @@ public class MapZones implements Iterable<Zone>{
  *  Point 1 - Point 3
  *  Point 3 - Point 4
  *  Point 2 - Point 4
+ *  
+ *  Point1's Latitude > Point3 Latitude but 
  *  
  * DISTRICT:		Point 1						Point 2						Point 3						Point 4
  * SLU 				38.63888, -90.240852		38.636148, -90.241753		38.635671, -90.225681		38.631757, -90.227172
@@ -56,6 +55,21 @@ public class MapZones implements Iterable<Zone>{
  * Xavier Hall		38.637499, -90.237901		38.637388, -90.237308		38.636979, -90.238102		38.636860, -90.237504					
  */
 	Zone zone;
+	int _id;
+	Location _point1;
+	double _oneLat;
+	double _oneLong;
+	Location _point2;
+	double _twoLat;
+	double _twoLong;
+	Location _point3;
+	double _threeLat;
+	double _threeLong;
+	Location _point4;
+	double _fourLat;
+	double _fourLong;
+	
+	String zone_name;
 	public ArrayList<Zone> Zones;
 
 	public MapZones () {
@@ -185,19 +199,161 @@ public class MapZones implements Iterable<Zone>{
 		Zone xavier = new Zone("Xavier Hall", new Location(38.637499, -90.237901), new Location(38.637388, -90.237308), 
 					  new Location(38.636979, -90.238102), new Location(38.636860, -90.237504));
 		Zones.add(xavier);
-		
+	}
 
-		
+	public MapZones(String name, double oneLat, double oneLong, double twoLat, double twoLong, double threeLat,
+		double threeLong, double fourLat, double fourLong){
+	this.zone_name = name;
+	this._oneLat = oneLat;
+	this._oneLong = oneLong;
+	this._twoLat = twoLat;
+	this._twoLong = twoLong;
+	this._threeLat = threeLat;
+	this._threeLong = threeLong;
+	this._fourLat = fourLat;
+	this._fourLong = fourLong;
+}
+	public MapZones(int id, String name, double oneLat, double oneLong, double twoLat, double twoLong, double threeLat,
+			double threeLong, double fourLat, double fourLong){
+		this._id = id;
+		this.zone_name = name;
+		this._oneLat = oneLat;
+		this._oneLong = oneLong;
+		this._twoLat = twoLat;
+		this._twoLong = twoLong;
+		this._threeLat = threeLat;
+		this._threeLong = threeLong;
+		this._fourLat = fourLat;
+		this._fourLong = fourLong;
+	}
+	
+	public MapZones(String name, double oneLat, double oneLong, double twoLat, double twoLong){
+		this.zone_name = name;
+		this._oneLat = oneLat;
+		this._oneLong = oneLong;
+		this._twoLat = twoLat;
+		this._twoLong = twoLong;
+	}
+	
+	public int getID(){
+		return this._id;
+	}
+	
+	public void setID(int id){
+		this._id = id;
+	}
+	
+	public String getZoneName(){
+		return this.zone_name;
+	}
+	public void setZoneName(String name){
+		this.zone_name = name;
 	}
 	
 	
+	
+	public Location getLocationOne(){
+		return this._point1;
+	}
+	
+	public Location getLocationTwo(){
+		return this._point2;
+	}
+	public Location getLocationThree(){
+		return this._point3;
+	}
+	public Location getLocationFour(){
+		return this._point4;
+	}
+	
+	//Point 1
+	public double getLocationOneLat(){
+		return this._oneLat;
+	}
+	public void setLocationOneLat(double oneLat){
+		this._oneLat = oneLat;
+	}
+	public double getLocationOneLong(){
+		return this._oneLong;
+	}
+	public void setLocationOneLong(double oneLong){
+		this._oneLong = oneLong;
+	}
+	//Point 2
+	public double getLocationTwoLat(){
+		return this._twoLat;
+	}
+	public void setLocationTwoLat(double twoLat){
+		this._twoLat = twoLat;
+	}
+	public double getLocationTwoLong(){
+		return this._twoLong;
+	}
+	public void setLocationTwoLong(double twoLong){
+		this._twoLong = twoLong;
+	}
+	//Point 3
+	public double getLocationThreeLat(){
+		return this._threeLat;
+	}
+	public void setLocationThreeLat(double threeLat){
+		this._threeLat = threeLat;
+	}
+	public double getLocationThreeLong(){
+		return this._threeLong;
+	}
+	public void setLocationThreeLong(double threeLong){
+		this._threeLong = threeLong;
+	}
+	//Point 4
+	public double getLocationFourLat(){
+		return this._fourLat;
+	}
+	public void setLocationFourLat(double fourLat){
+		this._fourLat = fourLat;
+	}
+	public double getLocationFourLong(){
+		return this._fourLong;
+	}
+	public void setLocationFourLong(double fourLong){
+		this._fourLong = fourLong;
+	}
+	
+	
+	
+/*	
+	public double getLocationOneLong(){
+		return this._point1.getLongitude();
+	}
+	
+	//Point 2
+	public double getLocationTwoLat(){
+		return this._point2.getLatitude();
+	}
+	public double getLocationTwoLong(){
+		return this._point2.getLongitude();
+	}
+	
+	//Point 3
+	public double getLocationThreeLat(){
+		return this._point3.getLatitude();
+	}
+	public double getLocationThreeLong(){
+		return this._point1.getLongitude();
+	}
+	
+	//Point 4
+	public double getLocationFourLat(){
+		return this._point4.getLatitude();
+	}
+	public double getLocationFourLong(){
+		return this._point4.getLongitude();
+	}
+	*/
 		
 	public Object getMapZone(){
 		return this.zone;
 	}
-
-
-
 
 	@Override
 	public Iterator<Zone> iterator() {

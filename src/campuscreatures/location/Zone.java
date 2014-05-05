@@ -54,7 +54,7 @@ public class Zone {
 //			
 //		}
 	}
-	
+
 	
 	public boolean inZone(Location point) {
 
@@ -75,10 +75,10 @@ public class Zone {
 				inArea = true;
 			} 
 		}
-
 		return inArea;
 	}
 	
+
 	public boolean inZone(Location player, Location point1, Location point2, Location point3){
 		return true;
 	}
@@ -97,12 +97,14 @@ public class Zone {
 //		barycenter = new Location(lat, lon);
 //	}
 
+
 	private double pointDistance(Location alpha, Location beta) {
 		double dx = (alpha.getLatitude() - beta.getLatitude());
 		double dy = (alpha.getLongitude() - beta.getLongitude());
 		return Math.sqrt((dx * dx) + (dy * dy));
 	}
-
+	
+	
 	// triangle
 	private double area(Location alpha, Location beta, Location gamma) {
 		double a, b, c;
@@ -114,9 +116,11 @@ public class Zone {
 	}
 
 	// quadrilateral
+
 //	private double area(Location alpha, Location beta, Location gamma,
 //			Location delta) {
 //		return ((area(alpha, gamma, beta))+(area(alpha, gamma, delta)));
 //	}
+
 	
 }
