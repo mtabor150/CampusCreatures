@@ -78,11 +78,14 @@ public class TrapCreaturesActivity extends Activity {
 	 * might want to start a battle.
 	 */
 	public void goToBattle(View view) {
+		
+		/*
 		setupSampleBattle(); //only used to setup currentBattle but any battle can be used.
 		Intent i = new Intent(this, BattleActivity.class);
 		i.putExtra("Battle", currentBattle);
 		System.out.println("goToBattle...");
 		startActivity(i);
+		*/
 	}
 
 	public void goToDBTesting(View view){
@@ -91,28 +94,50 @@ public class TrapCreaturesActivity extends Activity {
 		System.out.println("Creature count " + dbHelper.getCreature(2));
 		//get first creature in player party
 		BattleCreature tempCreature;
-		//tempCreature = tempProfile.getCreaturesList().get(0);
+		tempCreature = tempProfile.getParty().getPartyMember(0);
 		//System.out.println(tempCreature.getTitle());
+		
+		//get current location
+		List<Creatures> locals = new ArrayList<Creatures>();
+		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		int rando = locals.size();
 		
 		//make a random number generator to make encountered creature random
 		Random encounter = new Random();
-		int encounterID = encounter.nextInt(4);
-		List<Creatures> locals = new ArrayList<Creatures>();
-		
-		//get current location
-		locals = dbHelper.getAllCreaturesByRegion("Ritter Hall");
+		int encounterID = encounter.nextInt(rando);
 		
 		//create a random creature based on location
 		Creatures tempOpponent;
+		int modifier = tempCreature.getLevel() * 5;
+		int attMOD = 0;
+		int defMOD = 0;
+		int speedMOD = 0;
+		int healthMOD = 0;
+		for (int i = 0; i<modifier; i++){
+			Random modChoose = new Random();
+			int modChoice = modChoose.nextInt(4);
+			if (modChoice == 0){
+				attMOD++;
+			}
+			if (modChoice == 1){
+				defMOD++;
+			}
+			if (modChoice == 2){
+				speedMOD++;
+			}
+			if (modChoice == 3){
+				healthMOD++;
+			}
+		}
 		tempOpponent = locals.get(encounterID);
 		ArrayList<BattleAction> moveset = tempOpponent.getMoveSet(tempOpponent);
 		System.out.println(moveset);
 		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
-				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack(), tempOpponent.getDefense(), tempOpponent.getLevel(), 
-				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
+				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack() + attMOD, tempOpponent.getDefense() + defMOD, tempOpponent.getLevel(), 
+				tempOpponent.getSpeed() + speedMOD, tempOpponent.getHealth() + (5 * healthMOD), tempOpponent.getHealth() + (5 * healthMOD), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
-		//currentBattle = new Battle(tempCreature,localBattleOpponent, true);
+		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
 		System.out.println("...setupTrueBattle");
 		
 		Intent i = new Intent(this, BattleActivity.class);
