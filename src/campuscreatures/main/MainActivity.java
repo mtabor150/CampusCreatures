@@ -319,7 +319,7 @@ public class MainActivity extends FragmentActivity {
 					ArrayList<BattleAction> simpleActions2 = tempo2.getMoveSet(tempo2);
 					ArrayList<BattleAction> simpleActions3 = tempo3.getMoveSet(tempo3);
 					newProfile.addCreature(new BattleCreature(0,"Philanthropist", "house", "room", "earth", 5, 2, 22,4,10,10,0,simpleActions1));
-					newProfile.addCreature(new BattleCreature(1,"Markus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10 ,10,10,30,30,10,simpleActions2));
+					newProfile.addCreature(new BattleCreature(1,"Marcus Taborius", "Ritter Hall", "Saint Louis University", "psychic",10, 10 ,10,10,30,30,10,simpleActions2));
 					newProfile.addCreature(new BattleCreature(1,"Weasel Man", "Tegeler Hall", "Saint Louis University", "normal",10, 10 ,10,10,30,30,10,simpleActions3));
 					newProfile.addCreature(new BattleCreature(1,"Desi Djinn", "Tegeler Hall", "Saint Louis University", "normal",10, 10 ,10,10,30,30,10,simpleActions2));
 					//end of test code alpha
