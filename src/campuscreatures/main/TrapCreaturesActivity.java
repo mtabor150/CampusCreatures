@@ -108,12 +108,33 @@ public class TrapCreaturesActivity extends Activity {
 		
 		//create a random creature based on location
 		Creatures tempOpponent;
+		int modifier = tempCreature.getLevel() * 5;
+		int attMOD = 0;
+		int defMOD = 0;
+		int speedMOD = 0;
+		int healthMOD = 0;
+		for (int i = 0; i<modifier; i++){
+			Random modChoose = new Random();
+			int modChoice = modChoose.nextInt(4);
+			if (modChoice == 0){
+				attMOD++;
+			}
+			if (modChoice == 1){
+				defMOD++;
+			}
+			if (modChoice == 2){
+				speedMOD++;
+			}
+			if (modChoice == 3){
+				healthMOD++;
+			}
+		}
 		tempOpponent = locals.get(encounterID);
 		ArrayList<BattleAction> moveset = tempOpponent.getMoveSet(tempOpponent);
 		System.out.println(moveset);
 		BattleCreature localBattleOpponent = new BattleCreature(tempOpponent.getId(), tempOpponent.getName(), tempOpponent.getRegion(),
-				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack(), tempOpponent.getDefense(), tempOpponent.getLevel(), 
-				tempOpponent.getSpeed(), tempOpponent.getHealth(), tempOpponent.getHealth(), tempOpponent.getExperience(), moveset);		
+				tempOpponent.getDistrict(), tempOpponent.getType(), tempOpponent.getAttack() + attMOD, tempOpponent.getDefense() + defMOD, tempOpponent.getLevel(), 
+				tempOpponent.getSpeed() + speedMOD, tempOpponent.getHealth() + (5 * healthMOD), tempOpponent.getHealth() + (5 * healthMOD), tempOpponent.getExperience(), moveset);		
 		
 		//start the battle
 		currentBattle = new Battle(tempCreature,localBattleOpponent, true);
