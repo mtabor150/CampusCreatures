@@ -272,5 +272,7 @@ public class Battle implements Serializable {
 	//exchanges the current playerCreature with a new Creature
 	public void exchangePlayerCreature(BattleCreature newCreature) {
 		playerCreature = newCreature;
+		round = 1;
+		battlePrompt = new BattlePrompt(10);
 	}
 }

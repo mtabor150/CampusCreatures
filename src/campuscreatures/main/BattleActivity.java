@@ -438,6 +438,7 @@ public class BattleActivity extends Activity {
 	//handleEndGame handles the end of 
 	//TODO fill out this function
 	private void handleEndBattle() {
+		refreshStats();
 		if(currentBattle.getRound() != 0) {
 			return;
 		}
@@ -470,6 +471,7 @@ public class BattleActivity extends Activity {
 		            //No button clicked
 		            break;
 		        }
+		        thisBattleActivity.onBackPressed();
 		    }
 		};
 		AlertDialog.Builder ab = new AlertDialog.Builder(BattleActivity.this);
